@@ -1,0 +1,33 @@
+@use '../../../styles/variables' as var;
+
+.sidebar {
+  background: linear-gradient(
+    90deg,
+    rgba(103, 151, 240, 0.1) 0%,
+    rgba(103, 151, 240, 0.08) 100%
+  );
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //   justify-content: center;
+  img {
+    margin-top: 5rem;
+  }
+  ul {
+    list-style: none;
+    li > a {
+      text-decoration: none;
+      color: var.$primary-dark-grey;
+      display: flex;
+      flex-direction: column;
+      //   align-items: center;
+      //   justify-content: center;
+    }
+  }
+}
