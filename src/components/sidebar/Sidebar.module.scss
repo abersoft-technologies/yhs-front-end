@@ -16,18 +16,34 @@
   flex-direction: column;
   align-items: center;
   //   justify-content: center;
-  img {
+
+  .active_link {
+    color: var.$primary-color;
+    > svg > path {
+      fill: var.$primary-color;
+    }
+  }
+
+  > img {
     margin-top: 5rem;
   }
   ul {
+    margin-top: 5rem;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     list-style: none;
+    padding: 0;
+
     li > a {
-      text-decoration: none;
-      color: var.$primary-dark-grey;
       display: flex;
       flex-direction: column;
-      //   align-items: center;
-      //   justify-content: center;
+      align-items: center;
+      margin-top: 0.35rem;
+      text-decoration: none;
+      color: var.$primary-dark-grey;
     }
   }
 }
