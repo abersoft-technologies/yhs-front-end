@@ -2,3 +2,16 @@
 
 $primary-dark-grey: #5d5d5a;
 $primary-color: #699bf7;
+
+// Standard spacing
+$spacing: 0.25rem; // 4px, base
+
+// Spacing scale
+$spacing-none: 0;
+$spacing-x-small: 0.25rem;      // 4px
+$spacing-small: 0.5rem;         // 8px
+$spacing-medium: 1rem;          // 16px
+$spacing-large: 1.25rem;        // 20px
+$spacing-x-large: 1.5rem;       // 24px
+$spacing-xx-large: 2rem;        // 32px
+$spacing-xxx-large: 2.5rem;     // 38px

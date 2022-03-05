@@ -1,0 +1,63 @@
+@import '../variables';
+
+$gap-properties: (
+    none: $spacing-none,
+    xx-small: calc($spacing/2),
+    x-small: $spacing-x-small,
+    small: $spacing-small,
+    medium: $spacing-medium,
+    large: $spacing-large,
+    x-large: $spacing-x-large,
+    xx-large: $spacing-xx-large,
+    xxx-large: $spacing-xxx-large
+);
+
+$align-properties: (
+    center: center,
+    flex-end: flex-end,
+    flex-start: flex-start,
+);
+
+$justify-properties: (
+    center: center,
+    flex-end: flex-end,
+    flex-start: flex-start,
+);
+
+.flex {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+
+    &--column {
+        flex-direction: column;
+    }
+    &--column-reverse {
+        flex-direction: column-reverse;
+    }
+    &--row {
+        flex-direction: row;
+    }
+    &--row-reverse {
+        flex-direction: row-reverse;
+    }
+}
+
+// Example: key = none and gap = $spacing-none
+@each $key, $gap in $gap-properties {
+    .flex--gap-#{$key} {
+        gap: $gap;
+    }
+}
+
+@each $key, $align in $align-properties {
+    .flex--align-#{$key} {
+        align-items: $align;
+    }
+}
+
+@each $key, $justify in $justify-properties {
+    .flex--justify-#{$key} {
+        justify-content: $justify;
+    }
+}

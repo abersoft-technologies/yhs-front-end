@@ -7,9 +7,13 @@ import Sidebar from '../components/sidebar/Sidebar';
 
 interface ILayoutProps {
   children: React.ReactNode;
+  doNotShowSidebar?: boolean;
 }
 
-export default function Layout({ children }: ILayoutProps) {
+export default function Layout({ children, doNotShowSidebar }: ILayoutProps) {
+
+  const sidebar = doNotShowSidebar ? <></> : <Sidebar />;
+
   return (
     <>
       <Head>
@@ -20,7 +24,7 @@ export default function Layout({ children }: ILayoutProps) {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Sidebar />
+      {sidebar}
       <main className={styles.main}>{children}</main>
     </>
   );
