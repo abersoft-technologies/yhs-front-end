@@ -21,8 +21,8 @@ const Sidebar = () => {
                 xmlns='http://www.w3.org/2000/svg'
               >
                 <path
-                  fill-rule='evenodd'
-                  clip-rule='evenodd'
+                  fillRule='evenodd'
+                  clipRule='evenodd'
                   d='M5.25 5.25V19.25H19.25V5.25H5.25ZM15.75 15.75H8.75V8.75H15.75V15.75ZM5.25 22.75V36.75H19.25V22.75H5.25ZM15.75 33.25H8.75V26.25H15.75V33.25ZM22.75 5.25V19.25H36.75V5.25H22.75ZM33.25 15.75H26.25V8.75H33.25V15.75ZM22.75 22.75V36.75H36.75V22.75H22.75ZM33.25 33.25H26.25V26.25H33.25V33.25Z'
                   fill='#5D5D5A'
                 />
