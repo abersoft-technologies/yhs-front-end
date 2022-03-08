@@ -1,0 +1,16 @@
+@use '../../../styles/variables' as var;
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 200px;
+  width: calc(100% - 200px);
+  height: 60px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var.$light-grey;
+  z-index: 9;
+  //   box-shadow: 0 3px 2px -2px rgba(31, 31, 31, 0.221);
+}

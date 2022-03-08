@@ -1,0 +1,89 @@
+@use './variables' as var;
+
+.contacts_container {
+  margin-top: 8.25rem;
+  padding-left: 1.5rem;
+}
+
+.header_bar_container {
+  border-bottom: 1px solid var.$light-grey;
+  margin-bottom: var.$spacing-x-large;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  div:last-child {
+    // width: 11rem;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: var.$spacing-x-large;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: var.$spacing-small;
+    background: radial-gradient(50% 50% at 50% 50%, #7192cf 0%, #2355b1 100%);
+    border-radius: var.$spacing-small;
+    padding: var.$spacing-small;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+    border: none;
+    transition: transform 100ms ease-in-out;
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+  h2 {
+    font-size: 2rem;
+    margin: 0;
+    color: var.$txt-color;
+    font-weight: 400;
+  }
+}
+
+.header_interface_container {
+  display: flex;
+  gap: var.$spacing-x-large;
+
+  div:first-child {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  div > img {
+    position: absolute;
+    width: 24px;
+    margin-left: 0.5rem;
+  }
+  div > input {
+    outline: none;
+    border: var.$transparent-border;
+    border-radius: 0.5rem;
+    padding: 0.8rem 2rem 0.8rem 2.5rem;
+    width: 100%;
+    color: var.$txt-color;
+
+    ::placeholder {
+      color: var.$light-grey;
+    }
+  }
+  button {
+    img {
+      width: 20px;
+    }
+    display: flex;
+    align-items: center;
+    gap: var.$spacing-small;
+    font-size: 1rem;
+    background: none;
+    border: var.$transparent-border;
+    border-radius: var.$spacing-small;
+    color: var.$dark-grey;
+    padding: 0 1rem;
+    cursor: pointer;
+  }
+}

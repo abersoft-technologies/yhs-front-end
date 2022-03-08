@@ -1,0 +1,35 @@
+@use '../../../styles/variables' as var;
+
+.contact_list_container {
+  margin-top: var.$spacing-5x;
+}
+
+.label_bar_container {
+  color: var.$txt-color;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  padding-bottom: var.$spacing-small;
+  border-bottom: 1px solid var.$dark-grey;
+
+  div:first-child {
+    margin-left: 0.25rem;
+  }
+}
+
+.contact_card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  color: var.$txt-color;
+  border-bottom: 1px solid var.$light-grey;
+  // border-right: 1px solid var.$light-grey;
+  padding: 1.25rem 0 1.25rem 0;
+  // height: 100%;
+  /* div:not(:last-child) {
+    border-right: 1px solid var.$light-grey;
+    height: 100%;
+  }
+  div:first-child {
+    border-left: 1px solid var.$light-grey;
+  } */
+}

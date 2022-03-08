@@ -1,6 +1,10 @@
+@use './variables' as var;
+
 .main {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  height: calc(100vh - 140px);
+  // margin-top: 140px;
+
+  width: calc(100% - 200px - 5%);
+  margin-left: 200px;
+  margin-right: 5%;
 }
