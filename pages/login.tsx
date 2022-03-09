@@ -25,7 +25,13 @@ const Login: NextPage = () => {
       onSubmit={(e) => onFormSubmit(e)}
       className={styles.container}
     >
-      <Flex direction='column' gap='small' align='flex-start' justify='center'>
+      <Flex
+        direction='column'
+        gap='small'
+        align='flex-start'
+        justify='center'
+        height='screen'
+      >
         <label htmlFor='username'>Användarnam:</label>
         <input
           type='text'

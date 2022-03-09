@@ -15,16 +15,20 @@ interface ILayoutProps {
 
 export default function Layout({ children }: ILayoutProps) {
   const router = useRouter();
-  const sidebar =
-    router.pathname.includes('/login') ||
-    router.pathname.includes('/signup') ? (
-      <></>
-    ) : (
-      <>
-        <Sidebar />
-        <Topbar />
-      </>
-    );
+
+  const checkIfLoginOrRegister =
+    router.pathname.includes('/login') || router.pathname.includes('/signup')
+      ? true
+      : false;
+
+  const sidebar = checkIfLoginOrRegister ? (
+    <></>
+  ) : (
+    <>
+      <Sidebar />
+      <Topbar />
+    </>
+  );
 
   return (
     <>
@@ -37,7 +41,13 @@ export default function Layout({ children }: ILayoutProps) {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       {sidebar}
-      <main className={styles.main}>{children}</main>
+      <main
+        className={
+          checkIfLoginOrRegister ? styles.main_login_register : styles.main
+        }
+      >
+        {children}
+      </main>
     </>
   );
 }
