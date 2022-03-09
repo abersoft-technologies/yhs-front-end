@@ -1,12 +1,33 @@
+import React from 'react';
 import type { NextPage } from 'next';
-import styles from '../styles/Home.module.scss';
 
-const Home: NextPage = () => {
+import styles from '../styles/Overview.module.scss';
+
+import Milestones from '../src/components/overview/milestones/Milestones';
+
+const Overview: NextPage = () => {
   return (
-    <div>
-      <h1>YH-sökaren</h1>
-    </div>
+    <>
+      <div className={styles.overview_container}>
+        <header>
+          <div className={styles.header_bar_container}>
+            <div>
+              <h2>Överblick</h2>
+            </div>
+            <div>
+              <button>
+                <img src='/achievement-icon.svg' alt='Add contact' /> Sätt dina
+                mål
+              </button>
+            </div>
+          </div>
+        </header>
+        <section>
+          <Milestones />
+        </section>
+      </div>
+    </>
   );
 };
 
-export default Home;
+export default Overview;

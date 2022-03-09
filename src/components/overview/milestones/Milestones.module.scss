@@ -1,0 +1,93 @@
+@use '../../../../styles/variables' as var;
+
+.milestones_container {
+  border-radius: var.$spacing-medium;
+  box-shadow: var.$subtile-box-shadow;
+  padding: 1rem 2rem;
+  width: auto;
+
+  &:hover {
+    box-shadow: var.$subtile-box-shadow-hover;
+  }
+
+  > div {
+    margin: 0 1rem 0 1rem;
+  }
+}
+
+.months_container {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  justify-items: center;
+
+  text-align: center;
+  color: var.$txt-color;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+
+  div {
+    width: var.$spacing-5x;
+  }
+
+  div:nth-child(2) {
+    grid-column: 3;
+  }
+  div:nth-child(3) {
+    grid-column: 5;
+  }
+  div:nth-child(4) {
+    grid-column: 7;
+  }
+  div:nth-child(5) {
+    grid-column: 9;
+  }
+  div:nth-child(6) {
+    grid-column: 11;
+  }
+}
+
+.month_description_container {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  justify-items: center;
+  margin: 1rem 0 0 0;
+
+  color: var.$txt-color;
+  font-size: 0.85rem;
+  text-align: center;
+
+  div:nth-child(2) {
+    grid-column: 3;
+  }
+  div:nth-child(3) {
+    grid-column: 5;
+  }
+  div:nth-child(4) {
+    grid-column: 7;
+  }
+  div:nth-child(5) {
+    grid-column: 9;
+  }
+  div:nth-child(6) {
+    grid-column: 11;
+  }
+}
+.progress_svg_container {
+  display: grid;
+  grid-template-columns: repeat(11, 1fr);
+  align-items: center;
+  justify-items: center;
+
+  > svg {
+    width: var.$spacing-5x;
+  }
+  > div {
+    width: 160%;
+  }
+
+  hr {
+    background: #caddff;
+    border: none;
+    height: 5px;
+  }
+}

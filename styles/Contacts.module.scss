@@ -28,11 +28,16 @@
     border-radius: var.$spacing-small;
     padding: var.$spacing-small;
     color: #ffffff;
-    font-size: 1rem;
-    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
     border: none;
-    transition: transform 100ms ease-in-out;
+    transition: transform 200ms ease-in-out;
+
+    img {
+      width: 18px;
+    }
+
     &:hover {
       transform: translateY(-1px);
     }
