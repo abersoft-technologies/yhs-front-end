@@ -1,0 +1,25 @@
+@use '../../../../styles/variables' as var;
+
+.searchbar_container {
+  position: relative;
+  margin-left: 4rem;
+  display: flex;
+  align-items: center;
+  > img {
+    position: absolute;
+    width: 24px;
+    margin-left: 0.5rem;
+  }
+  > input {
+    outline: none;
+    border: var.$transparent-border;
+    border-radius: 0.5rem;
+    padding: 0.6rem 2rem 0.6rem 2.5rem;
+    width: 100%;
+    color: var.$txt-color;
+
+    ::placeholder {
+      color: var.$light-grey;
+    }
+  }
+}

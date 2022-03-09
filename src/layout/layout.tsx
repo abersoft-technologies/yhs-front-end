@@ -6,6 +6,7 @@ import styles from '../../styles/Layout.module.scss';
 
 /* Components for layout */
 import Sidebar from '../components/sidebar/Sidebar';
+import Topbar from '../components/topbar/Topbar';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -19,7 +20,10 @@ export default function Layout({ children }: ILayoutProps) {
     router.pathname.includes('/signup') ? (
       <></>
     ) : (
-      <Sidebar />
+      <>
+        <Sidebar />
+        <Topbar />
+      </>
     );
 
   return (
