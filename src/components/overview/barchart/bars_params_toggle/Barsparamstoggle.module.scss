@@ -1,0 +1,36 @@
+@use '../../../../../styles/variables' as var;
+
+.bar_params_toggle_container {
+  > div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > label {
+      position: absolute;
+      color: #fff;
+      cursor: pointer;
+      pointer-events: none;
+    }
+    > input {
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: all 150ms ease-in-out;
+      width: 80px;
+      height: 30px;
+      border: 2px solid #7192cf;
+      margin: 0;
+    }
+  }
+  > div:nth-child(1) > input {
+    border-radius: var.$spacing-small 0 0 var.$spacing-small;
+  }
+  > div:nth-child(2) > input {
+    border-left: none;
+    border-right: none;
+  }
+  > div:nth-child(3) > input {
+    border-radius: 0 var.$spacing-small var.$spacing-small 0;
+  }
+}

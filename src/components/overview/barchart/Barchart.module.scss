@@ -1,0 +1,107 @@
+@use '../../../../styles/variables' as var;
+
+.barchart_container {
+  width: 80%;
+  margin-bottom: 20rem;
+  padding-bottom: 8rem;
+  box-shadow: var.$subtile-box-shadow;
+  border-radius: var.$spacing-medium;
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+
+  /* Styling for top-row button */
+  > div:first-child {
+    margin-top: var.$spacing-xxx-large;
+    grid-column: 2 / 10;
+  }
+
+  > div:nth-child(3) {
+    margin-top: 2rem;
+  }
+}
+
+.colored_labels_and_button_group {
+  grid-column: 2 / 24;
+  margin-top: 1.5rem;
+}
+
+.label_colors_container {
+  color: var.$txt-color;
+
+  > div {
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* Styling button filtering charts */
+.button_filter_charts {
+  display: flex;
+  align-items: center;
+  gap: var.$spacing-large;
+  padding-bottom: var.$spacing-x-small;
+  cursor: pointer;
+
+  background: none;
+  border: none;
+  color: var.$txt-color;
+  border-bottom: 1px solid var.$primary-dark-grey;
+  font-size: 1.1rem;
+  > img {
+    width: 20px;
+  }
+}
+
+/* Styling for bar component (Including labels for each bar) */
+.bar_label_container {
+  margin: var.$spacing-small 0;
+  color: var.$txt-color;
+  font-size: 1.1rem;
+  > div > div {
+    font-size: 0.95rem;
+  }
+}
+.bar_with_label_total_container {
+  grid-column: 2 / 24;
+  margin-top: 5rem;
+}
+
+.bar_container {
+  // background: #eaeaea;
+  background: #f0f0f0;
+  height: var.$spacing-xxx-large;
+  height: 6rem;
+  padding: 0.5rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+  gap: 0.25rem;
+  position: relative;
+
+  .af_bar {
+    background: #3f609c70;
+    border: 1px solid #3f609c;
+    border-left: none;
+    height: var.$spacing-large;
+    border-radius: 0 4px 4px 0;
+  }
+  .lia_bar {
+    background: rgba(236, 113, 255, 0.35);
+    border: 1px solid rgba(236, 113, 255);
+    border-left: none;
+
+    height: var.$spacing-large;
+    border-radius: 0 4px 4px 0;
+  }
+  .employment_bar {
+    background: rgba(36, 138, 60, 0.4);
+    border: 1px solid rgb(36, 138, 60);
+    border-left: none;
+
+    height: var.$spacing-large;
+    border-radius: 0 4px 4px 0;
+  }
+}

@@ -4,6 +4,7 @@ import type { NextPage } from 'next';
 import styles from '../styles/Overview.module.scss';
 
 import Milestones from '../src/components/overview/milestones/Milestones';
+import Barchart from '../src/components/overview/barchart/Barchart';
 
 const Overview: NextPage = () => {
   return (
@@ -22,8 +23,9 @@ const Overview: NextPage = () => {
             </div>
           </div>
         </header>
-        <section>
+        <section className={styles.overview_content_container}>
           <Milestones />
+          <Barchart />
         </section>
       </div>
     </>

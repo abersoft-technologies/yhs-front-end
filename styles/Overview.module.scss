@@ -5,6 +5,11 @@
   padding-left: 1.5rem;
 }
 
+.overview_content_container {
+  display: grid;
+  gap: 2rem;
+}
+
 .header_bar_container {
   border-bottom: 1px solid var.$light-grey;
   margin-bottom: var.$spacing-x-large;
