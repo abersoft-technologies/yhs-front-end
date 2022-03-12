@@ -1,0 +1,15 @@
+{
+  "numbersForBar": [
+    { "number": 0, "lastItem": false, "isSmall": false },
+    { "number": 10, "lastItem": false, "isSmall": true },
+    { "number": 20, "lastItem": false, "isSmall": false },
+    { "number": 30, "lastItem": false, "isSmall": true },
+    { "number": 40, "lastItem": false, "isSmall": false },
+    { "number": 50, "lastItem": false, "isSmall": true },
+    { "number": 60, "lastItem": false, "isSmall": false },
+    { "number": 70, "lastItem": false, "isSmall": true },
+    { "number": 80, "lastItem": false, "isSmall": false },
+    { "number": 90, "lastItem": false, "isSmall": true },
+    { "number": 100, "lastItem": true, "isSmall": false }
+  ]
+}

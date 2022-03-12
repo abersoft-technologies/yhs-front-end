@@ -27,7 +27,6 @@ $justify-properties: (
 
 .flex {
   display: flex;
-  width: 100%;
 
   &--column {
     flex-direction: column;
@@ -42,6 +41,19 @@ $justify-properties: (
     flex-direction: row-reverse;
   }
 }
+
+.width {
+  &--screen {
+    width: 100vw;
+  }
+  &--full {
+    width: 100%;
+  }
+  &--auto {
+    width: auto;
+  }
+}
+
 .height {
   &--screen {
     height: 100vh;

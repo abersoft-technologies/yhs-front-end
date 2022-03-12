@@ -1,0 +1,7 @@
+{
+  "coloredLabels": [
+    { "labelName": "Avsiktsförklaringar", "labelColor": "#3f609c90" },
+    { "labelName": "Anställningar", "labelColor": "#248a3c90" },
+    { "labelName": "LIA-platser", "labelColor": "#ec71ff90" }
+  ]
+}

@@ -10,6 +10,7 @@ interface IFlexProps {
   justify?: 'center' | 'flex-end' | 'flex-start' | 'space-between';
   class?: string;
   height?: 'screen' | 'full' | 'none';
+  width?: 'screen' | 'full' | 'auto';
 }
 
 export const Flex = (props: IFlexProps) => {
@@ -25,6 +26,9 @@ export const Flex = (props: IFlexProps) => {
     [`flex--gap-${props.gap}`]: props.gap,
     'height--screen': props.height === 'screen',
     'height--full': props.height === 'full',
+    'width-screen': props.width === 'screen',
+    'width--full': props.width === 'full',
+    'width--auto': props.width === 'auto',
   });
 
   return <div className={classes}>{props.children}</div>;

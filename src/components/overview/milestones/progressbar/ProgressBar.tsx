@@ -9,7 +9,7 @@ const ProgressBar = () => {
       fill='none'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <g clip-path='url(#clip0_371_785)'>
+      <g clipPath='url(#clip0_371_785)'>
         <path
           d='M59 25.5L44.25 51.0477L14.75 51.0477L-1.28949e-06 25.5L14.75 -0.0477505L44.25 -0.0477492L59 25.5Z'
           fill='#CADDFF'
