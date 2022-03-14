@@ -1,0 +1,61 @@
+@use '../../../../styles/variables' as var;
+
+.progress_card_container {
+  width: 100%;
+  height: auto;
+  max-width: 240px;
+  max-height: 440px;
+  background: #fff;
+  box-shadow: var.$subtile-box-shadow;
+  border-radius: var.$spacing-medium;
+  padding: var.$spacing-large;
+
+  &:hover {
+    box-shadow: var.$subtile-box-shadow-hover;
+  }
+}
+
+.toggle_week_month_container {
+  border-bottom: 1px solid var.$light-grey;
+  display: flex;
+  justify-content: space-evenly;
+  hr {
+    margin: 0;
+    color: var.$light-grey;
+    border: none;
+    width: 1px;
+    background: var.$light-grey;
+  }
+  > button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var.$txt-color;
+  }
+}
+
+.attributes_progress_container {
+  margin-top: var.$spacing-x-large;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  > article {
+    display: flex;
+    align-items: center;
+    gap: var.$spacing-small;
+    color: var.$txt-color;
+    padding-bottom: var.$spacing-x-small;
+
+    border-bottom: 1px solid var.$light-grey;
+    > img {
+      background: var.$primary-color;
+      width: 20px;
+      padding: 0.2rem;
+      border-radius: 50%;
+      fill: red;
+      stroke: red;
+    }
+  }
+}

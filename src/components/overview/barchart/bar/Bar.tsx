@@ -1,3 +1,5 @@
+import React from 'react';
+
 /* Import scss module */
 import styles from '../Barchart.module.scss';
 
@@ -37,9 +39,9 @@ const Bar = ({
 }: IBarProps) => {
   const determentHeightOfBar = () => {
     let height = 0;
-    checkedParams.letter_of_intent ? (height += 2) : height;
-    checkedParams.employment ? (height += 2) : height;
-    checkedParams.internship ? (height += 2) : height;
+    checkedParams.letter_of_intent ? (height += 1.5) : height;
+    checkedParams.employment ? (height += 1.5) : height;
+    checkedParams.internship ? (height += 1.5) : height;
     return `${height}rem`;
   };
 
@@ -85,7 +87,7 @@ const Bar = ({
 
           {numbersForBar.map((item, i) => {
             return (
-              <>
+              <React.Fragment key={i}>
                 {!item.isSmall ? (
                   <BarProgressIndicatonNumber
                     key={i}
@@ -103,7 +105,7 @@ const Bar = ({
                     <label>{item.number}</label>
                   </BarProgressIndicatonNumberSmall>
                 )}
-              </>
+              </React.Fragment>
             );
           })}
         </div>
