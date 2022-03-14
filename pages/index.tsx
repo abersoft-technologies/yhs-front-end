@@ -5,6 +5,8 @@ import styles from '../styles/Overview.module.scss';
 
 import Milestones from '../src/components/overview/milestones/Milestones';
 import Barchart from '../src/components/overview/barchart/Barchart';
+import ProgressCard from '../src/components/overview/progress_card/ProgressCard';
+import { Flex } from '../src/components/ui/Flex';
 
 const Overview: NextPage = () => {
   return (
@@ -25,7 +27,10 @@ const Overview: NextPage = () => {
         </header>
         <section className={styles.overview_content_container}>
           <Milestones />
-          <Barchart />
+          <Flex direction='row' justify='space-between' gap='xxx-large'>
+            <Barchart />
+            <ProgressCard />
+          </Flex>
         </section>
       </div>
     </>
