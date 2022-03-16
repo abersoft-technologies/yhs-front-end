@@ -2,9 +2,10 @@
 
 .searchbar_container {
   position: relative;
-  margin-left: 4rem;
+  // margin-left: 4rem;
   display: flex;
   align-items: center;
+  // width: 100%;
   > img {
     position: absolute;
     width: 24px;
@@ -12,14 +13,28 @@
   }
   > input {
     outline: none;
-    border: var.$transparent-border;
+    border: 1px solid #f3f3f4;
+    // background: #c4c4c430;
+    background: #f3f3f4;
     border-radius: 0.5rem;
     padding: 0.6rem 2rem 0.6rem 2.5rem;
     width: 100%;
     color: var.$txt-color;
+    transition: all 200ms ease-in-out;
+    &::placeholder {
+      color: var.$dark-grey;
+    }
+    &:hover {
+      background: #fff;
+      border: var.$transparent-border;
+      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    }
 
-    ::placeholder {
-      color: var.$light-grey;
+    &:focus {
+      background: #fff;
+      border: var.$transparent-border;
+
+      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
     }
   }
 }

@@ -10,7 +10,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var.$light-grey;
+  // border-bottom: 1px solid var.$light-grey;
   z-index: 9;
-  //   box-shadow: 0 3px 2px -2px rgba(31, 31, 31, 0.221);
+  box-shadow: 0 3px 2px -2px rgba(31, 31, 31, 0.221);
+  color: var.$txt-color;
+
+  > div:nth-child(2) {
+    width: 100%;
+    justify-content: flex-end;
+    // align-self: flex-end;
+  }
+
+  > div:first-child {
+    margin-left: var.$spacing-large;
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    h2 {
+      font-size: 1.625rem;
+      font-weight: 400;
+    }
+  }
 }
