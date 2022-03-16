@@ -4,6 +4,7 @@ import { Flex } from '../src/components/ui/Flex';
 import Layout from '../src/layout/layout';
 import styles from '../styles/loginSignup.module.scss';
 import axios from "axios";
+import { Redirect } from '../src/globalFunctions/redirect';
 
 
 const Login: NextPage = () => {
@@ -26,6 +27,7 @@ const Login: NextPage = () => {
     }
     axios.post(reqUrl, data).then(res => {
       console.log("RES -->", res)
+      Redirect("/")
     }).catch(err => console.error(err))
   }
 

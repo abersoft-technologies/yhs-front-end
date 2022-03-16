@@ -23,7 +23,6 @@ const Signup: NextPage = () => {
     setName('');
     setEmail('');
     setPasswordTwo('');
-    Redirect("/login")
   };
 
 
@@ -36,6 +35,8 @@ const Signup: NextPage = () => {
     }
     axios.post(reqUrl, data).then(res => {
       console.log("RES", res)
+      Redirect("/login")
+
     }).catch(err => console.error(err))
   }
 
