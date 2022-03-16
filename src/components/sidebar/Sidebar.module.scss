@@ -1,11 +1,7 @@
 @use '../../../styles/variables' as var;
 
 .sidebar {
-  background: linear-gradient(
-    90deg,
-    rgba(103, 151, 240, 0.1) 0%,
-    rgba(103, 151, 240, 0.08) 100%
-  );
+  background: var.$primary-color-dark;
 
   position: fixed;
   left: 0;
@@ -15,37 +11,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: var.$subtile-box-shadow;
+  box-shadow: 1px 0px 15px 5px rgba(34, 55, 111, 0.2);
 
   .active_link {
-    transition: color 100ms ease-in-out;
-    color: var.$primary-color;
-    > svg > path {
-      transition: fill 100ms ease-in-out;
-      fill: var.$primary-color;
-    }
+    transition: all 200ms ease-in-out;
+    background: #ffffff20;
+    border-radius: 8px;
+    padding: 0.75rem;
+    /*     > svg > path {
+      transition: fill 200ms ease-in-out;
+    } */
   }
   .active_link_contacts {
-    transition: color 100ms ease-in-out;
-    color: var.$primary-color;
-    > svg > path {
+    transition: all 200ms ease-in-out;
+    background: #ffffff20;
+    border-radius: 8px;
+    padding: 0.75rem;
+    /*   > svg > path {
       transition: stroke 100ms ease-in-out;
-      stroke: var.$primary-color;
-    }
+    } */
   }
 
   div > img {
     margin-top: 0.75rem;
-    border-bottom: 1px solid var.$dark-grey;
+    border-bottom: 1px solid #fff;
     padding: 0 1.75rem 1rem 1.5rem;
   }
   ul {
     margin-top: 2.5rem;
-    height: 370px;
+    // height: 370px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     list-style: none;
     padding: 0;
 
@@ -60,11 +58,17 @@
       font-size: 1.1rem;
       letter-spacing: 1.5px;
       display: flex;
-      flex-direction: column;
+      justify-content: flex-start;
+      flex-direction: row;
+      gap: 0.5rem;
+      width: 160px;
       align-items: center;
       margin-top: 0.35rem;
       text-decoration: none;
-      color: var.$light-grey;
+      color: #fff;
+      background: #ffffff00;
+      border-radius: 8px;
+      padding: 0.75rem;
       > svg {
         margin-bottom: 0.25rem;
       }
