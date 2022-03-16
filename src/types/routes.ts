@@ -1,0 +1,1 @@
+export type RedirectRoutes = "/" | "/home" | "/login" | "/signup";
