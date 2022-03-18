@@ -3,10 +3,32 @@
 .contacts_container {
   // margin-top: 8.25rem;
   padding-left: 1.5rem;
+
+  > nav {
+    border-bottom: 1px solid var.$light-grey;
+    ul {
+      list-style: none;
+      display: flex;
+      gap: var.$spacing-x-large;
+      margin: 0;
+      padding: 0;
+
+      .active_link > a {
+        color: var.$primary-color-dark;
+        border-bottom: 2px solid var.$primary-color-dark;
+      }
+
+      > li > a {
+        text-decoration: none;
+        font-size: 1.125rem;
+        color: var.$light-grey;
+      }
+    }
+  }
 }
 
 .header_bar_container {
-  border-bottom: 1px solid var.$light-grey;
+  // border-bottom: 1px solid var.$light-grey;
   margin-bottom: var.$spacing-x-large;
   display: flex;
   align-items: flex-end;
@@ -51,8 +73,16 @@
   }
 }
 
+.contact_header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: var.$spacing-medium;
+}
+
 .header_interface_container {
   display: flex;
+  flex-direction: row;
   gap: var.$spacing-x-large;
 
   div:first-child {
@@ -67,11 +97,25 @@
   }
   div > input {
     outline: none;
-    border: var.$transparent-border;
+    border: 1px solid var.$light-grey;
     border-radius: 0.5rem;
-    padding: 0.8rem 2rem 0.8rem 2.5rem;
+    padding: 0.65rem 12rem 0.65rem 2.5rem;
     width: 100%;
     color: var.$txt-color;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      background: #fff;
+      border: var.$transparent-border;
+      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    }
+
+    &:focus {
+      background: #fff;
+      border: var.$transparent-border;
+
+      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    }
 
     ::placeholder {
       color: var.$light-grey;
@@ -86,10 +130,17 @@
     gap: var.$spacing-small;
     font-size: 1rem;
     background: none;
-    border: var.$transparent-border;
+    border: 1px solid var.$light-grey;
     border-radius: var.$spacing-small;
     color: var.$dark-grey;
     padding: 0 1rem;
     cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+      background: #fff;
+      border: var.$transparent-border;
+      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    }
   }
 }

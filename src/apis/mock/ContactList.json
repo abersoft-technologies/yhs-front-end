@@ -5,6 +5,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -15,6 +16,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -25,6 +27,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "new",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -35,6 +38,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -45,6 +49,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "denied",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -55,6 +60,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "meeting",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -65,6 +71,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -75,6 +82,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -85,6 +93,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -95,6 +104,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "new",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -105,6 +115,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "meeting",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -115,6 +126,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "denied",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -125,6 +137,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -135,6 +148,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "new",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -145,6 +159,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -155,6 +170,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "new",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -165,6 +181,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -175,6 +192,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "meeting",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -185,6 +203,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "new",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -195,6 +214,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
@@ -205,6 +225,7 @@
       "company": "Abersoft",
       "role": "FE Developer",
       "district": "Uppsala",
+      "status": "confirmed",
       "contact_information": {
         "email": "jesper@abersoft.se",
         "phone_number": "0709933555"
