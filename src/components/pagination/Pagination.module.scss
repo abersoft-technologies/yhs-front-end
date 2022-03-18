@@ -1,0 +1,74 @@
+@use '../../../styles/variables' as var;
+
+.pagination_container {
+  margin: var.$spacing-xx-large 1rem;
+  color: var.$txt-color;
+
+  .pagination_navigation {
+    > div:nth-child(2) {
+      position: relative;
+    }
+
+    .button_off {
+      background: #c4c4c440;
+      cursor: not-allowed;
+    }
+
+    .double_chevron,
+    .double_chevron {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    > button:first-child {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      > img {
+        pointer-events: none;
+      }
+    }
+
+    > button:nth-child(3) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      transform: rotateZ(180deg);
+      > img {
+        pointer-events: none;
+      }
+    }
+
+    .active_number {
+      border: none;
+      cursor: inherit;
+      color: #fff;
+      &:hover {
+        background: none;
+      }
+    }
+
+    button {
+      background: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 2px solid #c4c4c460;
+      font-size: 0.9rem;
+      font-weight: 300;
+      cursor: pointer;
+      position: relative;
+
+      z-index: 2;
+
+      &:hover {
+        background: #c4c4c440;
+      }
+    }
+  }
+}
