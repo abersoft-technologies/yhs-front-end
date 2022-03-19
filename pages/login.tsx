@@ -5,9 +5,13 @@ import Layout from '../src/layout/layout';
 import styles from '../styles/loginSignup.module.scss';
 import axios from "axios";
 import { Redirect } from '../src/globalFunctions/redirect';
+import { add } from '../src/store/slice/userSlice';
+import { IUserModel } from '../src/types/global';
+import { useAppDispatch } from '../src/hooks/useStore';
 
 
 const Login: NextPage = () => {
+  const dispatch = useAppDispatch();
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -26,7 +30,9 @@ const Login: NextPage = () => {
       password: password
     }
     axios.post(reqUrl, data).then(res => {
-      console.log("RES -->", res)
+      const data = res.data;
+      dispatch(add(data));
+      localStorage.setItem("user", JSON.stringify(data))
       Redirect("/")
     }).catch(err => console.error(err))
   }
