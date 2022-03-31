@@ -1,5 +1,7 @@
 import React from 'react';
 import type { NextPage } from 'next';
+import Router from 'next/router'
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 import styles from '../styles/Overview.module.scss';
 
@@ -9,6 +11,14 @@ import ProgressCard from '../src/components/overview/progress_card/ProgressCard'
 import { Flex } from '../src/components/ui/Flex';
 
 const Overview: NextPage = () => {
+
+  React.useEffect(() => {
+    const user = useLocalStorage("get", "session", "user")
+    if(!user) {
+      Router.push("/login")
+    }
+  }, [])
+
   return (
     <>
       <div className={styles.overview_container}>

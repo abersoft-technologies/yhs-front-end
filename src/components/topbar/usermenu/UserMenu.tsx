@@ -1,15 +1,40 @@
+import Link from 'next/link';
 import React from 'react';
+import { Redirect } from '../../../globalFunctions/redirect';
+import { useLocalStorage } from '../../../hooks/useLocalStorage';
+import { IUserModel } from '../../../types/global';
+import { Flex } from '../../ui/Flex';
 
 import styles from './Usermenu.module.scss';
 
-const UserMenu = () => {
+interface IUserMenu {
+  userName?: string;
+}
+
+const UserMenu = (props: IUserMenu) => {
+  const [openDropdown, setOpenDropdown] = React.useState<boolean>(false)
+
+  const logout = () => {
+    useLocalStorage("remove", "session", "user")
+    Redirect("/login")
+  }
+
   return (
     <div className={styles.usermenu_container}>
+      <Flex direction='row' >
       <img src='/placeholder-avatar.svg' alt='Profile Picutre' />
-      <button>
-        {'Lorem name'}
+      <button onClick={() => setOpenDropdown(!openDropdown)}>
+        {props.userName}
         <img src='/chevron-down.svg' alt='Chevron down' />
       </button>
+      </Flex>
+      {openDropdown ?
+      <div className={styles.usermenu_dropdown}>
+      <button onClick={logout}>Logga ut</button>
+    </div>
+    : null
+    }
+
     </div>
   );
 };

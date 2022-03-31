@@ -5,9 +5,14 @@ import Layout from '../src/layout/layout';
 import styles from '../styles/loginSignup.module.scss';
 import axios from "axios";
 import { Redirect } from '../src/globalFunctions/redirect';
+import { add } from '../src/store/slice/userSlice';
+import { IUserModel } from '../src/types/global';
+import { useAppDispatch } from '../src/hooks/useStore';
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 
 const Login: NextPage = () => {
+  const dispatch = useAppDispatch();
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -18,7 +23,7 @@ const Login: NextPage = () => {
     setPassword('');
   };
 
-  const reqUrl = process.env.NODE_ENV === "development" ? "http://localhost:8080/users/login" : "";
+  const reqUrl = "https://yhs-back-end.herokuapp.com/users/login";
 
   const submitToDB = () => {
     const data = {
@@ -26,8 +31,13 @@ const Login: NextPage = () => {
       password: password
     }
     axios.post(reqUrl, data).then(res => {
-      console.log("RES -->", res)
-      Redirect("/")
+      const data = res.data;
+      dispatch(add(data));
+      useLocalStorage("set", "session", "user", JSON.stringify(data))
+      setTimeout(() => {
+        Redirect("/")
+        //TODO Show loading spinner (YS-38)
+      }, 500);
     }).catch(err => console.error(err))
   }
 
@@ -35,6 +45,10 @@ const Login: NextPage = () => {
     if (e.target.id === 'input-username') setUserName(e.target.value);
     if (e.target.id === 'input-password') setPassword(e.target.value);
   };
+
+  React.useEffect(() => {
+    useLocalStorage("remove", "session", "user")
+  }, [])
 
   return (
     <form
