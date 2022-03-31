@@ -4,6 +4,7 @@
   margin-right: 48px;
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: var.$spacing-medium;
 
   button {
@@ -18,5 +19,11 @@
     img {
       width: var.$spacing-large;
     }
+  }
+
+  .usermenu_dropdown {
+    position: absolute;
+    padding: 8px;
+    top: 60%;
   }
 }

@@ -5,6 +5,7 @@ import Layout from '../src/layout/layout';
 import styles from '../styles/loginSignup.module.scss';
 import axios from "axios";
 import { Redirect } from '../src/globalFunctions/redirect';
+import { useLocalStorage } from '../src/hooks/useLocalStorage';
 
 const Signup: NextPage = () => {
   const [userName, setUserName] = useState<string>('');
@@ -13,7 +14,7 @@ const Signup: NextPage = () => {
   const [password, setPassword] = useState<string>('');
   const [passwordTwo, setPasswordTwo] = useState<string>('');
 
-  const reqUrl = process.env.NODE_ENV === "development" ? "http://localhost:8080/users/signup" : "";
+  const reqUrl = "https://yhs-back-end.herokuapp.com/users/signup";
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,8 +36,8 @@ const Signup: NextPage = () => {
     }
     axios.post(reqUrl, data).then(res => {
       console.log("RES", res)
-      Redirect("/login")
-
+      Redirect("/")
+      useLocalStorage("set", "session", "user", JSON.stringify(data))
     }).catch(err => console.error(err))
   }
 

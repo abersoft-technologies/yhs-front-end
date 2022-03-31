@@ -1,18 +1,19 @@
+import Router from 'next/router'
 import { RedirectRoutes } from "../types/routes"
 
 export const Redirect = (routes: RedirectRoutes) => {
     switch(routes) {
         case "/":
-            window.location.href = "/";
+            Router.push("/");
         break;
         case "/home":
-            window.location.href = "/home";
+            Router.push("/home");
         break;
         case "/login":
-            window.location.href = "/login";
+            Router.push("/login");
         break;
         case "/home":
-            window.location.href = "/signup";
+            Router.push("/signup");
         break;
     }
 }
