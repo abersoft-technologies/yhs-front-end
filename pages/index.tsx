@@ -14,13 +14,6 @@ import ProgressCard from '../src/components/overview/progress_card/ProgressCard'
 import { Flex } from '../src/components/ui/Flex';
 
 const Overview: NextPage = () => {
-  useEffect(() => {
-    const user = useLocalStorage('get', 'session', 'user');
-    if (!user) {
-      Redirect('/login');
-    }
-  }, []);
-
   return (
     <>
       <div className={styles.overview_container}>
