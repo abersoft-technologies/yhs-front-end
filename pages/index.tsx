@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { NextPage } from 'next';
-import Router from 'next/router'
+import Router from 'next/router';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import { Redirect } from '../src/globalFunctions/redirect';
 
+/* Styling components */
 import styles from '../styles/Overview.module.scss';
 
+/* Components import */
 import Milestones from '../src/components/overview/milestones/Milestones';
 import Barchart from '../src/components/overview/barchart/Barchart';
 import ProgressCard from '../src/components/overview/progress_card/ProgressCard';
 import { Flex } from '../src/components/ui/Flex';
 
 const Overview: NextPage = () => {
-
-  React.useEffect(() => {
-    const user = useLocalStorage("get", "session", "user")
-    if(!user) {
-      Router.push("/login")
-    }
-  }, [])
-
   return (
     <>
       <div className={styles.overview_container}>

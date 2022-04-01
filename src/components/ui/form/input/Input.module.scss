@@ -1,0 +1,39 @@
+@import '../../../../../styles/variables';
+
+.label {
+  color: $txt-color;
+  font-weight: bold;
+  font-size: 0.9;
+}
+
+.input {
+  border-radius: $spacing-small;
+  border: 1px solid $light-grey;
+  //   padding: $spacing-small;
+  //   padding: 0.7rem 0.75rem;
+  padding: 0 0.75rem;
+  height: 38px;
+  outline: none;
+  color: $txt-color;
+  //   width: 100%;
+
+  transition: all 150ms ease-in-out;
+
+  &::placeholder {
+    color: $dark-grey;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  &:hover {
+    background: #fff;
+    border: $transparent-border;
+    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+  }
+
+  &:focus {
+    background: #fff;
+    border: $transparent-border;
+
+    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+  }
+}
