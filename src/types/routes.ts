@@ -1,1 +1,1 @@
-export type RedirectRoutes = "/" | "/home" | "/login" | "/signup";
+export type RedirectRoutes = '/' | '/home' | '/inloggning' | '/registrering';

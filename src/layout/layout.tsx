@@ -17,7 +17,8 @@ export default function Layout({ children }: ILayoutProps) {
   const router = useRouter();
 
   const checkIfLoginOrRegister =
-    router.pathname.includes('/login') || router.pathname.includes('/signup')
+    router.pathname.includes('/inloggning') ||
+    router.pathname.includes('/registrering')
       ? true
       : false;
 
@@ -33,10 +34,10 @@ export default function Layout({ children }: ILayoutProps) {
   return (
     <>
       <Head>
-        <title>YH-sökaren</title>
+        <title>YH Portalen</title>
         <meta
           name='description'
-          content='YH-ansökan - Sök din utbildning genom oss'
+          content='YH Portalen - Sök din utbildning genom oss'
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
