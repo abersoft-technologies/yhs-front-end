@@ -1,7 +1,6 @@
 export interface IUserModel {
-    name: string,
-    username: string,
-    email: string,
-    password: string,
-    date: string;
+  firstName: string;
+  lasttName: string;
+  email: string;
+  date: string;
 }

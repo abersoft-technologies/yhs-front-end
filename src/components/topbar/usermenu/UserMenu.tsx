@@ -8,33 +8,31 @@ import { Flex } from '../../ui/Flex';
 import styles from './Usermenu.module.scss';
 
 interface IUserMenu {
-  userName?: string;
+  firstName?: string;
 }
 
 const UserMenu = (props: IUserMenu) => {
-  const [openDropdown, setOpenDropdown] = React.useState<boolean>(false)
+  const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
 
   const logout = () => {
-    useLocalStorage("remove", "session", "user")
-    Redirect("/login")
-  }
+    useLocalStorage('remove', 'session', 'user');
+    Redirect('/inloggning');
+  };
 
   return (
     <div className={styles.usermenu_container}>
-      <Flex direction='row' >
-      <img src='/placeholder-avatar.svg' alt='Profile Picutre' />
-      <button onClick={() => setOpenDropdown(!openDropdown)}>
-        {props.userName}
-        <img src='/chevron-down.svg' alt='Chevron down' />
-      </button>
+      <Flex direction='row'>
+        <img src='/placeholder-avatar.svg' alt='Profile Picutre' />
+        <button onClick={() => setOpenDropdown(!openDropdown)}>
+          {props.firstName}
+          <img src='/chevron-down.svg' alt='Chevron down' />
+        </button>
       </Flex>
-      {openDropdown ?
-      <div className={styles.usermenu_dropdown}>
-      <button onClick={logout}>Logga ut</button>
-    </div>
-    : null
-    }
-
+      {openDropdown ? (
+        <div className={styles.usermenu_dropdown}>
+          <button onClick={logout}>Logga ut</button>
+        </div>
+      ) : null}
     </div>
   );
 };

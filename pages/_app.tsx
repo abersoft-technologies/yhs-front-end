@@ -21,12 +21,12 @@ const persistor = persistStore(store);
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  if (router.pathname === '/*') {
+  /*   if (router.pathname === '/*') {
     Redirect('/inloggning');
-  }
+  } */
   useEffect(() => {
     const user = useLocalStorage('get', 'session', 'user');
-    if (!user) {
+    if (!user && router.pathname !== '/registrering') {
       Redirect('/inloggning');
     }
   }, [router.pathname]);
