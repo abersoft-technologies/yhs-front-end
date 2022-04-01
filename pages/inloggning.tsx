@@ -6,6 +6,7 @@ import { add } from '../src/store/slice/userSlice';
 import { useAppDispatch } from '../src/hooks/useStore';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
+import { Loading } from '../src/components/ui/loading/Loading';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -19,6 +20,7 @@ const Login: NextPage = () => {
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,10 +42,11 @@ const Login: NextPage = () => {
         const data = res.data;
         dispatch(add(data));
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
+        setIsLoading(true)
         setTimeout(() => {
           Redirect('/');
           //TODO Show loading spinner (YS-38)
-        }, 500);
+        }, 1000);
       })
       .catch((err) => console.error(err));
   };
@@ -134,6 +137,9 @@ const Login: NextPage = () => {
             />
 
             <button>Logga in</button>
+            <Flex direction='row' justify='center'>
+              <Loading isLoading={isLoading} size="small" />
+            </Flex>
           </Flex>
         </form>
       </div>
