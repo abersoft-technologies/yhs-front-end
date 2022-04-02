@@ -1,16 +1,22 @@
-// #5D5D5A
-$primary-dark-grey: #5d5d5a;
-// $primary-color: #699bf7;
-$txt-color: #464646;
+/* Fonts imports */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+/* Font variables */
+$font-roboto: 'Roboto', sans-serif;
+
+/* color variables */
+$primary-dark-grey: #5d5d5a;
+$txt-color: #464646;
 $very-dark-grey: #363636;
 $dark-grey: #5d5d5a;
 $light-grey: #c4c4c4;
 $primary-color: #7586ce;
-$primary-color-light-transparent: #f4f6fdcc;
+$primary-color-transparent: #7586ce1a;
+$primary-color-light-transparent: #f4f6fdd2;
 $primary-color-light-hover: #8596df;
 $primary-color-dark: #22376f;
 
+/* Border variables */
 $transparent-border: 1px solid rgba(117, 134, 206, 0.8);
 
 // $subtile-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);

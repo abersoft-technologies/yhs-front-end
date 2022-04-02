@@ -1,0 +1,63 @@
+@import '../../../../styles/variables';
+
+.add_contact_module_container {
+  position: fixed;
+  border-radius: $spacing-small;
+  border: 1px solid $light-grey;
+  background: #fff;
+  box-shadow: $subtile-box-shadow;
+  top: 2%;
+  z-index: 999;
+  width: 580px;
+  height: 96%;
+  transition: all 0.65s cubic-bezier(0.3, 0, 0, 1);
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $spacing-x-large 0 $spacing-x-large;
+    gap: $spacing-medium;
+    margin-top: $spacing-large;
+    .textarea_container {
+      align-self: flex-start;
+      width: 100%;
+    }
+  }
+  header {
+    background: $primary-color-transparent;
+    border-bottom: 1px solid $light-grey;
+    border-radius: $spacing-small $spacing-small 0 0;
+    > div {
+      position: relative;
+    }
+    > div > button {
+      display: flex;
+      align-items: center;
+
+      border: none;
+      background: none;
+      position: absolute;
+      cursor: pointer;
+      right: 5%;
+    }
+    > div > h3 {
+      font-weight: 500;
+      font-size: $spacing-medium;
+      color: $txt-color;
+    }
+  }
+  section {
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - $spacing-x-large * 2);
+    padding: $spacing-x-large;
+    border-top: 1px solid $light-grey;
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: $spacing-x-large;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.module_dark_layer {
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+  background: #45454540;
+  opacity: 0;
+  transition: 0.4s cubic-bezier(0.3, 0, 0, 1);
+  pointer-events: none;
+}
+
+.dark_layer_active {
+  background: #45454540;
+  opacity: 1;
+  pointer-events: fill;
+}
