@@ -12,6 +12,7 @@ interface IInputProps {
   type?: string;
   label?: string;
   autoComplete?: boolean;
+  width?: string;
 }
 
 export const Input = ({
@@ -22,9 +23,13 @@ export const Input = ({
   label,
   onChangeFunction,
   autoComplete,
+  width,
 }: IInputProps) => {
   return (
-    <Flex direction='column' gap='small'>
+    <div
+      className={styles.input_label_container}
+      style={width ? { width: width } : { width: 'auto' }}
+    >
       {label ? (
         <label htmlFor={name} className={styles.label}>
           {label}
@@ -43,6 +48,6 @@ export const Input = ({
         autoComplete={autoComplete ? 'on' : 'new-password'}
         aria-multiline='false'
       />
-    </Flex>
+    </div>
   );
 };

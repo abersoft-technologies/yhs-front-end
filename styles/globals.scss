@@ -1,4 +1,4 @@
-@use "./ui//loading.scss";
+@use './ui//loading.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 html,
@@ -7,11 +7,4 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
-  // background: rgb(252, 252, 252);
 }
-
-/* :root {
-  font-size: 16px !important;
-  font-weight: 400 !important;
-}
- */

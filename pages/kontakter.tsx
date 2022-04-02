@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -11,9 +11,14 @@ import { Button } from '@nextui-org/react';
 /* Components imports */
 import { Flex } from '../src/components/ui/Flex';
 import ContactList from '../src/components/contacts/ContactList';
+import AddContactModule from '../src/components/modules/add_data/AddContactModule';
 
 const kontakter: NextPage = () => {
   const router = useRouter();
+  const [contactModuleToggle, setContactModuleToggle] =
+    useState<boolean>(false);
+
+  const closeContactModule = () => setContactModuleToggle(false);
 
   return (
     <>
@@ -48,6 +53,7 @@ const kontakter: NextPage = () => {
 
           <Flex direction='row' gap='large'>
             <Button
+              onClick={() => setContactModuleToggle(!contactModuleToggle)}
               auto
               icon={<img src='/add-contact.svg' alt='Add contact' />}
               size='sm'
@@ -75,6 +81,10 @@ const kontakter: NextPage = () => {
         </header>
         <ContactList />
       </div>
+      <AddContactModule
+        active={contactModuleToggle}
+        closeModule={closeContactModule}
+      />
     </>
   );
 };

@@ -1,0 +1,32 @@
+@import '../../../../styles/variables';
+
+.primary_color_btn {
+  color: $primary-color;
+  border: 1px solid $primary-color;
+  background: $primary-color;
+}
+
+.button {
+  border-radius: $spacing-x-small;
+  cursor: pointer;
+  padding: $spacing-small;
+  font-size: $spacing-medium;
+}
+
+.button_filled {
+  color: #fff;
+  border: none;
+  transition: all 150ms ease-in-out;
+
+  &:hover {
+    background: $primary-color-light-hover;
+  }
+}
+.button_outlined {
+  background: none;
+  transition: all 150ms ease-in-out;
+
+  &:hover {
+    background: $primary-color-transparent;
+  }
+}
