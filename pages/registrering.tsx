@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Redirect } from '../src/globalFunctions/redirect';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
+import { Loading } from '../src/components/ui/loading/Loading';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -19,19 +20,55 @@ const Signup: NextPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordTwo, setPasswordTwo] = useState<string>('');
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const reqUrl = 'https://yhs-back-end.herokuapp.com/users/signup';
+  const reqUrl = process.env.NODE_ENV === "development" ?  "http://localhost:8080/users/signup" : 'https://yhs-back-end.herokuapp.com/users/signup';
+  //Minimum eight characters, at least one letter and one number
+  const passwordRegex = /\d/;
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const isValid = validate();
+    if(!isValid) {
+      setShowErrorMessage(true)
+      return
+    };
     submitToDB();
 
     setFirstName('');
     setLastName('');
     setPassword('');
-    setEmail('');
     setPasswordTwo('');
+    setEmail('');
   };
+
+  const validate = (): boolean => {
+    const hasNumber = passwordRegex.test(password);
+    if(password !== passwordTwo) {
+      setErrorMessage("Lösenorden matchar inte")
+      setPassword('');
+      setPasswordTwo('');
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 3000);
+      return false;
+    } else if(password.length < 8) {
+      setErrorMessage(`Lösenordet är för kort, det är ${password.length} tecken och ska vara minst åtta tecken`)
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 3000);
+      return false;
+    }else if(!hasNumber) {
+      setErrorMessage('Lösenordet måste innehålla minst ett nummer')
+      setTimeout(() => {
+        setErrorMessage("")
+      }, 3000);
+      return false;
+    }
+    return true;
+  }
 
   const submitToDB = () => {
     const data = {
@@ -40,13 +77,24 @@ const Signup: NextPage = () => {
       email: email,
       password: password,
     };
+    setIsLoading(true)
     axios
-      .post(reqUrl, data)
-      .then((res) => {
-        Redirect('/');
+    .post(reqUrl, data)
+    .then((res) => {
+      Redirect('/');
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setShowErrorMessage(true);
+        setErrorMessage("Email eller lösenord används redan");
+        setTimeout(() => {
+          setShowErrorMessage(false);
+          setErrorMessage("")
+          setIsLoading(false)
+
+        }, 3000);
+        console.error(err);
+      });
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +204,10 @@ const Signup: NextPage = () => {
               onChangeFunction={(e) => onTextChange(e)}
             />
             <button>Registrera</button>
+            <Flex direction="column" justify='center' align='center'>
+              {showErrorMessage ? <p>{errorMessage}</p> : null}
+              <Loading isLoading={isLoading && !showErrorMessage} size="small" />
+            </Flex>
           </Flex>
         </form>
       </div>
