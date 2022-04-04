@@ -12,13 +12,18 @@ import { Button } from '@nextui-org/react';
 import { Flex } from '../src/components/ui/Flex';
 import ContactList from '../src/components/contacts/ContactList';
 import AddContactModule from '../src/components/modules/add_data/AddContactModule';
+import AddCorporateModule from '../src/components/modules/add_data/AddCorporateModule';
 
 const kontakter: NextPage = () => {
   const router = useRouter();
   const [contactModuleToggle, setContactModuleToggle] =
     useState<boolean>(false);
+    const [corpModuleToggle, setCorpModuleToggle] =
+    useState<boolean>(false);
 
   const closeContactModule = () => setContactModuleToggle(false);
+  const closeCorpModule = () => setCorpModuleToggle(false);
+
 
   return (
     <>
@@ -67,6 +72,7 @@ const kontakter: NextPage = () => {
             </Button>
             <Button
               icon={<img src='/add-company.svg' alt='Add compnay' />}
+              onClick={() => setCorpModuleToggle(!corpModuleToggle)}
               auto
               size='sm'
               css={{
@@ -85,6 +91,9 @@ const kontakter: NextPage = () => {
         active={contactModuleToggle}
         closeModule={closeContactModule}
       />
+      <AddCorporateModule
+      active={corpModuleToggle}
+      closeModule={closeCorpModule}/>
     </>
   );
 };
