@@ -21,6 +21,8 @@ const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ const Login: NextPage = () => {
     setPassword('');
   };
 
-  const reqUrl = 'https://yhs-back-end.herokuapp.com/users/login';
+  const reqUrl = process.env.NODE_ENV === "development" ?  "http://localhost:8080/users/login" : 'https://yhs-back-end.herokuapp.com/users/login';
 
   const submitToDB = () => {
     const data = {
@@ -48,7 +50,15 @@ const Login: NextPage = () => {
           //TODO Show loading spinner (YS-38)
         }, 1000);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setShowErrorMessage(true)
+        setErrorMessage("Något gick fel")
+        setTimeout(() => {
+          setShowErrorMessage(false);
+          setErrorMessage("")
+        }, 3000);
+        console.error(err)
+      });
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,6 +148,7 @@ const Login: NextPage = () => {
 
             <button>Logga in</button>
             <Flex direction='row' justify='center'>
+              {showErrorMessage ? <p>{errorMessage}</p> : null}
               <Loading isLoading={isLoading} size="small" />
             </Flex>
           </Flex>
