@@ -27,6 +27,15 @@
   }
 }
 
+.buttons_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var.$spacing-medium;
+  position: absolute;
+}
+
 .header_bar_container {
   // border-bottom: 1px solid var.$light-grey;
   margin-bottom: var.$spacing-x-large;
