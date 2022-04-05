@@ -5,6 +5,7 @@ interface IPropsButton {
   width?: string;
   color?: 'primary' | 'primary-dark';
   onClick?: () => void;
+  iconRight?: JSX.Element;
 }
 
 const setColorClass = (color: string | undefined) => {
@@ -40,16 +41,18 @@ export const OutlinedButton = ({
   onClick,
   color,
   width,
+  iconRight
 }: IPropsButton) => {
   return (
     <button
       onClick={onClick}
       style={width ? { width: width } : { width: 'auto' }}
-      className={`${styles.button} ${styles.button_outlined} ${setColorClass(
+      className={`${styles.button} ${iconRight ? styles.button_icon : ''} ${styles.button_outlined} ${setColorClass(
         color
       )}`}
     >
       {text}
+      {iconRight ? iconRight : null}
     </button>
   );
 };

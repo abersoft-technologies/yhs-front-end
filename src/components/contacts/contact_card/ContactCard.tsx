@@ -1,13 +1,14 @@
 import styles from '../Contactlist.module.scss';
 
 interface IContactCardProps {
-  i: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   company: string;
   role?: string;
   district?: string;
   status: string;
-  contact_information?: { email: string; phone_number: string };
+  email?: string;
+  phoneNumber?: string;
 }
 
 interface IStatusBoxProps {
@@ -54,26 +55,23 @@ const StatusBox = ({ status }: IStatusBoxProps) => {
 };
 
 const ContactCard = ({
-  name,
+  firstName,
+  lastName,
   company,
   role,
   district,
   status,
-  contact_information,
+  email,
 }: IContactCardProps) => (
   <article className={styles.contact_card}>
-    <div>{name ? name : 'Namn kan  inte hittas'}</div>
+    <div>{firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}</div>
     <div>
       <div>{company ? company : 'Ej angivet'}</div>
       <div>{role ? role : 'Ej angivet'}</div>
     </div>
     <div>{district ? district : 'Ej angivet'}</div>
     <StatusBox status={status} />
-    <div>
-      {contact_information?.email
-        ? contact_information.email
-        : 'Ingen assosierad email'}
-    </div>
+    <div>{email ? email : 'Ingen assosierad email'}</div>
   </article>
 );
 

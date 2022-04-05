@@ -14,6 +14,11 @@ interface IButtonNumProps {
   firstNumDots?: boolean;
   lastNumDots?: boolean;
 }
+interface IPaginationProps {
+  setPage: (number: number) => void;
+  page: number;
+  totalPages: number;
+}
 
 const ActivePageLayer = styled.div`
   position: absolute;
@@ -26,13 +31,12 @@ const ActivePageLayer = styled.div`
   left: ${(props: IActivePageLayerProps) => props.pagePosition}px;
 `;
 
-const Pagenation = () => {
+const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
   const [pagePosition, setPagePosition] = useState(0);
-  const [activeNumber, setActiveNumber] = useState(1);
   const [slicedPages, setSlicedpage] = useState(1);
   const [hoverDotsLeft, setHoverDotsLeft] = useState(false);
   const [hoverDotsRight, setHoverDotsRight] = useState(false);
-  let arrayPages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+  let arrayPages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const handleNumberClicked = (event: any) => {
     let numberPressed = parseInt(event.target.innerText);
@@ -40,106 +44,112 @@ const Pagenation = () => {
     let btnName = event.target.closest('button').name;
     let doubleRight = btnName === 'double-right';
     let doubleLeft = btnName === 'double-left';
-    let numbersLeft = lastPageNumber - activeNumber;
+    let numbersLeft = lastPageNumber - page;
+
+    if (totalPages < 10) {
+      setPagePosition(numberPressed - 1);
+      setPage(numberPressed);
+      return;
+    }
 
     if (doubleRight) {
       if (pagePosition <= 3) {
-        console.log('here');
         setPagePosition(4);
         setSlicedpage(3);
-        setActiveNumber(7);
+        setPage(7);
       } else if (numbersLeft > 6) {
         setPagePosition(4);
         setSlicedpage(slicedPages + 3);
-        setActiveNumber(activeNumber + 3);
+        setPage(page + 3);
       } else if (numbersLeft === 6) {
         setPagePosition(4);
         setSlicedpage(slicedPages + 2);
-        setActiveNumber(activeNumber + 2);
+        setPage(page + 2);
       } else if (numbersLeft === 5) {
         setPagePosition(4);
         setSlicedpage(slicedPages + 1);
-        setActiveNumber(activeNumber + 1);
+        setPage(page + 1);
       }
       return;
     } else if (doubleLeft) {
       if (pagePosition > 4) {
         setPagePosition(4);
-        setActiveNumber(lastPageNumber - 6);
+        setPage(lastPageNumber - 6);
         setSlicedpage(lastPageNumber - 10);
-      } else if (activeNumber > 7) {
+      } else if (page > 7) {
         setPagePosition(4);
         setSlicedpage(slicedPages - 3);
-        setActiveNumber(activeNumber - 3);
-      } else if (activeNumber === 7) {
+        setPage(page - 3);
+      } else if (page === 7) {
         setPagePosition(4);
         setSlicedpage(slicedPages - 2);
-        setActiveNumber(activeNumber - 2);
-      } else if (activeNumber === 6) {
+        setPage(page - 2);
+      } else if (page === 6) {
         setPagePosition(4);
         setSlicedpage(slicedPages - 1);
-        setActiveNumber(activeNumber - 1);
+        setPage(page - 1);
       }
     } else if (numberPressed === lastPageNumber) {
       setPagePosition(8);
-      setActiveNumber(lastPageNumber);
+      setPage(lastPageNumber);
       setSlicedpage(lastPageNumber - 8);
     } else if (lastPageNumber - numberPressed <= 3) {
-      setActiveNumber(numberPressed);
+      setPage(numberPressed);
       setPagePosition(8 - (lastPageNumber - numberPressed));
       setSlicedpage(lastPageNumber - 8);
     } else if (numberPressed > 5) {
       setPagePosition(4);
-      setActiveNumber(numberPressed);
+      setPage(numberPressed);
       setSlicedpage(numberPressed - 4);
     } else {
       setPagePosition(numberPressed - 1);
-      setActiveNumber(numberPressed);
+      setPage(numberPressed);
       setSlicedpage(1);
     }
   };
+
   const handleNavigationClicked = (e: any) => {
     const lastPageNumber = arrayPages[arrayPages.length - 1];
     const direction = e.target.name;
-    const pagesLeftEnd = lastPageNumber - activeNumber;
-    const pagesLeftStart = activeNumber - 1;
+    const pagesLeftEnd = lastPageNumber - page;
+    const pagesLeftStart = page - 1;
 
-    if (pagesLeftEnd <= 4 && direction === 'next') {
-      if (lastPageNumber === activeNumber) return;
-      setPagePosition(pagePosition + 1);
-      setActiveNumber(activeNumber + 1);
-    } else if (pagesLeftStart <= 4 && direction === 'previous') {
-      if (activeNumber === 1) return;
-      setPagePosition(pagePosition - 1);
-      setActiveNumber(activeNumber - 1);
-    } else if (
-      direction === 'next' &&
-      pagePosition === 4 &&
-      pagesLeftEnd >= 4
-    ) {
-      setActiveNumber(activeNumber + 1);
-      setSlicedpage(slicedPages + 1);
-    } else if (
-      direction === 'previous' &&
-      pagePosition === 4 &&
-      pagesLeftStart >= 4
-    ) {
-      setActiveNumber(activeNumber - 1);
-      setSlicedpage(slicedPages - 1);
-    } else if (direction === 'next' && lastPageNumber !== pagePosition) {
-      setPagePosition(pagePosition + 1);
-      setActiveNumber(activeNumber + 1);
-    } else if (direction == 'previous' && pagePosition > 0) {
-      setPagePosition(pagePosition - 1);
-      setActiveNumber(activeNumber - 1);
+    if (direction === 'next' && page !== totalPages) {
+      if (pagesLeftEnd > 4 && pagePosition === 4) {
+        setPage(page + 1);
+        setSlicedpage(slicedPages + 1);
+      } else {
+        setPage(page + 1);
+        setPagePosition(pagePosition + 1);
+      }
+    }
+
+    if (direction === 'previous' && page !== 1) {
+      if (pagesLeftStart > 4 && pagePosition === 4) {
+        setPage(page - 1);
+        setSlicedpage(slicedPages - 1);
+      } else {
+        setPage(page - 1);
+        setPagePosition(pagePosition - 1);
+      }
     }
   };
 
   const MiddleNumbers = () => {
     const lastPageNumber = arrayPages[arrayPages.length - 1];
-    const pagesLeftEnd = lastPageNumber - activeNumber;
-    const pagesLeftStart = activeNumber - 1;
+    const pagesLeftEnd = lastPageNumber - page;
+    const pagesLeftStart = page - 1;
     const middleNumberArray = arrayPages.slice(1, arrayPages.length - 1);
+
+    if (totalPages < 10) {
+      return (
+        <>
+          {arrayPages.slice(1, arrayPages.length - 1).map((item, i) => {
+            return <ButtonNumber key={i} number={item} />;
+          })}
+        </>
+      );
+    }
 
     if (pagePosition >= 4) {
       let slicedArrray = middleNumberArray.slice(
@@ -193,9 +203,9 @@ const Pagenation = () => {
   }: IButtonNumProps) => {
     const setClassName = () => {
       if (pagePosition >= 5) {
-        return number === activeNumber ? styles.active_number : '';
+        return number === page ? styles.active_number : '';
       } else if (pagePosition === 5) {
-        return activeNumber === number ? styles.active_number : '';
+        return page === number ? styles.active_number : '';
       } else if (middleNumber) {
         return middleNumber === number ? styles.active_number : '';
       } else {
@@ -287,8 +297,10 @@ const Pagenation = () => {
         </button>
         <Flex direction='row' gap='x-small'>
           <ButtonNumber number={1} />
-          <MiddleNumbers />
-          <ButtonNumber number={arrayPages[arrayPages.length - 1]} />
+          {totalPages > 1 && <MiddleNumbers />}
+          {totalPages > 1 && (
+            <ButtonNumber number={arrayPages[arrayPages.length - 1]} />
+          )}
           <ActivePageLayer
             pagePosition={pagePosition * 4 + pagePosition * 32}
           />
@@ -297,9 +309,7 @@ const Pagenation = () => {
           name='next'
           onClick={handleNavigationClicked}
           className={
-            activeNumber === arrayPages[arrayPages.length - 1]
-              ? styles.button_off
-              : ''
+            page === arrayPages[arrayPages.length - 1] ? styles.button_off : ''
           }
         >
           <img src='/chevron-left.svg' alt='Chevron' />
@@ -309,4 +319,4 @@ const Pagenation = () => {
   );
 };
 
-export default Pagenation;
+export default Pagination;
