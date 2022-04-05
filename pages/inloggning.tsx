@@ -22,7 +22,7 @@ const Login: NextPage = () => {
   const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +31,11 @@ const Login: NextPage = () => {
     setPassword('');
   };
 
-  const reqUrl = process.env.NODE_ENV === "development" ?  "http://localhost:8080/users/login" : 'https://yhs-back-end.herokuapp.com/users/login';
+  /*   const reqUrl =
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:8080/auth/login'
+      : 'https://yhs-back-end.herokuapp.com/auth/login'; */
+  const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/login';
 
   const submitToDB = () => {
     const data = {
@@ -44,20 +48,20 @@ const Login: NextPage = () => {
         const data = res.data;
         dispatch(add(data));
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
-        setIsLoading(true)
+        setIsLoading(true);
         setTimeout(() => {
           Redirect('/');
           //TODO Show loading spinner (YS-38)
         }, 1000);
       })
       .catch((err) => {
-        setShowErrorMessage(true)
-        setErrorMessage("Något gick fel")
+        setShowErrorMessage(true);
+        setErrorMessage('Något gick fel');
         setTimeout(() => {
           setShowErrorMessage(false);
-          setErrorMessage("")
+          setErrorMessage('');
         }, 3000);
-        console.error(err)
+        console.error(err);
       });
   };
 
@@ -149,7 +153,7 @@ const Login: NextPage = () => {
             <button>Logga in</button>
             <Flex direction='row' justify='center'>
               {showErrorMessage ? <p>{errorMessage}</p> : null}
-              <Loading isLoading={isLoading} size="small" />
+              <Loading isLoading={isLoading} size='small' />
             </Flex>
           </Flex>
         </form>

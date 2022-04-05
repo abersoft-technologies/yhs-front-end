@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { addContact } from '../../../apis/contact/add';
 
 import styles from './AddContactModule.module.scss';
 
@@ -14,32 +15,32 @@ interface IModuleProps {
 }
 
 interface IFormData {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  phoneNumber?: string;
   company: string;
-  role: string;
-  town: string;
+  role?: string;
+  town?: string;
   status: string;
 }
 
 const AddContactModule = ({ active, closeModule }: IModuleProps) => {
-  const [formData, setFormData] = useState({
-    first_name: '',
-    last_name: '',
+  const [formData, setFormData] = useState<IFormData>({
+    firstName: '',
+    lastName: '',
     email: '',
-    phone_number: '',
+    phoneNumber: '',
     company: '',
     role: '',
     town: '',
     status: '',
   });
   const {
-    first_name,
-    last_name,
+    firstName,
+    lastName,
     email,
-    phone_number,
+    phoneNumber,
     company,
     role,
     town,
@@ -80,18 +81,18 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           >
             <Input
               width='50%'
-              name='first_name'
+              name='firstName'
               placeholder='Förnamn'
               label='Förnamn'
-              value={first_name}
+              value={firstName}
               onChangeFunction={handleOnChange}
             />
             <Input
               width='50%'
-              name='last_name'
+              name='lastName'
               placeholder='Efternamn'
               label='Efternamn'
-              value={last_name}
+              value={lastName}
               onChangeFunction={handleOnChange}
             />
           </Flex>
@@ -107,15 +108,15 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               placeholder='Email'
               label='Email'
               type='email'
-              value={email}
+              value={email ? email : ''}
               onChangeFunction={handleOnChange}
             />
             <Input
               width='50%'
-              name='phone_number'
+              name='phoneNumber'
               placeholder='Mobilnummer'
               label='Mobilnummer'
-              value={phone_number}
+              value={phoneNumber ? phoneNumber : ''}
               onChangeFunction={handleOnChange}
             />
           </Flex>
@@ -138,7 +139,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               name='role'
               placeholder='Roll'
               label='Roll'
-              value={role}
+              value={role ? role : ''}
               onChangeFunction={handleOnChange}
             />
           </Flex>
@@ -153,7 +154,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               name='town'
               placeholder='Ort'
               label='Ort'
-              value={town}
+              value={town ? town : ''}
               onChangeFunction={handleOnChange}
             />
             <Input
@@ -178,7 +179,11 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         <section>
           <div>
             <OutlinedButton onClick={closeModule} text='Avbryt' width='100%' />
-            <FilledButton text='Lägg till kontakt' width='100%' />
+            <FilledButton
+              onClick={() => addContact(formData)}
+              text='Lägg till kontakt'
+              width='100%'
+            />
           </div>
         </section>
       </div>
