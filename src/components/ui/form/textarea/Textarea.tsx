@@ -12,6 +12,9 @@ interface ITextareaProps {
   rows: number;
   placeholder: string;
   label?: string;
+  value?: string,
+  onChangeFunc?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  width?: "auto" | "screen" | "full";
 }
 
 export const Textarea = ({
@@ -20,9 +23,12 @@ export const Textarea = ({
   cols,
   rows,
   placeholder,
+  value,
+  onChangeFunc,
+  width,
 }: ITextareaProps) => {
   return (
-    <Flex direction='column' gap='small' width='auto'>
+    <Flex direction='column' gap='small' width={width}>
       {label ? (
         <label htmlFor={name} className={styles.label}>
           {label}
@@ -36,8 +42,10 @@ export const Textarea = ({
         id={name}
         cols={cols}
         rows={rows}
+        onChange={(e) => onChangeFunc ? onChangeFunc(e) : null}
         placeholder={placeholder}
         style={{ resize: 'none' }}
+        value={value}
       ></textarea>
     </Flex>
   );

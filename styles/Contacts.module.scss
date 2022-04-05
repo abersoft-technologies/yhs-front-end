@@ -27,6 +27,38 @@
   }
 }
 
+.dropdown_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var.$spacing-medium;
+  position: absolute;
+  background-color: white;
+  box-shadow: var.$subtile-box-shadow;
+  width: 200px;
+
+  .list {
+    width: 100%;
+    .list_container {
+      cursor: pointer;
+      color: var.$primary-color-light-hover;
+      padding: var.$spacing-medium;
+      display: flex;
+      justify-content: space-evenly;
+      p {
+        font-size: var.$spacing-medium;
+        margin: 0;
+      }
+      &:hover {
+        background-color: var.$primary-color-light-transparent;
+      }
+    }
+  }
+
+
+}
+
 .header_bar_container {
   // border-bottom: 1px solid var.$light-grey;
   margin-bottom: var.$spacing-x-large;

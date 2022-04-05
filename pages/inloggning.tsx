@@ -42,13 +42,14 @@ const Login: NextPage = () => {
       email: email,
       password: password,
     };
+    const access_token = data;
+    setIsLoading(true);
     axios
       .post(reqUrl, data)
       .then((res) => {
         const data = res.data;
         dispatch(add(data));
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
-        setIsLoading(true);
         setTimeout(() => {
           Redirect('/');
           //TODO Show loading spinner (YS-38)
