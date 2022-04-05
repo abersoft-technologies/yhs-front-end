@@ -21,9 +21,10 @@ const setColorClass = (color: string | undefined) => {
   }
 };
 
-export const FilledButton = ({ text, color, width }: IPropsButton) => {
+export const FilledButton = ({ text, onClick, color, width }: IPropsButton) => {
   return (
     <button
+      onClick={onClick}
       style={width ? { width: width } : { width: 'auto' }}
       className={`${styles.button} ${styles.button_filled} ${setColorClass(
         color
