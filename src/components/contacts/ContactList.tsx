@@ -1,13 +1,36 @@
-import React from 'react';
-import ContactListData from '../../apis/mock/ContactList.json';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContactListRedux } from '../../store/slice/contactList';
 
 import styles from './Contactlist.module.scss';
 
 import Pagination from '../pagination/Pagination';
 import ContactCard from './contact_card/ContactCard';
 
+interface IListDataMap {
+  firstName: string;
+  lastName: string;
+  company: string;
+  role?: string;
+  town?: string;
+  status: string;
+  email?: string;
+  phoneNumber?: string;
+}
+
 const ContactList = () => {
-  const { ListData } = ContactListData;
+  const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
+
+  const contactListReducer = useSelector(
+    (state: any) => state.contactListReducer
+  );
+  const ListData = contactListReducer.result.data.contactList;
+  const listValues = contactListReducer.result.data.listValues;
+
+  useEffect(() => {
+    dispatch(getContactListRedux({ limit: 10, page: page, queryParams: '' }));
+  }, [page]);
 
   return (
     <>
@@ -23,23 +46,29 @@ const ContactList = () => {
           <div>Kontaktinfo.</div>
         </div>
         <div>
-          {ListData.slice(0, 10).map((item, i) => {
-            return (
-              <ContactCard
-                key={i}
-                i={i}
-                name={item.name}
-                company={item.company}
-                role={item.role}
-                district={item.district}
-                status={item.status}
-                contact_information={item.contact_information}
-              />
-            );
-          })}
+          {ListData &&
+            ListData.map((item: IListDataMap, i: number) => {
+              return (
+                <ContactCard
+                  key={i}
+                  firstName={item.firstName}
+                  lastName={item.lastName}
+                  company={item.company}
+                  role={item.role}
+                  district={item.town}
+                  status={item.status}
+                  email={item.email}
+                  phoneNumber={item.phoneNumber}
+                />
+              );
+            })}
         </div>
       </section>
-      <Pagination />
+      <Pagination
+        page={page}
+        setPage={setPage}
+        totalPages={listValues.totalPages}
+      />
     </>
   );
 };
