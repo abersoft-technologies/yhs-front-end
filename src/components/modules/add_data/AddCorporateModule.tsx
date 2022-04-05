@@ -5,6 +5,7 @@ import { Input } from "../../ui/form/input/Input";
 import { Textarea } from "../../ui/form/textarea/Textarea";
 import ModuleDarkLayer from "../ModuleDarkLayer";
 import styles from './AddCorporateModule.module.scss';
+import { addCorp } from '../../../apis/corp/add';
 
 
 interface IModuleProps {
@@ -15,7 +16,6 @@ interface IModuleProps {
 interface IAddCorporateForm {
     name: string,
     tags: string[],
-    tag: string;
     info: string,
 }
 
@@ -23,27 +23,32 @@ const AddCorporateModule = ({active, closeModule}: IModuleProps) => {
     const [formData, setFormData] = useState<IAddCorporateForm>({
         name: '',
         tags: [],
-        tag: '',
         info: ''
     });
+    const [tag, setTag] = useState<string>("")
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         let name = e.target.name;
         console.log(name, e.target.value, formData);
         setFormData({ ...formData, [name]: e.target.value });
+        if(e.target.name === "tag") {
+          setTag(e.target.value)
+        }
     };
 
     const addTag = () => {
-        console.log(formData.tag)
+      if(tag === "") return;
+      const tempTags = formData.tags;
+      tempTags.push(tag);
+      setFormData(prev => ({...prev, tags: tempTags}))
+      setTag("")
     }
 
-    const submit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const tempTags = formData.tags;
-        if(formData.tag === "") return;
-        tempTags.push(formData.tag);
-        setFormData(prev => ({...prev, tags: tempTags, tag: ""}))
-        console.log(formData)
+    const submitForm = () => {
+      console.log("JP", formData)
+      addCorp(formData)
+      setFormData({name: "", tags: [], info: ""})
+      setTag("")
     }
 
       return (
@@ -65,7 +70,7 @@ const AddCorporateModule = ({active, closeModule}: IModuleProps) => {
                 </button>
               </Flex>
             </header>
-            <form onSubmit={e => submit(e)}>
+            <form onSubmit={e => e.preventDefault()}>
               <Flex
                 direction='column'
                 gap='xxx-large'
@@ -87,7 +92,7 @@ const AddCorporateModule = ({active, closeModule}: IModuleProps) => {
                         name='tag'
                         placeholder='Taggar'
                         label='Taggar'
-                        value={formData.tag}
+                        value={tag}
                         onChangeFunction={handleOnChange}
                     />
                 <OutlinedButton onClick={addTag} text='Lägg till tag' width='20%' />
@@ -108,7 +113,7 @@ const AddCorporateModule = ({active, closeModule}: IModuleProps) => {
             <section>
               <div>
                 <OutlinedButton onClick={closeModule} text='Avbryt' width='100%' />
-                <FilledButton text='Lägg till företag' width='100%' />
+                <FilledButton onClick={submitForm} text='Lägg till företag' width='100%' />
               </div>
             </section>
           </div>
