@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Router from 'next/router';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
@@ -12,8 +12,9 @@ import Milestones from '../src/components/overview/milestones/Milestones';
 import Barchart from '../src/components/overview/barchart/Barchart';
 import ProgressCard from '../src/components/overview/progress_card/ProgressCard';
 import { Flex } from '../src/components/ui/Flex';
+import Layout from '../src/layout/layout';
 
-const Overview: NextPage = () => {
+const Overview = () => {
   return (
     <>
       <div className={styles.overview_container}>
@@ -40,6 +41,10 @@ const Overview: NextPage = () => {
       </div>
     </>
   );
+};
+
+Overview.getLayout = function getLayout(page: ReactElement) {
+  return <Layout>{page}</Layout>;
 };
 
 export default Overview;

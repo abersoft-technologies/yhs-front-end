@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, ReactElement, ReactNode } from 'react';
 import type { AppProps } from 'next/app';
+import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { Redirect } from '../src/globalFunctions/redirect';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
@@ -17,13 +18,23 @@ import '../styles/ui/flex.scss';
 /* Components import */
 import Layout from '../src/layout/layout';
 
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
 const persistor = persistStore(store);
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
+  const getLayout = Component.getLayout ?? ((page) => page);
   /*   if (router.pathname === '/*') {
     Redirect('/inloggning');
   } */
+
   useEffect(() => {
     const user = useLocalStorage('get', 'session', 'user');
     if (!user && router.pathname !== '/registrering') {
@@ -33,9 +44,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Layout>
+        {getLayout(<Component {...pageProps} />)}
+        {/*   <Layout>
           <Component {...pageProps} />
-        </Layout>
+        </Layout> */}
       </PersistGate>
     </Provider>
   );
