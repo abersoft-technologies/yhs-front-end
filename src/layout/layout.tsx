@@ -1,6 +1,5 @@
 import React from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import styles from '../../styles/Layout.module.scss';
 
@@ -14,23 +13,6 @@ interface ILayoutProps {
 }
 
 export default function Layout({ children }: ILayoutProps) {
-  const router = useRouter();
-
-  const checkIfLoginOrRegister =
-    router.pathname.includes('/inloggning') ||
-    router.pathname.includes('/registrering')
-      ? true
-      : false;
-
-  const sidebar = checkIfLoginOrRegister ? (
-    <></>
-  ) : (
-    <>
-      <Sidebar />
-      <Topbar />
-    </>
-  );
-
   return (
     <>
       <Head>
@@ -41,14 +23,9 @@ export default function Layout({ children }: ILayoutProps) {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      {sidebar}
-      <main
-        className={
-          checkIfLoginOrRegister ? styles.main_login_register : styles.main
-        }
-      >
-        {children}
-      </main>
+      <Sidebar />
+      <Topbar />
+      <main className={styles.main}>{children}</main>
     </>
   );
 }
