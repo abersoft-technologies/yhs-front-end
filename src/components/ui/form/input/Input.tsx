@@ -2,8 +2,6 @@ import React from 'react';
 
 import styles from './Input.module.scss';
 
-import { Flex } from '../../Flex';
-
 interface IInputProps {
   placeholder: string;
   name: string;
@@ -30,12 +28,10 @@ export const Input = ({
       className={styles.input_label_container}
       style={width ? { width: width } : { width: 'auto' }}
     >
-      {label ? (
+      {label && (
         <label htmlFor={name} className={styles.label}>
           {label}
         </label>
-      ) : (
-        ''
       )}
       <input
         id={name}

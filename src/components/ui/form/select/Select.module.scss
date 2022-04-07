@@ -1,0 +1,89 @@
+@import '../../../../../styles/variables';
+
+.label {
+  color: $txt-color;
+  font-weight: bold;
+  font-size: 0.9;
+}
+.select_label_container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-small;
+}
+.select_open_container {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid $light-grey;
+  padding: $spacing-small 0;
+  border-radius: $spacing-small;
+  box-shadow: $subtile-box-shadow;
+}
+.select_option {
+  padding: 0.5rem;
+  // cursor: pointer;
+  cursor: default;
+  &:hover {
+    background: $primary-color-transparent;
+  }
+}
+.select_container {
+  border-radius: $spacing-small;
+  border: 1px solid $light-grey;
+  padding: 0 0.75rem;
+  height: 38px;
+  outline: none;
+  background: none;
+  color: $txt-color;
+  font-size: 0.9rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: default;
+  transition: all 150ms ease-in-out;
+
+  button {
+    position: absolute;
+    background: none;
+    display: flex;
+    align-items: center;
+    border: none;
+    right: 0;
+    padding: 0 $spacing-medium;
+    height: 100%;
+    cursor: pointer;
+    span {
+      position: absolute;
+      display: block;
+      border-left: 1px solid $light-grey;
+      height: 55%;
+      left: 0;
+    }
+    &:hover {
+      > svg > path {
+        transition: stroke 100ms ease-in-out;
+        stroke: $txt-color;
+      }
+    }
+  }
+
+  &::placeholder {
+    color: $dark-grey;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  &:hover {
+    background: #fff;
+    border: $transparent-border;
+    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+  }
+
+  &:focus {
+    background: #fff;
+    border: $transparent-border;
+
+    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+  }
+}
