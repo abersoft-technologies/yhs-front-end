@@ -52,7 +52,6 @@ const Login: NextPage = () => {
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
         setTimeout(() => {
           Redirect('/');
-          //TODO Show loading spinner (YS-38)
         }, 1000);
       })
       .catch((err) => {

@@ -1,10 +1,11 @@
 import React, { ReactElement } from 'react';
 
+import CorporateList from '../../src/components/corporate/CorporateList';
 import ContactLayout from '../../src/layout/contactLayout';
 import Layout from '../../src/layout/layout';
 
 const foretag = () => {
-  return <div>Här ska list-componenten vara</div>;
+  return <CorporateList />;
 };
 
 foretag.getLayout = function getLayout(page: ReactElement) {
