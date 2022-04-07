@@ -7,6 +7,7 @@ import ModuleDarkLayer from "../ModuleDarkLayer";
 import styles from './AddEduModule.module.scss';
 import { addCorp } from '../../../apis/corp/add';
 import { Select } from "../../ui/form/select/Select";
+import { addEdu } from "../../../apis/edu/add";
 
 
 interface IModuleProps {
@@ -14,21 +15,19 @@ interface IModuleProps {
     closeModule: () => void;
   }
 
-interface IAddCorporateForm {
+interface IAddEduForm {
     name: string,
-    tags: string[],
-    info: string,
+    place: string[],
 }
 
 const AddEduModule = ({active, closeModule}: IModuleProps) => {
-    const [formData, setFormData] = useState<IAddCorporateForm>({
+    const [formData, setFormData] = useState<IAddEduForm>({
         name: '',
-        tags: [],
-        info: ''
+        place: [],
     });
     const [tag, setTag] = useState<string>("")
     const [selectValue, setSelectValue] = useState<string>("")
-
+    const placeList = [{value: "Uppsala", label: "Uppsala"}, {value: "Stockholm", label: "Stockholm"}, {value: "Allingsås", label: "Allingsås"}]
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         let name = e.target.name;
@@ -40,22 +39,28 @@ const AddEduModule = ({active, closeModule}: IModuleProps) => {
     };
 
     const handleSelectChange = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        setSelectValue(e.currentTarget.id)
+        let text: string = "";
+        // setSelectValue(e.currentTarget.id)
+        const list = formData.place;
+        list.push(e.currentTarget.id)
+        setFormData(prev => ({...prev, place: list}))
+        list.forEach(item => {
+            return text += item += ", ";
+        })
+        setSelectValue(text)
     }
 
-    const addTag = () => {
-      if(tag === "") return;
-      const tempTags = formData.tags;
-      tempTags.push(tag);
-      setFormData(prev => ({...prev, tags: tempTags}))
-      setTag("")
+    const onClose = () => {
+        setFormData({name: "", place: []})
+        setSelectValue("");
+        closeModule()
     }
 
     const submitForm = () => {
       console.log("JP", formData)
-      addCorp(formData)
-      setFormData({name: "", tags: [], info: ""})
-      setTag("")
+      addEdu(formData)
+      setFormData({name: "", place: []})
+      setSelectValue("");
     }
 
       return (
@@ -72,7 +77,7 @@ const AddEduModule = ({active, closeModule}: IModuleProps) => {
             <header>
               <Flex direction='row' align='center' justify='center'>
                 <h3>Ny Utbildning</h3>
-                <button onClick={closeModule}>
+                <button onClick={onClose}>
                   <img src='/close-module-icon.svg' alt='Cross' />
                 </button>
               </Flex>
@@ -87,14 +92,14 @@ const AddEduModule = ({active, closeModule}: IModuleProps) => {
               >
                 <Input
                   width='100%'
-                  name='Utbildningsnamn'
-                  placeholder='Företag'
-                  label='Företag'
+                  name='name'
+                  placeholder='Utbildningsnamn'
+                  label='Utbildningsnamn'
                   value={formData.name}
                   onChangeFunction={handleOnChange}
                 />
                 <Select
-                    options={[{value: "Uppsala", label: "Uppsala"}]}
+                    options={placeList}
                     onChangeFunction={(e) => handleSelectChange(e)}
                     width='100%'
                     label='Ort'
@@ -105,7 +110,7 @@ const AddEduModule = ({active, closeModule}: IModuleProps) => {
             </form>
             <section>
               <div>
-                <OutlinedButton onClick={closeModule} text='Avbryt' width='100%' />
+                <OutlinedButton onClick={onClose} text='Avbryt' width='100%' />
                 <FilledButton onClick={submitForm} text='Lägg till Utbildning' width='100%' />
               </div>
             </section>
