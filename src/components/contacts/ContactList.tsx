@@ -25,8 +25,9 @@ const ContactList = () => {
   const contactListReducer = useSelector(
     (state: any) => state.contactListReducer
   );
-  const ListData = contactListReducer.result.data.contactList;
-  const listValues = contactListReducer.result.data.listValues;
+
+  const ListData = contactListReducer.result.data ? contactListReducer.result.data.contactList : undefined;
+  const listValues = contactListReducer.result.data ? contactListReducer.result.data.listValues : undefined;
 
   useEffect(() => {
     dispatch(getContactListRedux({ limit: 10, page: page, queryParams: '' }));
@@ -67,7 +68,7 @@ const ContactList = () => {
       <Pagination
         page={page}
         setPage={setPage}
-        totalPages={listValues.totalPages}
+        totalPages={listValues ? listValues.totalPages : 0}
       />
     </>
   );

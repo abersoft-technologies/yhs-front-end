@@ -1,7 +1,6 @@
 @use './variables' as var;
 
 .contacts_container {
-  // margin-top: 8.25rem;
   padding-left: 1.5rem;
 
   > nav {
@@ -9,19 +8,21 @@
     ul {
       list-style: none;
       display: flex;
-      gap: var.$spacing-x-large;
+      gap: var.$spacing-large;
       margin: 0;
       padding: 0;
 
       .active_link > a {
         color: var.$primary-color-dark;
         border-bottom: 2px solid var.$primary-color-dark;
+        padding: 0 0.5rem;
       }
 
       > li > a {
         text-decoration: none;
         font-size: 1.125rem;
         color: var.$light-grey;
+        padding: 0 0.5rem;
       }
     }
   }
@@ -55,19 +56,15 @@
       }
     }
   }
-
-
 }
 
 .header_bar_container {
-  // border-bottom: 1px solid var.$light-grey;
   margin-bottom: var.$spacing-x-large;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 
   div:last-child {
-    // width: 11rem;
     padding-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
@@ -78,7 +75,6 @@
     display: flex;
     align-items: center;
     gap: var.$spacing-small;
-    // background: radial-gradient(50% 50% at 50% 50%, #7192cf 0%, #2355b1 100%);
     background: var.$primary-color;
     border-radius: var.$spacing-small;
     padding: var.$spacing-small;

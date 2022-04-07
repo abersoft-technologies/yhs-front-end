@@ -14,14 +14,13 @@ const Topbar = () => {
   const router = useRouter();
   const user = useLocalStorage('get', 'session', 'user');
   let parsedUser: IUserModel | undefined = undefined;
-  if(user) {
+  if (user) {
     parsedUser = user.data.user;
-
   }
   const setPageTitle = () => {
     if (router.pathname === '/') return 'Överblick';
-    if (router.pathname === '/analys') return 'Analys';
-    if (router.pathname === '/kontakter') return 'Kontakter';
+    if (router.pathname.includes('/analys')) return 'Analys';
+    if (router.pathname.includes('/kontakter')) return 'Kontakter';
   };
   return (
     <section className={styles.topbar}>

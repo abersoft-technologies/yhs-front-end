@@ -6,7 +6,6 @@ import styles from './Sidebar.module.scss';
 
 const Sidebar = () => {
   const router = useRouter();
-  console.log(router.pathname);
   return (
     <nav className={styles.sidebar}>
       <div>
@@ -61,7 +60,7 @@ const Sidebar = () => {
           <Link href={'/kontakter'}>
             <a
               className={
-                router.pathname == '/kontakter'
+                router.pathname.includes('/kontakter')
                   ? styles.active_link_contacts
                   : ''
               }
