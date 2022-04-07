@@ -18,13 +18,13 @@ interface IStatusBoxProps {
 const StatusBox = ({ status }: IStatusBoxProps) => {
   function setClassName() {
     switch (status) {
-      case 'confirmed':
+      case 'AF Bekräftad':
         return styles.green_box;
-      case 'denied':
+      case 'Dementerad':
         return styles.red_box;
-      case 'meeting':
+      case 'Möte bokat':
         return styles.yellow_box;
-      case 'new':
+      case 'Ny kontakt':
         return styles.blue_box;
       default:
         break;
@@ -48,7 +48,7 @@ const StatusBox = ({ status }: IStatusBoxProps) => {
   return (
     <div className={styles.status_box_container}>
       <div className={`${styles.status_box} ${setClassName()}`}>
-        <span>{setTxt()}</span>
+        <span>{status}</span>
       </div>
     </div>
   );

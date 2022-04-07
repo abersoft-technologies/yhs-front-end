@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { addContact } from '../../../apis/contact/add';
 
 import styles from './AddContactModule.module.scss';
 
 import ModuleDarkLayer from '../ModuleDarkLayer';
 import { Input } from '../../ui/form/input/Input';
+import { Select } from '../../ui/form/select/Select';
 import { Flex } from '../../ui/Flex';
 import { FilledButton, OutlinedButton } from '../../ui/buttons/Buttons';
 import { Textarea } from '../../ui/form/textarea/Textarea';
@@ -25,7 +26,16 @@ interface IFormData {
   status: string;
 }
 
+const optionsSelect = [
+  { value: 'Ny kontakt', label: 'Ny kontakt' },
+  { value: 'Tidigare medverkan', label: 'Tidigare medverkan' },
+  { value: 'Möte bokat', label: 'Möte bokat' },
+  { value: 'AF Bekräftad', label: 'AF bekräftad' },
+  { value: 'Dementerad', label: 'Dementerad' },
+];
+
 const AddContactModule = ({ active, closeModule }: IModuleProps) => {
+  const [statusProp, setStatusProp] = useState(optionsSelect[0].value);
   const [formData, setFormData] = useState<IFormData>({
     firstName: '',
     lastName: '',
@@ -34,24 +44,23 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     company: '',
     role: '',
     town: '',
-    status: '',
+    status: optionsSelect[0].value,
   });
-  const {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    company,
-    role,
-    town,
-    status,
-  } = formData;
+  const { firstName, lastName, email, phoneNumber, company, role, town } =
+    formData;
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     console.log(name, e.target.value, formData);
     setFormData({ ...formData, [name]: e.target.value });
   };
+
+  const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
+    setStatusProp(e.currentTarget.id);
+  };
+  useEffect(() => {
+    setFormData({ ...formData, status: statusProp });
+  }, [statusProp]);
 
   return (
     <>
@@ -96,6 +105,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               onChangeFunction={handleOnChange}
             />
           </Flex>
+
           <Flex
             direction='row'
             gap='xxx-large'
@@ -157,13 +167,12 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               value={town ? town : ''}
               onChangeFunction={handleOnChange}
             />
-            <Input
-              width='50%'
-              name='status'
-              placeholder='Status'
+            <Select
               label='Status'
-              value={status}
-              onChangeFunction={handleOnChange}
+              options={optionsSelect}
+              width='50%'
+              onChangeFunction={handleOnChangeStatus}
+              value={statusProp}
             />
           </Flex>
           <div className={styles.textarea_container}>
