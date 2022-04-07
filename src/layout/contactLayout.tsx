@@ -55,8 +55,13 @@ const contactLayout = ({ children }: LayoutProps) => {
             >
               <Link href='/kontakter/foretag'>Företag</Link>
             </li>
-            <li>
-              <Link href='/kontakter/alla'>Utbildningar</Link>
+            <li
+             className={
+              router.pathname === '/kontakter/utbildningar'
+                ? styles.active_link
+                : ''
+            }>
+              <Link href='/kontakter/utbildningar'>Utbildningar</Link>
             </li>
           </ul>
         </nav>
