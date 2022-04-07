@@ -9,6 +9,7 @@ import AddCorporateModule from '../components/modules/add_data/AddCorporateModul
 import { OutlinedButton } from '../components/ui/buttons/Buttons';
 import { Flex } from '../components/ui/Flex';
 import { Dropdown } from '../components/shared/dropdown/Dropdown';
+import AddEduModule from '../components/modules/add_data/AddEduModule';
 
 interface LayoutProps {
   children: ReactNode;
@@ -21,10 +22,14 @@ const contactLayout = ({ children }: LayoutProps) => {
   const [contactModuleToggle, setContactModuleToggle] =
     useState<boolean>(false);
   const [corpModuleToggle, setCorpModuleToggle] = useState<boolean>(false);
+  const [eduModuleToggle, setEduModuleToggle] = useState<boolean>(false);
+
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   const closeContactModule = () => setContactModuleToggle(false);
   const closeCorpModule = () => setCorpModuleToggle(false);
+  const closeEduModule = () => setEduModuleToggle(false);
+
 
   const openDropdown = () => {
     setToggleDropdown(!toggleDropdown);
@@ -80,6 +85,8 @@ const contactLayout = ({ children }: LayoutProps) => {
                   setContactModuleToggle(!contactModuleToggle)
                 }
                 onCorpClick={() => setCorpModuleToggle(!corpModuleToggle)}
+                onEduClick={() => setEduModuleToggle(!corpModuleToggle)}
+
               />
             ) : (
               <></>
@@ -95,6 +102,10 @@ const contactLayout = ({ children }: LayoutProps) => {
       <AddCorporateModule
         active={corpModuleToggle}
         closeModule={closeCorpModule}
+      />
+      <AddEduModule
+        active={eduModuleToggle}
+        closeModule={closeEduModule}
       />
     </>
   );
