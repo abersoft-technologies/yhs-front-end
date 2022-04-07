@@ -26,6 +26,8 @@ const StatusBox = ({ status }: IStatusBoxProps) => {
         return styles.yellow_box;
       case 'Ny kontakt':
         return styles.blue_box;
+      case 'AF skriven':
+        return styles.green_box;
       default:
         break;
     }

@@ -28,8 +28,8 @@ interface IFormData {
 
 const optionsSelect = [
   { value: 'Ny kontakt', label: 'Ny kontakt' },
-  { value: 'Tidigare medverkan', label: 'Tidigare medverkan' },
   { value: 'Möte bokat', label: 'Möte bokat' },
+  { value: 'AF skriven', label: 'AF skriven' },
   { value: 'AF Bekräftad', label: 'AF bekräftad' },
   { value: 'Dementerad', label: 'Dementerad' },
 ];
