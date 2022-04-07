@@ -1,0 +1,56 @@
+@import '../variables';
+
+$size-properties: (
+  none: $spacing-none,
+  xx-small: calc($spacing/2),
+  x-small: $spacing-x-small,
+  small: $spacing-small,
+  medium: $spacing-medium,
+  large: $spacing-large,
+  x-large: $spacing-x-large,
+  xx-large: $spacing-xx-large,
+  xxx-large: $spacing-xxx-large,
+  auto: "auto",
+  full: "100%"
+);
+
+.text {
+    margin: 0;
+    padding: 0;
+}
+
+@each $key, $width in $size-properties {
+    .text--width-#{$key} {
+      width: $width;
+    }
+}
+
+@each $key, $size in $size-properties {
+    .text--size-#{$key} {
+      font-size: $size;
+    }
+}
+
+@each $key, $py in $size-properties {
+  .text--py-#{$key} {
+    padding: $py 0px;
+  }
+}
+
+@each $key, $px in $size-properties {
+  .text--px-#{$key} {
+    padding: 0px $px;
+  }
+}
+
+@each $key, $my in $size-properties {
+  .text--my-#{$key} {
+    margin: $my 0px;
+  }
+}
+
+@each $key, $mx in $size-properties {
+  .text--mx-#{$key} {
+    margin: 0px $mx;
+  }
+}
