@@ -13,7 +13,7 @@ const CorporateCard = ({
   }: ICorporateCardProps) => (
     <article className={styles.corporate_card}>
       <div>{name}</div>
-      <div>{tags[0]}</div>
+      <div>{tags ? tags[0] : "Ingar taggar"}</div>
       <div>{info ? info : "Ingen info anget"}</div>
       {/* <div>
         <div>{company ? company : 'Ej angivet'}</div>
