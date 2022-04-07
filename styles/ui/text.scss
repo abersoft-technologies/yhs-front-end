@@ -30,3 +30,27 @@ $size-properties: (
       font-size: $size;
     }
 }
+
+@each $key, $py in $size-properties {
+  .text--py-#{$key} {
+    padding: $py 0px;
+  }
+}
+
+@each $key, $px in $size-properties {
+  .text--px-#{$key} {
+    padding: 0px $px;
+  }
+}
+
+@each $key, $my in $size-properties {
+  .text--my-#{$key} {
+    margin: $my 0px;
+  }
+}
+
+@each $key, $mx in $size-properties {
+  .text--mx-#{$key} {
+    margin: 0px $mx;
+  }
+}

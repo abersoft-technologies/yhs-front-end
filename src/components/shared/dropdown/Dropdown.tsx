@@ -3,6 +3,7 @@ import { createRef, useEffect, useState } from 'react';
 import styles from '../../../../styles/Contacts.module.scss';
 
 import { Flex } from '../../ui/Flex';
+import { Text } from '../../ui/text/Text';
 
 interface IDropdownProps {
   toggleRef: React.RefObject<HTMLDivElement>;
@@ -39,11 +40,11 @@ export const Dropdown = ({
     >
       <Flex direction='column' class={styles.list}>
         <div className={styles.list_container}>
-          <p onClick={onContactClick}>Lägg till Kontakt</p>
+          <Text text='Lägg till Kontakt' onClick={onContactClick} />
           <img src='/addContact.svg' alt='Add contact' />
         </div>
         <div className={styles.list_container}>
-          <p onClick={onCorpClick}>Lägg till Företag</p>
+          <Text text='Lägg till Företag' onClick={onCorpClick} />
           <img src='/addCorp.svg' alt='Add compnay' />
         </div>
       </Flex>
