@@ -3,6 +3,8 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import userReducer from './slice/userSlice';
 import contactListReducer from './slice/contactList';
+import corpListReducer from './slice/corpList';
+
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 const persistConfig = {
@@ -13,6 +15,7 @@ const persistConfig = {
 const reducers = combineReducers({
   userReducer,
   contactListReducer,
+  corpListReducer
 });
 
 const persist = persistReducer(persistConfig, reducers);
