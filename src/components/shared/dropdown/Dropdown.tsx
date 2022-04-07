@@ -9,12 +9,14 @@ interface IDropdownProps {
   toggleRef: React.RefObject<HTMLDivElement>;
   onContactClick: () => void;
   onCorpClick: () => void;
+  onEduClick: () => void;
 }
 
 export const Dropdown = ({
   toggleRef,
   onContactClick,
   onCorpClick,
+  onEduClick
 }: IDropdownProps) => {
   const dropdownRef = createRef<HTMLDivElement>();
   const [topPos, setTopPos] = useState<number>(0);
@@ -45,7 +47,11 @@ export const Dropdown = ({
         </div>
         <div className={styles.list_container}>
           <Text text='Lägg till Företag' onClick={onCorpClick} />
-          <img src='/addCorp.svg' alt='Add compnay' />
+          <img src='/addCorp.svg' alt='Add company' />
+        </div>
+        <div className={styles.list_container}>
+          <Text text='Lägg till Utbildning' onClick={onEduClick} />
+          <img src='/addEducation.svg' alt='Add education' />
         </div>
       </Flex>
     </div>
