@@ -1,6 +1,16 @@
 export interface IUserModel {
-  firstName: string;
-  lasttName: string;
-  email: string;
-  date: string;
+  user: {
+    status: number | null;
+    data: {
+      token: string;
+      user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        date: string;
+        id: string;
+      };
+    };
+    message: string;
+  };
 }

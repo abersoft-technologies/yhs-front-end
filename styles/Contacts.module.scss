@@ -33,24 +33,38 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var.$spacing-medium;
+  padding: var.$spacing-x-small 0;
+  // gap: var.$spacing-x-small;
   position: absolute;
   background-color: white;
-  box-shadow: var.$subtile-box-shadow;
+  box-shadow: var.$intense-black-shadow;
+  border: 1px solid var.$light-grey;
+  border-radius: var.$spacing-x-small;
   width: 200px;
 
   .list {
     width: 100%;
+    .list_container:not(:last-child) {
+      border-bottom: 1px solid var.$light-grey;
+    }
     .list_container {
       cursor: pointer;
-      color: var.$primary-color-light-hover;
-      padding: var.$spacing-medium;
+      color: var.$txt-color;
+      padding: var.$spacing-small;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: flex-start;
+      align-items: center;
+      gap: var.$spacing-small;
+      img {
+        width: 20px;
+        margin: 0 var.$spacing-x-small;
+      }
       p {
         font-size: var.$spacing-medium;
+        font-size: 0.9rem;
       }
       &:hover {
+        transition: background-color 0.15s ease-in-out;
         background-color: var.$primary-color-light-transparent;
       }
     }
@@ -126,10 +140,10 @@
     outline: none;
     border: 1px solid var.$light-grey;
     border-radius: 0.5rem;
-    padding: 0.65rem 12rem 0.65rem 2.5rem;
-    width: 100%;
+    padding: 0.65rem 2.5rem 0.65rem 2.5rem;
     color: var.$txt-color;
     transition: all 200ms ease-in-out;
+    width: 100%;
 
     &:hover {
       background: #fff;

@@ -10,9 +10,12 @@ export const getContactListRedux: any = createAsyncThunk(
     const token = userData.data.token;
     console.log(dispatch);
     const { limit, page, queryParams } = dispatch;
-    const response = await api.get(`/contact?limit=${limit}&page=${page}`, {
-      headers: { 'x-access-token': token },
-    });
+    const response = await api.get(
+      `/contact?limit=${limit}&page=${page}&queryParams=${queryParams}`,
+      {
+        headers: { 'x-access-token': token },
+      }
+    );
     return response.data;
   }
 );

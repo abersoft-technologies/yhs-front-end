@@ -7,6 +7,7 @@ import { Text } from '../../ui/text/Text';
 
 interface IDropdownProps {
   toggleRef: React.RefObject<HTMLDivElement>;
+  toggleDropdown: () => void;
   onContactClick: () => void;
   onCorpClick: () => void;
   onEduClick: () => void;
@@ -14,13 +15,28 @@ interface IDropdownProps {
 
 export const Dropdown = ({
   toggleRef,
+  toggleDropdown,
   onContactClick,
   onCorpClick,
-  onEduClick
+  onEduClick,
 }: IDropdownProps) => {
   const dropdownRef = createRef<HTMLDivElement>();
   const [topPos, setTopPos] = useState<number>(0);
   const [rightPos, setRightPos] = useState<number>(0);
+
+  useEffect(() => {
+    const onClick = (event: any) => {
+      // if (!event.target.closest('div')) return;
+      // if (event.target.closest('div').id !== 'select-container')
+      toggleDropdown();
+    };
+
+    window.addEventListener('click', onClick);
+
+    return () => {
+      window.removeEventListener('click', onClick);
+    };
+  }, []);
 
   useEffect(() => {
     if (toggleRef.current && dropdownRef.current) {
@@ -41,17 +57,26 @@ export const Dropdown = ({
       ref={dropdownRef}
     >
       <Flex direction='column' class={styles.list}>
-        <div className={styles.list_container}>
-          <Text text='Lägg till Kontakt' onClick={onContactClick} />
-          <img src='/addContact.svg' alt='Add contact' />
+        <div className={styles.list_container} onClick={onContactClick}>
+          <img
+            src='/svgs/contacts/add_dropdown/add_con.svg'
+            alt='Add contact'
+          />
+          <Text text='Lägg till Kontakt' />
         </div>
-        <div className={styles.list_container}>
-          <Text text='Lägg till Företag' onClick={onCorpClick} />
-          <img src='/addCorp.svg' alt='Add company' />
+        <div className={styles.list_container} onClick={onCorpClick}>
+          <img
+            src='/svgs/contacts/add_dropdown/add_comp.svg'
+            alt='Add company'
+          />
+          <Text text='Lägg till Företag' />
         </div>
-        <div className={styles.list_container}>
-          <Text text='Lägg till Utbildning' onClick={onEduClick} />
-          <img src='/addEducation.svg' alt='Add education' />
+        <div className={styles.list_container} onClick={onEduClick}>
+          <img
+            src='/svgs/contacts/add_dropdown/add_edu.svg'
+            alt='Add education'
+          />
+          <Text text='Lägg till Utbildning' />
         </div>
       </Flex>
     </div>
