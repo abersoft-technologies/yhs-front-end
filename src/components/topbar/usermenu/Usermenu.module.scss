@@ -6,6 +6,11 @@
   align-items: center;
   flex-direction: column;
   gap: var.$spacing-medium;
+  position: relative;
+
+  > div > img:first-child {
+    margin-right: var.$spacing-small;
+  }
 
   button {
     display: flex;
@@ -23,7 +28,31 @@
 
   .usermenu_dropdown {
     position: absolute;
-    padding: 8px;
-    top: 60%;
+    top: 120%;
+    right: 0;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: var.$intense-black-shadow;
+    border-radius: var.$spacing-x-small;
+    border: 1px solid var.$light-grey;
+    > button {
+      width: 100%;
+      padding: var.$spacing-small;
+      transition: background-color 150ms ease-in-out;
+      &:hover {
+        background: var.$primary-color-light-transparent;
+      }
+    }
+
+    > button:last-child {
+      border-top: 1px solid var.$light-grey;
+      color: rgb(181, 48, 48);
+
+      &:hover {
+        background: rgb(181, 48, 48, 0.2);
+      }
+    }
   }
 }
