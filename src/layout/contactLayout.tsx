@@ -117,13 +117,15 @@ const contactLayout = ({ children }: LayoutProps) => {
           <Flex direction='column' gap='large' align='center' justify='center'>
             <div ref={toggleRef}>
               <OutlinedButton
-                text='lägg till'
+                text='Lägg till'
+                color='primary-dark'
                 iconRight={<img src='/arrow-down.svg' alt='Arrow down' />}
                 onClick={() => openDropdown()}
               />
             </div>
             {toggleDropdown ? (
               <Dropdown
+                toggleDropdown={openDropdown}
                 toggleRef={toggleRef}
                 onContactClick={() =>
                   setContactModuleToggle(!contactModuleToggle)

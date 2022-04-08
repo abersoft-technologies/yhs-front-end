@@ -5,6 +5,11 @@
   border: 1px solid $primary-color;
   background: $primary-color;
 }
+.primary_dark_color_btn {
+  color: $primary-color-dark;
+  border: 1px solid $primary-color-dark;
+  background: $primary-color-dark;
+}
 
 .button {
   border-radius: $spacing-x-small;
