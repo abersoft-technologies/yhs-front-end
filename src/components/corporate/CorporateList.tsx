@@ -16,6 +16,11 @@ import styles from './CorporateList.module.scss';
 const CorporateList = () => {
     const dispatch = useDispatch();
   const [page, setPage] = useState(1);
+  const [openInfoCard, setOpenInfoCard] = useState(false);
+
+  const openInfoCardFunc = () =>{
+    setOpenInfoCard(true)
+  }
 
   const corpListReducer = useSelector(
     (state: any) => state.corpListReducer
@@ -29,6 +34,7 @@ const CorporateList = () => {
   }, [page]);
 
     return (
+      <>
         <section className={styles.corporate_list_container}>
         <div className={styles.label_bar_container}>
           <div>Namn</div>
@@ -51,6 +57,7 @@ const CorporateList = () => {
           totalPages={listValues ? listValues.totalPages : 0}
         />
         </section>
+        </>
     )
 }
 
