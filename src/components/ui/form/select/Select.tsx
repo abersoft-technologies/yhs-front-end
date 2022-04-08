@@ -24,8 +24,6 @@ export const Select = ({
       if (!event.target.closest('div')) return;
       if (event.target.closest('div').id !== 'select-container')
         setSelectClicked(false);
-      console.info(event.target);
-      console.log(selectClicked);
     };
 
     window.addEventListener('click', onClick);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactListRedux } from '../../store/slice/contactList';
 
@@ -25,13 +26,22 @@ const ContactList = () => {
   const contactListReducer = useSelector(
     (state: any) => state.contactListReducer
   );
+  const searchQuery = useSelector(
+    (state: any) => state.searchQueryReducer.value
+  );
 
-  const ListData = contactListReducer.result.data ? contactListReducer.result.data.contactList : undefined;
-  const listValues = contactListReducer.result.data ? contactListReducer.result.data.listValues : undefined;
+  const ListData = contactListReducer.result.data
+    ? contactListReducer.result.data.contactList
+    : undefined;
+  const listValues = contactListReducer.result.data
+    ? contactListReducer.result.data.listValues
+    : undefined;
 
   useEffect(() => {
-    dispatch(getContactListRedux({ limit: 10, page: page, queryParams: '' }));
-  }, [page]);
+    dispatch(
+      getContactListRedux({ limit: 10, page: page, queryParams: searchQuery })
+    );
+  }, [page, searchQuery]);
 
   return (
     <>
