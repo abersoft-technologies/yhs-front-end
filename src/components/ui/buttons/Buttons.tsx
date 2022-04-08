@@ -16,7 +16,7 @@ const setColorClass = (color: string | undefined) => {
       return styles.primary_color_btn;
       break;
     case 'primary-dark':
-      return styles.primary_color_btn;
+      return styles.primary_dark_color_btn;
     default:
       break;
   }
@@ -41,15 +41,15 @@ export const OutlinedButton = ({
   onClick,
   color,
   width,
-  iconRight
+  iconRight,
 }: IPropsButton) => {
   return (
     <button
       onClick={onClick}
       style={width ? { width: width } : { width: 'auto' }}
-      className={`${styles.button} ${iconRight ? styles.button_icon : ''} ${styles.button_outlined} ${setColorClass(
-        color
-      )}`}
+      className={`${styles.button} ${iconRight ? styles.button_icon : ''} ${
+        styles.button_outlined
+      } ${setColorClass(color)}`}
     >
       {text}
       {iconRight ? iconRight : null}
