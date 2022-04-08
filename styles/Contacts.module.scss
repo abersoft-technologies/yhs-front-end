@@ -126,10 +126,10 @@
     outline: none;
     border: 1px solid var.$light-grey;
     border-radius: 0.5rem;
-    padding: 0.65rem 12rem 0.65rem 2.5rem;
-    width: 100%;
+    padding: 0.65rem 2.5rem 0.65rem 2.5rem;
     color: var.$txt-color;
     transition: all 200ms ease-in-out;
+    width: 100%;
 
     &:hover {
       background: #fff;

@@ -1,24 +1,26 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { combineReducers } from 'redux';
 import userReducer from './slice/userSlice';
 import contactListReducer from './slice/contactList';
 import corpListReducer from './slice/corpList';
 import eduListReducer from './slice/eduList';
+import searchQueryReducer from './slice/searchQuery';
 
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 const persistConfig = {
   key: 'root',
-  storage: createWebStorage("local")
+  storage: createWebStorage('local'),
 };
 
 const reducers = combineReducers({
   userReducer,
   contactListReducer,
   corpListReducer,
-  eduListReducer
+  eduListReducer,
+  searchQueryReducer,
 });
 
 const persist = persistReducer(persistConfig, reducers);
