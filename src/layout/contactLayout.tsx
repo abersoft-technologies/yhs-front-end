@@ -19,6 +19,7 @@ import { Flex } from '../components/ui/Flex';
 import { Dropdown } from '../components/shared/dropdown/Dropdown';
 import AddEduModule from '../components/modules/add_data/AddEduModule';
 import { SearchBar } from '../components/shared/searchbar/Searchbar';
+import FilterInterface from '../components/filter_interface/FilterInterface';
 
 interface LayoutProps {
   children: ReactNode;
@@ -116,15 +117,11 @@ const contactLayout = ({ children }: LayoutProps) => {
           </div>
           <Flex direction='column' gap='large' align='center' justify='center'>
             <div ref={toggleRef}>
-<<<<<<< HEAD
-              <OutlinedButton
-=======
               <button className={styles.add_btn} onClick={() => openDropdown()}>
                 Lägg till
                 <img src='/arrow-down.svg' alt='Arrow down' />
               </button>
               {/*            <OutlinedButton
->>>>>>> YS-76
                 text='Lägg till'
                 color='primary-dark'
                 iconRight={<img src='/arrow-down.svg' alt='Arrow down' />}
@@ -145,6 +142,7 @@ const contactLayout = ({ children }: LayoutProps) => {
               <></>
             )}
           </Flex>
+          <FilterInterface />
         </header>
         {children}
       </div>
