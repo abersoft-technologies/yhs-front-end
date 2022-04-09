@@ -116,12 +116,20 @@ const contactLayout = ({ children }: LayoutProps) => {
           </div>
           <Flex direction='column' gap='large' align='center' justify='center'>
             <div ref={toggleRef}>
+<<<<<<< HEAD
               <OutlinedButton
+=======
+              <button className={styles.add_btn} onClick={() => openDropdown()}>
+                Lägg till
+                <img src='/arrow-down.svg' alt='Arrow down' />
+              </button>
+              {/*            <OutlinedButton
+>>>>>>> YS-76
                 text='Lägg till'
                 color='primary-dark'
                 iconRight={<img src='/arrow-down.svg' alt='Arrow down' />}
                 onClick={() => openDropdown()}
-              />
+              /> */}
             </div>
             {toggleDropdown ? (
               <Dropdown

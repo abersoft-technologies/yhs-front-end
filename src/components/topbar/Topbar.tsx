@@ -7,16 +7,9 @@ import styles from './Topbar.module.scss';
 import { Flex } from '../ui/Flex';
 import SearchBar from './searchbar/SearchBar';
 import UserMenu from './usermenu/UserMenu';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { IUserModel } from '../../types/global';
 
 const Topbar = () => {
   const router = useRouter();
-  const user = useLocalStorage('get', 'session', 'user');
-  let parsedUser: IUserModel | undefined = undefined;
-  if (user) {
-    parsedUser = user.data.user;
-  }
   const setPageTitle = () => {
     if (router.pathname === '/') return 'Överblick';
     if (router.pathname.includes('/analys')) return 'Analys';
@@ -32,9 +25,7 @@ const Topbar = () => {
       </Flex>
       <Flex direction='row' align='center' justify='flex-end' gap='xxx-large'>
         <SearchBar />
-        <UserMenu
-          firstName={parsedUser ? parsedUser.firstName : 'JesperKing'}
-        />
+        <UserMenu />
       </Flex>
     </section>
   );

@@ -30,13 +30,13 @@
   &:hover {
     background: #fff;
     border: $transparent-border;
-    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
   }
 
   &:focus {
     background: #fff;
     border: $transparent-border;
 
-    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
   }
 }
