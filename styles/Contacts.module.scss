@@ -28,17 +28,43 @@
   }
 }
 
+.add_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var.$spacing-small;
+  background: none;
+  border: 1px solid var.$very-light-grey;
+  border-radius: var.$spacing-x-small;
+  height: 32px;
+  width: 90px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  color: var.$txt-color;
+  transition: all 150ms ease-in-out;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:hover {
+    border-color: var.$light-grey;
+  }
+
+  &:focus {
+    background: #fff;
+    border: var.$transparent-border;
+    box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
+  }
+}
+
 .dropdown_container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: var.$spacing-x-small 0;
-  // gap: var.$spacing-x-small;
   position: absolute;
   background-color: white;
   box-shadow: var.$intense-black-shadow;
-  border: 1px solid var.$light-grey;
+  -moz-osx-font-smoothing: grayscale;
   border-radius: var.$spacing-x-small;
   width: 200px;
 
@@ -119,6 +145,10 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: var.$spacing-medium;
+
+  div:last-child {
+    align-self: flex-start;
+  }
 }
 
 .header_interface_container {
@@ -138,7 +168,7 @@
   }
   div > input {
     outline: none;
-    border: 1px solid var.$light-grey;
+    border: 1px solid var.$very-light-grey;
     border-radius: 0.5rem;
     padding: 0.65rem 2.5rem 0.65rem 2.5rem;
     color: var.$txt-color;
@@ -148,14 +178,14 @@
     &:hover {
       background: #fff;
       border: var.$transparent-border;
-      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+      box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
     }
 
     &:focus {
       background: #fff;
       border: var.$transparent-border;
 
-      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+      box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
     }
 
     ::placeholder {
@@ -171,17 +201,26 @@
     gap: var.$spacing-small;
     font-size: 1rem;
     background: none;
-    border: 1px solid var.$light-grey;
+    border: 1px solid var.$very-light-grey;
     border-radius: var.$spacing-small;
     color: var.$dark-grey;
     padding: 0 1rem;
     cursor: pointer;
     transition: all 200ms ease-in-out;
 
+    // &:hover {
+    //   background: #fff;
+    //   border: var.$transparent-border;
+    //   box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
+    // }
     &:hover {
+      border-color: var.$light-grey;
+    }
+
+    &:focus {
       background: #fff;
       border: var.$transparent-border;
-      box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+      box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
     }
   }
 }

@@ -16,14 +16,13 @@
   left: 0;
   width: 100%;
   background: #fff;
-  border: 1px solid $light-grey;
   padding: $spacing-small 0;
   border-radius: $spacing-small;
-  box-shadow: $subtile-box-shadow;
+  box-shadow: 0 0 0 1px rgba(89, 105, 129, 0.1);
+  box-shadow: $medium-box-shadow;
 }
 .select_option {
   padding: 0.5rem;
-  // cursor: pointer;
   cursor: default;
   &:hover {
     background: $primary-color-transparent;
@@ -77,13 +76,13 @@
   &:hover {
     background: #fff;
     border: $transparent-border;
-    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
   }
 
   &:focus {
     background: #fff;
     border: $transparent-border;
 
-    box-shadow: 0 0 0 4px rgba(117, 134, 206, 0.2);
+    box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
   }
 }
