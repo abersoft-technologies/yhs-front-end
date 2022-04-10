@@ -15,7 +15,7 @@ export const Select = ({
   value,
   onChangeFunction,
   options,
-  width,
+  width
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
 

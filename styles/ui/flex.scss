@@ -23,6 +23,8 @@ $justify-properties: (
   flex-end: flex-end,
   flex-start: flex-start,
   space-between: space-between,
+  space-evenly: space-evenly,
+  space-around: space-around
 );
 
 .flex {
@@ -61,6 +63,18 @@ $justify-properties: (
   &--full {
     height: 100%;
   }
+}
+
+.flex--wrap-wrap {
+  flex-wrap: wrap;
+}
+
+.flex--wrap-nowrap {
+  flex-wrap: nowrap;
+}
+
+.flex--wrap-wrap-reverse {
+  flex-wrap: wrap-reverse;
 }
 
 // Example: key = none and gap = $spacing-none
