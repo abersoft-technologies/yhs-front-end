@@ -8,6 +8,7 @@ interface IListData {
   name: string;
   tags: string[];
   info: string;
+  _id: string;
 }
 
 import styles from './CorporateList.module.scss';
@@ -48,6 +49,7 @@ const CorporateList = () => {
             name={item.name}
             info={item.info}
             tags={item.tags}
+            id={item._id}
           />
         })}
 

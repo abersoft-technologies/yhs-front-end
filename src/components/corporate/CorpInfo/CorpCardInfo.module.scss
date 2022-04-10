@@ -3,7 +3,8 @@
 
 .cardContainer {
     height: 100%;
-    width: 100%;
+    width: 90%;
     border: 1px solid var.$dark-grey;
     margin-left: 1.5rem;
+    padding: var.$spacing-large;
 }
