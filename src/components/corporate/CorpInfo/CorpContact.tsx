@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { Flex } from "../../ui/Flex";
 import { Select } from "../../ui/form/select/Select";
 import { CorpTag } from "./CorpTag"
-
 import styles from "./CorpCardInfo.module.scss"
+import contactStyle from "../../../components/contacts/ContactList.module.scss"
+import ContactCard from "./ContactCard";
 
 interface ICorporateContactProps {
     corpData: any;
     contactData: ContactObject;
+    listValues: any;
 }
 
 interface ContactObject {
@@ -53,34 +55,22 @@ const buttonArray = [
     {value: "Studiebesök"},
     {value: "LG"},
 ]
-export const CorporateContact = ({corpData, contactData}: ICorporateContactProps) => {
+export const CorporateContact = ({corpData, contactData, listValues}: ICorporateContactProps) => {
     const [selectValueContact, setSelectValueContact] = useState<string>("");
     const [selectValueEmployements, setSelectValueEmployments] = useState<string>(employymentOptions[0].value);
     const [selectValueLia, setSelectValueLia] = useState<string>(employymentOptions[0].value);
-    const [optionsListContacts, setOptionsListContacts] = useState<Array<IOptionObject>>([]);
+    const [listContacts, setlistContacts] = useState<Array<IContactData>>([]);
     const [radioButtonList, setRadioButtonList] = useState(buttonArray);
+    const [page, setPage] = useState(1);
 
     const createSelectArray = () => {
         if(contactData) {
-            let list: Array<IOptionObject> = [{value: "", label: ""}];
+            let list: Array<IContactData> = [];
             contactData.contacts.forEach((item: IContactData) => {
-                list.push({value: item.firstName + " " + item.lastName, label: item.firstName + " " + item.lastName});
+                list.push(item);
             })
-            setOptionsListContacts(list)
-            setSelectValueContact(list[1] ? list[1].value : "")
+            setlistContacts(list)
         }
-    }
-
-    const onChangeSelectContacts = (e: React.MouseEvent<HTMLDivElement>) => {
-        setSelectValueContact(e.currentTarget.id);
-    }
-
-    const onChangeSelectEmployement = (e: React.MouseEvent<HTMLDivElement>) => {
-        setSelectValueEmployments(e.currentTarget.id);
-    }
-
-    const onChangeSelectLia = (e: React.MouseEvent<HTMLDivElement>) => {
-        setSelectValueLia(e.currentTarget.id);
     }
 
     useEffect(() => {
@@ -88,23 +78,34 @@ export const CorporateContact = ({corpData, contactData}: ICorporateContactProps
     }, [contactData])
 
     return (
-        <Flex direction="column" gap="large">
+        <Flex direction="column" gap="large" width="full">
             <h1>Anknyta kontakter</h1>
-            <Select width="100%" value={selectValueContact} options={optionsListContacts ? optionsListContacts : []} onChangeFunction={onChangeSelectContacts} label="Kontakter" />
-            <Flex direction="row" justify="space-between" width="full">
+            <Flex direction="row" justify="space-between" width="full" gap="large">
                 {corpData && corpData.tags.map((item: string, i: number) => {
                     return <CorpTag key={i} value={item} />
                 })}
             </Flex>
-            <Flex direction="row" justify="space-between" width="auto">
-                <Select width="250px" value={selectValueEmployements} options={employymentOptions} label="Anställningar" onChangeFunction={onChangeSelectEmployement} />
-                <Select width="250px" value={selectValueLia} options={liaOptions} label="LIA" onChangeFunction={onChangeSelectLia} />
-            </Flex>
-            <Flex direction="row" gap="large" wrap="wrap" class={styles.buttonContainer}>
-                {radioButtonList.map((item, i) => {
-                    return <span key={i}>{item.value} <input type={"checkbox"} /></span>
-                })}
-            </Flex>
+            <section className={contactStyle.contact_list_container}>
+                <div className={contactStyle.label_bar_container}>
+                <div>Namn</div>
+                <div>Ort</div>
+                <div>Kontaktinfo.</div>
+            </div>
+            <div>
+                {listContacts &&
+                    listContacts.map((item: IContactData, i: number) => {
+                        return (
+                            <ContactCard
+                                key={i}
+                                firstName={item.firstName}
+                                lastName={item.lastName}
+                                district={item.town}
+                                email={item.email}
+                            />
+                        );
+                    })}
+            </div>
+            </section>
         </Flex>
     )
 }

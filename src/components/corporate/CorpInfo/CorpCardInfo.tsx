@@ -6,6 +6,8 @@ import styles from "./CorpCardInfo.module.scss"
 import { useRouter } from "next/router";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { getContactsInCorp, getCorp } from "../../../apis/corp/get";
+import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
 
 interface IEduCardInfoProps {
     // contacts?: Array<any>;
@@ -38,7 +40,15 @@ export const CorpCardInfo = () => {
     const [dataCorp, setDataCorp] = useState<any>();
     const [dataContacts, setDataContacts] = useState<any>();
 
+    const dispatch = useAppDispatch();
 
+  const contactListReducer = useAppSelector(
+    (state: any) => state.contactListReducer
+  );
+
+    const listValues = contactListReducer.result.data
+    ? contactListReducer.result.data.listValues
+    : undefined;
 
     const getData = async () => {
           await getCorp(id).then(res => {
@@ -64,7 +74,7 @@ export const CorpCardInfo = () => {
 
     return (
         <Flex direction="row" class={styles.cardContainer} align={"center"} justify={"center"} width="full" height="full">
-          <CorporateContact corpData={dataCorp} contactData={dataContacts} />
+          <CorporateContact corpData={dataCorp} contactData={dataContacts} listValues={listValues} />
         </Flex>
     )
 }
