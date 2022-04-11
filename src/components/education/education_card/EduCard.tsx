@@ -1,7 +1,10 @@
 import styles from "../EduList.module.scss"
 interface ICorporateCardProps {
     name: string;
-    place: string[];
+    shortName: string;
+    type: string;
+    managementList: string[];
+    place: string;
 }
 
 const openInfoCard = () => {
@@ -11,11 +14,17 @@ const openInfoCard = () => {
 const EduCard = ({
     name,
     place,
+    shortName,
+    type,
+    managementList
   }: ICorporateCardProps) => (
     <>
     <article className={styles.corporate_card} onClick={openInfoCard}>
       <div>{name}</div>
-      <div>{place ? place[0] : "Ingen ort"}</div>
+      <div>{shortName}</div>
+      <div>{type}</div>
+      <div>{managementList ? managementList[0] : ""}</div>
+      <div>{place ? place : "Ingen ort"}</div>
     </article>
     </>
   );
