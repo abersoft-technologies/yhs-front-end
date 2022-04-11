@@ -1,0 +1,14 @@
+@use '../../../../styles/variables' as var;
+
+
+.cardContainer {
+    height: 100%;
+    width: 50%;
+    border: 1px solid var.$dark-grey;
+    margin-left: 1.5rem;
+    padding: var.$spacing-large;
+}
+
+.buttonContainer {
+    width: 75%;
+}

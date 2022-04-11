@@ -55,6 +55,11 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
+  const addContactFunc = () => {
+    addContact(formData)
+    setFormData({ company: "", firstName: "", lastName: "", status: "", email: "", phoneNumber: "", role: "", town: "" });
+  }
+
   const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
     setStatusProp(e.currentTarget.id);
   };
@@ -189,7 +194,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           <div>
             <OutlinedButton onClick={closeModule} text='Avbryt' width='100%' />
             <FilledButton
-              onClick={() => addContact(formData)}
+              onClick={() => addContactFunc()}
               text='Lägg till kontakt'
               width='100%'
             />
