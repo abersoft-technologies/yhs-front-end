@@ -21,7 +21,7 @@ const UserMenu = (props: IUserMenu) => {
   );
   useEffect(() => {
     const onClick = (event: any) => {
-      console.log(event.target.closest('button'));
+      // console.log(event.target.closest('button'));
       if (
         event.target.closest('button') &&
         event.target.closest('button').id === 'dropdown-usermenu'

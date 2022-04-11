@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 interface IListData {
   name: string;
-  place: string[];
+  shortName: string;
+  type: string;
+  managementList: string[];
+  place: string;
 }
 
 import styles from './EduList.module.scss';
@@ -31,12 +34,18 @@ const EduList = () => {
         <section className={styles.edu_list_container}>
         <div className={styles.label_bar_container}>
           <div>Namn</div>
+          <div>Förkortning</div>
+          <div>typ</div>
+          <div>Ledningsgrupp</div>
           <div>Ort</div>
         </div>
         <div></div>
         {ListData && ListData.map((item: IListData, i: number) => {
           return <EduCard
             key={i}
+            shortName={item.shortName}
+            type={item.type}
+            managementList={item.managementList}
             name={item.name}
             place={item.place}
           />
