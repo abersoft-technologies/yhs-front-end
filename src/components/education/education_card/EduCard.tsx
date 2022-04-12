@@ -23,7 +23,7 @@ const EduCard = ({
       <div>{name}</div>
       <div>{shortName}</div>
       <div>{type}</div>
-      <div>{managementList ? managementList[0] : ""}</div>
+      <div>{managementList[0] ? managementList[0] : "Ingen ledningsgrupp"}</div>
       <div>{place ? place : "Ingen ort"}</div>
     </article>
     </>

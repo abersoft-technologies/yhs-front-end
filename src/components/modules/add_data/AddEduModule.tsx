@@ -56,7 +56,12 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let name = e.target.name;
-    setFormData({ ...formData, [name]: e.target.value });
+    if(name === "shortName" && formData.shortName.length < 6) {
+      setFormData({ ...formData, shortName: e.target.value });
+      console.log("Kommer in hit", formData.shortName.length)
+    } else if(name !== "shortName") {
+      setFormData({ ...formData, [name]: e.target.value });
+    }
     console.log(formData)
   };
 
@@ -158,7 +163,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
               onChangeFunction={(e) => setFormData(prev => ({...prev, place: e.currentTarget.id}))}
               width='100%'
               label='Ort'
-              value={selectValue}
+              value={formData.place}
             />
           </Flex>
         </form>

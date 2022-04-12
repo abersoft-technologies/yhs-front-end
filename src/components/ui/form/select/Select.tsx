@@ -70,7 +70,7 @@ export const Select = ({
         </button>
 
         <div
-          style={!selectClicked ? { display: 'none' } : { display: 'block' }}
+          style={!selectClicked ? { display: 'none' } : { display: 'block', zIndex: "1000" }}
           className={styles.select_open_container}
         >
           {options.map((item, i) => {
