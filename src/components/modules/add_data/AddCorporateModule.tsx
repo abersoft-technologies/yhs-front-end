@@ -6,6 +6,7 @@ import { Textarea } from '../../ui/form/textarea/Textarea';
 import ModuleDarkLayer from '../ModuleDarkLayer';
 import styles from './AddCorporateModule.module.scss';
 import { addCorp } from '../../../apis/corp/add';
+import { InfoBox } from '../../ui/info/InfoBox';
 
 interface IModuleProps {
   active: boolean;
@@ -25,6 +26,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     info: '',
   });
   const [tag, setTag] = useState<string>('');
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
 
   const handleOnChange = (
     e:
@@ -52,6 +54,12 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     addCorp(formData);
     setFormData({ name: '', tags: [], info: '' });
     setTag('');
+    setDoShowInfoBox(true)
+    closeModule();
+
+    setTimeout(() => {
+      setDoShowInfoBox(false)
+    }, 3000);
   };
 
   return (
@@ -127,6 +135,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
+      <InfoBox infoText='Du har lagt till ett nytt företag' showBox={doShowInfoBox} type="success" />
     </>
   );
 };

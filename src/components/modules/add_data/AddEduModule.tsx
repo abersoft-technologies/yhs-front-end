@@ -9,6 +9,7 @@ import { addCorp } from '../../../apis/corp/add';
 import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
 import { useSelector } from 'react-redux';
+import { InfoBox } from "../../ui/info/InfoBox"
 
 interface IModuleProps {
   active: boolean;
@@ -36,6 +37,8 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   });
   const [selectValue, setSelectValue] = useState<string>('');
   const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+
 
 
 
@@ -81,6 +84,12 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
     addEdu(formData);
     setFormData({ name: '', place: "", shortName: "", type: "", managementList: []});
     setSelectValue('');
+    setDoShowInfoBox(true);
+    onClose();
+
+    setTimeout(() => {
+      setDoShowInfoBox(false)
+    }, 3000);
   };
 
   const addManagementValue = () => {
@@ -178,6 +187,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
           </div>
         </section>
       </div>
+      <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
     </>
   );
 };

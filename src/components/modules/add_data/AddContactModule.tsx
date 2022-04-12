@@ -9,6 +9,7 @@ import { Select } from '../../ui/form/select/Select';
 import { Flex } from '../../ui/Flex';
 import { FilledButton, OutlinedButton } from '../../ui/buttons/Buttons';
 import { Textarea } from '../../ui/form/textarea/Textarea';
+import { InfoBox } from '../../ui/info/InfoBox';
 
 interface IModuleProps {
   active: boolean;
@@ -49,6 +50,9 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   const { firstName, lastName, email, phoneNumber, company, role, town } =
     formData;
 
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     console.log(name, e.target.value, formData);
@@ -58,6 +62,11 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   const addContactFunc = () => {
     addContact(formData)
     setFormData({ company: "", firstName: "", lastName: "", status: "", email: "", phoneNumber: "", role: "", town: "" });
+    setDoShowInfoBox(true)
+    closeModule();
+    setTimeout(() => {
+      setDoShowInfoBox(false)
+    }, 3000);
   }
 
   const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -201,6 +210,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
+      <InfoBox infoText='Du har lagt till en ny kontakt' showBox={doShowInfoBox} type="success" />
     </>
   );
 };
