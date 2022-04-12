@@ -156,11 +156,7 @@ const Signup: NextPage = () => {
         </div>
       </div>
       <div>
-        {windowSize.height && windowSize.height > 828 ? (
-          <img src='/svgs/login_register/logo_loggin.svg' alt='Logo' />
-        ) : (
-          ''
-        )}
+        <img src='/svgs/login_register/logo_loggin.svg' alt='Logo' />
         <form
           action='get'
           onSubmit={(e) => onFormSubmit(e)}

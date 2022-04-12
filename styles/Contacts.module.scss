@@ -142,16 +142,16 @@
 
 .contact_header {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
   margin-top: var.$spacing-medium;
+  margin-bottom: 2.5rem;
 
   div:last-child {
     align-self: flex-start;
   }
 }
 
-.header_interface_container {
+.contact_layout_search_n_filter_container {
   display: flex;
   flex-direction: row;
   gap: var.$spacing-x-large;

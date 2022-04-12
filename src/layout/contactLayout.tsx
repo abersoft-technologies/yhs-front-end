@@ -45,6 +45,7 @@ const contactLayout = ({ children }: LayoutProps) => {
   const [searchWord, setSearchWord] = useState('');
   const toggleRef = React.createRef<HTMLDivElement>();
 
+  const [filterIsActive, setFilterIsActive] = useState<boolean>(false);
   const [contactModuleToggle, setContactModuleToggle] =
     useState<boolean>(false);
   const [corpModuleToggle, setCorpModuleToggle] = useState<boolean>(false);
@@ -100,8 +101,6 @@ const contactLayout = ({ children }: LayoutProps) => {
   }, [])
 
   const setSearchPlaceholder = () => {
-    // if(router.pathname ==== '/kontakter')
-
     switch (router.pathname) {
       case '/kontakter':
         return 'Sök bland kontakter...';
@@ -147,45 +146,49 @@ const contactLayout = ({ children }: LayoutProps) => {
           </ul>
         </nav>
         <header className={styles.contact_header}>
-          <div className={styles.header_interface_container}>
-            <SearchBar
-              searchWord={searchWord}
-              setSearchWord={setSearchWord}
-              width='420px'
-              placeholder={setSearchPlaceholder()}
-            />
-            <button>
-              <img src='/filter-icon.svg' alt='Filter icon' /> Filter
-            </button>
-          </div>
-          <Flex direction='column' gap='large' align='center' justify='center'>
-            <div ref={toggleRef}>
-              <button className={styles.add_btn} onClick={() => openDropdown()}>
-                Lägg till
-                <img src='/arrow-down.svg' alt='Arrow down' />
-              </button>
-              {/*            <OutlinedButton
-                text='Lägg till'
-                color='primary-dark'
-                iconRight={<img src='/arrow-down.svg' alt='Arrow down' />}
-                onClick={() => openDropdown()}
-              /> */}
-            </div>
-            {toggleDropdown ? (
-              <Dropdown
-                toggleDropdown={openDropdown}
-                toggleRef={toggleRef}
-                onContactClick={() =>
-                  setContactModuleToggle(!contactModuleToggle)
-                }
-                onCorpClick={() => setCorpModuleToggle(!corpModuleToggle)}
-                onEduClick={() => setEduModuleToggle(!corpModuleToggle)}
+          <Flex direction='row' justify='space-between'>
+            <div className={styles.contact_layout_search_n_filter_container}>
+              <SearchBar
+                searchWord={searchWord}
+                setSearchWord={setSearchWord}
+                width='420px'
+                placeholder={setSearchPlaceholder()}
               />
-            ) : (
-              <></>
-            )}
+              <button onClick={() => setFilterIsActive(!filterIsActive)}>
+                <img src='/filter-icon.svg' alt='Filter icon' /> Filter
+              </button>
+            </div>
+            <Flex
+              direction='column'
+              gap='large'
+              align='center'
+              justify='center'
+            >
+              <div ref={toggleRef}>
+                <button
+                  className={styles.add_btn}
+                  onClick={() => openDropdown()}
+                >
+                  Lägg till
+                  <img src='/arrow-down.svg' alt='Arrow down' />
+                </button>
+              </div>
+              {toggleDropdown ? (
+                <Dropdown
+                  toggleDropdown={openDropdown}
+                  toggleRef={toggleRef}
+                  onContactClick={() =>
+                    setContactModuleToggle(!contactModuleToggle)
+                  }
+                  onCorpClick={() => setCorpModuleToggle(!corpModuleToggle)}
+                  onEduClick={() => setEduModuleToggle(!corpModuleToggle)}
+                />
+              ) : (
+                <></>
+              )}
+            </Flex>
           </Flex>
-          <FilterInterface />
+          <FilterInterface isActive={filterIsActive} />
         </header>
         {children}
       </div>

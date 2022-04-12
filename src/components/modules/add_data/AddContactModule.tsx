@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { addContact } from '../../../apis/contact/add';
 
+/* Styles imports */
 import styles from './AddContactModule.module.scss';
 
+/* Components imports */
 import ModuleDarkLayer from '../ModuleDarkLayer';
 import { Input } from '../../ui/form/input/Input';
 import { Select } from '../../ui/form/select/Select';
@@ -50,8 +52,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   const { firstName, lastName, email, phoneNumber, company, role, town } =
     formData;
 
-  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
-
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
@@ -59,19 +60,32 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
+  const handleOnChangeStatus = (label: string, value: string) => {
+    setStatusProp(value);
+  };
   const addContactFunc = () => {
-    addContact(formData)
-    setFormData({ company: "", firstName: "", lastName: "", status: "", email: "", phoneNumber: "", role: "", town: "" });
-    setDoShowInfoBox(true)
+    addContact(formData);
+    setFormData({
+      company: '',
+      firstName: '',
+      lastName: '',
+      status: '',
+      email: '',
+      phoneNumber: '',
+      role: '',
+      town: '',
+    });
+    setDoShowInfoBox(true);
     closeModule();
     setTimeout(() => {
-      setDoShowInfoBox(false)
+      setDoShowInfoBox(false);
     }, 3000);
-  }
-
-  const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
-    setStatusProp(e.currentTarget.id);
   };
+
+  /*   const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
+    setStatusProp(e.currentTarget.id);
+  }; */
+
   useEffect(() => {
     setFormData({ ...formData, status: statusProp });
   }, [statusProp]);
@@ -210,7 +224,11 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
-      <InfoBox infoText='Du har lagt till en ny kontakt' showBox={doShowInfoBox} type="success" />
+      <InfoBox
+        infoText='Du har lagt till en ny kontakt'
+        showBox={doShowInfoBox}
+        type='success'
+      />
     </>
   );
 };

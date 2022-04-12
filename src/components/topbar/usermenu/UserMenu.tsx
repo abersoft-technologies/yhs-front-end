@@ -17,11 +17,11 @@ const UserMenu = (props: IUserMenu) => {
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
 
   const user = useSelector(
-    (state: RootState) => state.userReducer.user && state.userReducer.user.data.user
+    (state: RootState) =>
+      state.userReducer.user && state.userReducer.user.data.user
   );
   useEffect(() => {
     const onClick = (event: any) => {
-      // console.log(event.target.closest('button'));
       if (
         event.target.closest('button') &&
         event.target.closest('button').id === 'dropdown-usermenu'
