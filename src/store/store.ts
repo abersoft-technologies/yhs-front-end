@@ -5,6 +5,8 @@ import { combineReducers } from 'redux';
 import userReducer from './slice/userSlice';
 import contactListReducer from './slice/contactList';
 import corpListReducer from './slice/corpList';
+import corporateReducer from './slice/corporate';
+
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
 
@@ -21,6 +23,7 @@ const reducers = combineReducers({
   corpListReducer,
   eduListReducer,
   searchQueryReducer,
+  corporateReducer
 });
 
 const persist = persistReducer(persistConfig, reducers);

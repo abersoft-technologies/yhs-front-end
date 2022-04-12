@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FilledButton, OutlinedButton } from '../../ui/buttons/Buttons';
 import { Flex } from '../../ui/Flex';
 import { Input } from '../../ui/form/input/Input';
@@ -8,28 +8,49 @@ import styles from './AddEduModule.module.scss';
 import { addCorp } from '../../../apis/corp/add';
 import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
+import { useSelector } from 'react-redux';
+import { InfoBox } from "../../ui/info/InfoBox"
 
 interface IModuleProps {
   active: boolean;
   closeModule: () => void;
+  contactList: Array<{value: string, label: string}>;
 }
 
 interface IAddEduForm {
   name: string;
-  place: string[];
+  place: string;
+  shortName: string;
+  type: string;
+  managementList: Array<string>;
 }
 
-const AddEduModule = ({ active, closeModule }: IModuleProps) => {
+
+
+const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   const [formData, setFormData] = useState<IAddEduForm>({
     name: '',
-    place: [],
+    place: "",
+    shortName: "",
+    type: "",
+    managementList: [],
   });
-  const [tag, setTag] = useState<string>('');
   const [selectValue, setSelectValue] = useState<string>('');
+  const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+
+
+
+
   const placeList = [
     { value: 'Uppsala', label: 'Uppsala' },
     { value: 'Stockholm', label: 'Stockholm' },
     { value: 'Allingsås', label: 'Allingsås' },
+  ];
+
+  const types = [
+    { value: 'Ny ansökan', label: 'Ny ansökan' },
+    { value: 'Omsök', label: 'Omsök' },
   ];
 
   const handleOnChange = (
@@ -38,39 +59,45 @@ const AddEduModule = ({ active, closeModule }: IModuleProps) => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let name = e.target.name;
-    console.log(name, e.target.value, formData);
-    setFormData({ ...formData, [name]: e.target.value });
-    if (e.target.name === 'tag') {
-      setTag(e.target.value);
+    if(name === "shortName" && formData.shortName.length < 6) {
+      setFormData({ ...formData, shortName: e.target.value });
+      console.log("Kommer in hit", formData.shortName.length)
+    } else if(name !== "shortName") {
+      setFormData({ ...formData, [name]: e.target.value });
     }
+    console.log(formData)
   };
 
   const handleSelectChange = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    let text: string = '';
-    // setSelectValue(e.currentTarget.id)
-    const list = formData.place;
-    list.push(e.currentTarget.id);
-    setFormData((prev) => ({ ...prev, place: list }));
-    list.forEach((item) => {
-      return (text += item += ', ');
-    });
-    setSelectValue(text);
+    setSelectValue(e.currentTarget.id)
   };
 
   const onClose = () => {
-    setFormData({ name: '', place: [] });
+    setFormData({ name: '', place: "", shortName: "", type: "", managementList: [] });
     setSelectValue('');
     closeModule();
   };
 
   const submitForm = () => {
-    console.log('JP', formData);
     addEdu(formData);
-    setFormData({ name: '', place: [] });
+    setFormData({ name: '', place: "", shortName: "", type: "", managementList: []});
     setSelectValue('');
+    setDoShowInfoBox(true);
+    onClose();
+
+    setTimeout(() => {
+      setDoShowInfoBox(false)
+    }, 3000);
   };
+
+  const addManagementValue = () => {
+    const list = formData.managementList;
+    list.push(managementValue);
+    setFormData(prev => ({...prev, managementList: list}))
+    setManagementValue("")
+  }
 
   return (
     <>
@@ -107,12 +134,45 @@ const AddEduModule = ({ active, closeModule }: IModuleProps) => {
               value={formData.name}
               onChangeFunction={handleOnChange}
             />
+            <Input
+              width='100%'
+              name='shortName'
+              placeholder='Förkortad betäckning'
+              label='Förkortad betäckning'
+              value={formData.shortName}
+              onChangeFunction={handleOnChange}
+            />
+            <Select
+              options={types}
+              onChangeFunction={(e) => setFormData(prev => ({...prev, type: e.currentTarget.id}))}
+              width='100%'
+              label='Typ av ansökan'
+              value={formData.type}
+            />
+            {formData.type === "Omsök" ?
+            <>
+              <Select
+                value={managementValue}
+                options={contactList}
+                width='100%'
+                label="Lägg till i ledningsgrupp"
+                onChangeFunction={(e) => setManagementValue(e.currentTarget.id)}
+              />
+              <Flex direction='row' width='full'>
+              <FilledButton
+                onClick={addManagementValue}
+                text='Lägg till i ledningsform'
+                width='50%'
+              />
+              </Flex>
+              </>
+            : null}
             <Select
               options={placeList}
-              onChangeFunction={(e) => handleSelectChange(e)}
+              onChangeFunction={(e) => setFormData(prev => ({...prev, place: e.currentTarget.id}))}
               width='100%'
               label='Ort'
-              value={selectValue}
+              value={formData.place}
             />
           </Flex>
         </form>
@@ -127,6 +187,7 @@ const AddEduModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
+      <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
     </>
   );
 };

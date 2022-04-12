@@ -24,11 +24,12 @@ const Signup: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const reqUrl =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8080/auth/signup'
-      : 'https://yhs-back-end.herokuapp.com/auth/signup';
-  //Minimum eight characters, at least one letter and one number
+  // const reqUrl =
+  //   process.env.NODE_ENV === 'development'
+  //     ? 'http://localhost:8080/auth/signup'
+  //     : 'https://yhs-back-end.herokuapp.com/auth/signup';
+  const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/signup';
+      //Minimum eight characters, at least one letter and one number
   const passwordRegex = /\d/;
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -91,7 +92,7 @@ const Signup: NextPage = () => {
       })
       .catch((err) => {
         setShowErrorMessage(true);
-        setErrorMessage('Email eller lösenord används redan');
+        setErrorMessage('Något gick fel');
         setTimeout(() => {
           setShowErrorMessage(false);
           setErrorMessage('');

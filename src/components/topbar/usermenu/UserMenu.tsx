@@ -17,7 +17,8 @@ const UserMenu = (props: IUserMenu) => {
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
 
   const user = useSelector(
-    (state: RootState) => state.userReducer.user.data.user
+    (state: RootState) =>
+      state.userReducer.user && state.userReducer.user.data.user
   );
   useEffect(() => {
     const onClick = (event: any) => {
@@ -51,8 +52,8 @@ const UserMenu = (props: IUserMenu) => {
           id='dropdown-usermenu'
           onClick={() => setOpenDropdown(!openDropdown)}
         >
-          <span>{user.firstName}</span>
-          <span>{user.lastName}</span>
+          <span>{user && user.firstName}</span>
+          <span>{user && user.lastName}</span>
           <img src='/chevron-down.svg' alt='Chevron down' />
         </button>
       </Flex>

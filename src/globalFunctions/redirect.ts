@@ -15,5 +15,8 @@ export const Redirect = (routes: RedirectRoutes) => {
     case '/registrering':
       Router.push('/registrering');
       break;
+    // case '/kontakter/foretag/foretagInfo':
+    //   Router.push('/kontakter/foretag/:slug'); //Kanske inte kan använda denna här
+    //   break;
   }
 };

@@ -5,7 +5,7 @@ import styles from './Select.module.scss';
 interface ISelectProps {
   value: string;
   onChangeFunction: (label: string, value: string) => void;
-  clearFieldFunc: (label: string) => void;
+  clearFieldFunc?: (label: string) => void;
   label: string;
   width?: string;
   options: { value: string; label: string }[];
@@ -36,16 +36,15 @@ export const Select = ({
       window.removeEventListener('click', onClick);
     };
   }, []);
+  const handleClrSelect = () => {
+    if (clearFieldFunc) {
+      clearFieldFunc(label);
+    }
+  };
 
   const ClearSelectField = () => {
     return (
-      <button
-        onClick={() => {
-          clearFieldFunc(label);
-          value = 'kuk';
-        }}
-        className={styles.clr_btn}
-      >
+      <button onClick={handleClrSelect} className={styles.clr_btn}>
         <svg
           width='10'
           height='10'
@@ -103,7 +102,11 @@ export const Select = ({
           </svg>
         </button>
         <div
-          style={!selectClicked ? { display: 'none' } : { display: 'block' }}
+          style={
+            !selectClicked
+              ? { display: 'none' }
+              : { display: 'block', zIndex: '1000' }
+          }
           className={styles.select_open_container}
         >
           {options.map((item, i) => {

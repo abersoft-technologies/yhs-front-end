@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { removeQuery, setQuery } from '../store/slice/searchQuery';
 import { useSearchDebounce } from '../hooks/useSearchDebounce';
 
@@ -20,9 +20,23 @@ import { Dropdown } from '../components/shared/dropdown/Dropdown';
 import AddEduModule from '../components/modules/add_data/AddEduModule';
 import { SearchBar } from '../components/shared/searchbar/Searchbar';
 import FilterInterface from '../components/filter_interface/FilterInterface';
+import { getAll } from "../apis/contact/getAll"
 
 interface LayoutProps {
   children: ReactNode;
+}
+
+interface IContactData {
+  company: string;
+  date: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: string;
+  status: string;
+  town: string;
+  _id: string;
 }
 
 const contactLayout = ({ children }: LayoutProps) => {
@@ -39,6 +53,10 @@ const contactLayout = ({ children }: LayoutProps) => {
 
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
+  const [managementList, setManagementList] = useState<Array<{value: string, label: string}>>([]);
+  const [ListData, setListData] = useState<Array<IContactData>>([]);
+
+
   const closeContactModule = () => setContactModuleToggle(false);
   const closeCorpModule = () => setCorpModuleToggle(false);
   const closeEduModule = () => setEduModuleToggle(false);
@@ -46,6 +64,21 @@ const contactLayout = ({ children }: LayoutProps) => {
   const openDropdown = () => {
     setToggleDropdown(!toggleDropdown);
   };
+
+
+    const createContactList = (data: Array<IContactData>) => {
+      const list: Array<{value: string, label: string}> = [];
+      data.forEach((item: IContactData, i: number) => {
+        let text = "";
+        text += item.firstName + " " + item.lastName;
+        const obj = {
+          value: text,
+          label: text
+        }
+        list.push(obj)
+      });
+      setManagementList(list);
+    }
 
   useEffect(() => {
     const handleQuerySearch = () => {
@@ -56,6 +89,16 @@ const contactLayout = ({ children }: LayoutProps) => {
       clearTimeout(timeOutId);
     };
   }, [searchWord]);
+
+  useEffect(() => {
+    getAll().then(res => {
+      console.log("RES --->", res?.data)
+      setListData(res?.data.data.contactList)
+      createContactList(res?.data.data.contactList);
+    }).catch(err => {
+      console.log(err)
+    })
+  }, [])
 
   const setSearchPlaceholder = () => {
     switch (router.pathname) {
@@ -157,7 +200,7 @@ const contactLayout = ({ children }: LayoutProps) => {
         active={corpModuleToggle}
         closeModule={closeCorpModule}
       />
-      <AddEduModule active={eduModuleToggle} closeModule={closeEduModule} />
+      <AddEduModule active={eduModuleToggle} closeModule={closeEduModule} contactList={managementList} />
     </>
   );
 };

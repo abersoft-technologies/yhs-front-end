@@ -7,10 +7,11 @@ interface IFlexProps {
   direction: 'column' | 'column-reverse' | 'row' | 'row-reverse';
   gap?: SpaceSize;
   align?: 'center' | 'flex-end' | 'flex-start';
-  justify?: 'center' | 'flex-end' | 'flex-start' | 'space-between';
+  justify?: 'center' | 'flex-end' | 'flex-start' | 'space-between' | "space-evenly" | "space-around";
   class?: string;
   height?: 'screen' | 'full' | 'none';
   width?: 'screen' | 'full' | 'auto';
+  wrap?: "wrap" | "nowrap" | "wrap-reverse"
 }
 
 export const Flex = (props: IFlexProps) => {
@@ -29,6 +30,7 @@ export const Flex = (props: IFlexProps) => {
     'width-screen': props.width === 'screen',
     'width--full': props.width === 'full',
     'width--auto': props.width === 'auto',
+    [`flex--wrap-${props.wrap}`]: props.wrap
   });
 
   return <div className={classes}>{props.children}</div>;
