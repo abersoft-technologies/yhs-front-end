@@ -1,36 +1,49 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
-import { IUserModel } from '../../types/global';
+import { IUserModelRedux } from '../../types/global';
 
-const initialState: IUserModel = {
-  user: {
+interface StateObject {
     status: null,
     data: {
-      token: '',
+      token: string;
       user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        date: '',
-        id: '',
+        firstName: string,
+          lastName: string,
+          email: string,
+          date: string,
+          id: string,
+      }
+    }
+    message: string;
+}
+
+const initialState: StateObject = {
+      status: null,
+      data: {
+        token: '',
+        user: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          date: '',
+          id: '',
+        },
       },
-    },
-    message: '',
-  },
+      message: '',
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    add: (state, action: PayloadAction<IUserModel>) => {
-      state = { ...action.payload };
+    add: (state, action: PayloadAction<StateObject>) => {
+      return action.payload;
     },
   },
 });
 
 export const { add } = userSlice.actions;
 
-export const SelectCurrentUser = (state: RootState) => state.userReducer.user;
+export const SelectCurrentUser = (state: RootState) => state.userReducer.data.user;
 
 export default userSlice.reducer;

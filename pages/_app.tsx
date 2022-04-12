@@ -43,12 +43,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   }, [router.pathname]);
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
         {getLayout(<Component {...pageProps} />)}
         {/*   <Layout>
           <Component {...pageProps} />
         </Layout> */}
-      </PersistGate>
     </Provider>
   );
 }

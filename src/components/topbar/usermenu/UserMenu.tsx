@@ -4,21 +4,38 @@ import { useSelector } from 'react-redux';
 import { Redirect } from '../../../globalFunctions/redirect';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { RootState } from '../../../store/store';
-import { IUserModel } from '../../../types/global';
+import { IUserModelRedux } from '../../../types/global';
 import { Flex } from '../../ui/Flex';
+import SelectCurrentUser from "../../../store/slice/userSlice"
 
 import styles from './Usermenu.module.scss';
+import { useAppSelector } from '../../../hooks/useStore';
 
 interface IUserMenu {
   firstName?: string;
 }
 
+interface UserObject {
+    status: null,
+    data: {
+      token: string;
+      user: {
+        firstName: string,
+          lastName: string,
+          email: string,
+          date: string,
+          id: string,
+      }
+    }
+    message: string;
+}
+
+
 const UserMenu = (props: IUserMenu) => {
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
 
-  const user = useSelector(
-    (state: RootState) =>
-      state.userReducer.user && state.userReducer.user.data.user
+  const user: UserObject = useAppSelector(
+    (state: RootState) => state.userReducer
   );
   useEffect(() => {
     const onClick = (event: any) => {
@@ -33,11 +50,12 @@ const UserMenu = (props: IUserMenu) => {
     };
 
     window.addEventListener('click', onClick);
+    console.log("USER --->", user)
 
     return () => {
       window.removeEventListener('click', onClick);
     };
-  }, []);
+  }, [user]);
 
   const logout = () => {
     useLocalStorage('remove', 'session', 'user');
@@ -52,8 +70,8 @@ const UserMenu = (props: IUserMenu) => {
           id='dropdown-usermenu'
           onClick={() => setOpenDropdown(!openDropdown)}
         >
-          <span>{user && user.firstName}</span>
-          <span>{user && user.lastName}</span>
+          <span>{user ? user.data.user.firstName : "Inget" }</span>
+          <span>{user ? user.data.user.lastName : "Namn"}</span>
           <img src='/chevron-down.svg' alt='Chevron down' />
         </button>
       </Flex>
