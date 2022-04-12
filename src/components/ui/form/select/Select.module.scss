@@ -15,6 +15,7 @@
   top: 120%;
   left: 0;
   width: 100%;
+  z-index: 9999;
   background: #fff;
   padding: $spacing-small 0;
   border-radius: $spacing-small;
@@ -30,6 +31,7 @@
 }
 .select_container {
   border-radius: $spacing-small;
+  width: 100%;
   border: 1px solid $light-grey;
   padding: 0 0.75rem;
   height: 38px;
@@ -40,10 +42,23 @@
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   cursor: default;
   transition: all 150ms ease-in-out;
+  .clr_btn {
+    margin-right: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      > svg > path {
+        transition: stroke 100ms ease-in-out;
+        stroke: $txt-color;
+      }
+    }
+  }
 
-  button {
+  .drop_dowm_btn {
     position: absolute;
     background: none;
     display: flex;

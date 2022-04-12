@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { addContact } from '../../../apis/contact/add';
 
+/* Styles imports */
 import styles from './AddContactModule.module.scss';
 
+/* Components imports */
 import ModuleDarkLayer from '../ModuleDarkLayer';
 import { Input } from '../../ui/form/input/Input';
 import { Select } from '../../ui/form/select/Select';
@@ -55,9 +57,10 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
-  const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
-    setStatusProp(e.currentTarget.id);
+  const handleOnChangeStatus = (label: string, value: string) => {
+    setStatusProp(value);
   };
+
   useEffect(() => {
     setFormData({ ...formData, status: statusProp });
   }, [statusProp]);

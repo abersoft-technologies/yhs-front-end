@@ -4,18 +4,22 @@ import styles from './Select.module.scss';
 
 interface ISelectProps {
   value: string;
-  onChangeFunction: React.MouseEventHandler<HTMLDivElement>;
-  label?: string;
+  onChangeFunction: (label: string, value: string) => void;
+  clearFieldFunc: (label: string) => void;
+  label: string;
   width?: string;
   options: { value: string; label: string }[];
+  clrAble?: boolean;
 }
 
 export const Select = ({
   label,
   value,
   onChangeFunction,
+  clearFieldFunc,
   options,
   width,
+  clrAble,
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
 
@@ -33,6 +37,34 @@ export const Select = ({
     };
   }, []);
 
+  const ClearSelectField = () => {
+    return (
+      <button
+        onClick={() => {
+          clearFieldFunc(label);
+          value = 'kuk';
+        }}
+        className={styles.clr_btn}
+      >
+        <svg
+          width='10'
+          height='10'
+          viewBox='0 0 10 10'
+          fill='none'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M1.66699 8.33332L8.33366 1.66666M1.66699 1.66666L8.33366 8.33332L1.66699 1.66666Z'
+            stroke='#C4C4C4'
+            stroke-width='1.5'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          />
+        </svg>
+      </button>
+    );
+  };
+
   return (
     <div
       className={styles.select_label_container}
@@ -49,8 +81,10 @@ export const Select = ({
         id='select-container'
         onClick={() => setSelectClicked(!selectClicked)}
       >
-        <span>{value}</span>
-        <button type='button'>
+        <span>{value ? value : `Välj ${label.toLocaleLowerCase()}...`}</span>
+        {value && clrAble && <ClearSelectField />}
+
+        <button type='button' className={styles.drop_dowm_btn}>
           <span></span>
           <svg
             width='12'
@@ -68,7 +102,6 @@ export const Select = ({
             />
           </svg>
         </button>
-
         <div
           style={!selectClicked ? { display: 'none' } : { display: 'block' }}
           className={styles.select_open_container}
@@ -78,7 +111,7 @@ export const Select = ({
               <div
                 key={i}
                 id={item.value}
-                onClick={onChangeFunction}
+                onClick={() => onChangeFunction(label, item.value)}
                 className={styles.select_option}
               >
                 {item.label}
