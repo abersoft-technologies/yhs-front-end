@@ -1,16 +1,16 @@
-export interface IUserModel {
-  user: {
-    status: number | null;
+export interface IUserModelRedux {
     data: {
-      token: string;
-      user: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        date: string;
-        id: string;
+      status: number | null;
+      data: {
+        token: string;
+        user: {
+          firstName: string;
+          lastName: string;
+          email: string;
+          date: string;
+          id: string;
+        };
       };
-    };
-    message: string;
-  };
+      message: string;
+    }
 }

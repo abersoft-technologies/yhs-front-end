@@ -7,6 +7,8 @@ import { useAppDispatch } from '../src/hooks/useStore';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
+import { useDispatch } from "react-redux";
+import { IUserModelRedux } from '../src/types/global';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -17,7 +19,7 @@ import { Input } from '../src/components/ui/form/input/Input';
 
 const Login: NextPage = () => {
   const windowSize = useWindowSize();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,12 +44,12 @@ const Login: NextPage = () => {
       email: email,
       password: password,
     };
-    const access_token = data;
     setIsLoading(true);
     axios
       .post(reqUrl, data)
       .then((res) => {
         const data = res.data;
+        console.log("JP userData", data)
         dispatch(add(data));
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
         setTimeout(() => {

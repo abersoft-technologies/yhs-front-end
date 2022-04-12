@@ -5,6 +5,7 @@ import { Redirect } from '../src/globalFunctions/redirect';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
+import { add } from '../src/store/slice/userSlice';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -12,9 +13,12 @@ import styles from '../styles/loginSignup.module.scss';
 /* Components import */
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
+import { useAppDispatch } from '../src/hooks/useStore';
 
 const Signup: NextPage = () => {
   const windowSize = useWindowSize();
+  const dispatch = useAppDispatch();
+
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -87,7 +91,10 @@ const Signup: NextPage = () => {
     axios
       .post(reqUrl, data)
       .then((res) => {
-        Redirect('/');
+        dispatch(add(res.data))
+        setTimeout(() => {
+          Redirect('/');
+        }, 1000);
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
       })
       .catch((err) => {
