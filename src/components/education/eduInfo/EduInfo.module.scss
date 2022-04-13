@@ -1,0 +1,72 @@
+@use '../../../../styles/variables' as var;
+
+.edu_list_container {
+    // margin-top: var.$spacing-5x;
+}
+
+.managementList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin: 4px 0px;
+    }
+}
+
+.cardContainer {
+    height: 100%;
+    width: 50%;
+    border: 1px solid var.$dark-grey;
+    margin-left: 1.5rem;
+    padding: var.$spacing-large;
+}
+
+.label_bar_container {
+    color: var.$txt-color;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 10fr 5fr 5fr 10fr 2fr;
+    padding-bottom: var.$spacing-small;
+    border-bottom: 1px solid var.$dark-grey;
+
+    > div:first-child {
+      margin-left: 0.75rem;
+    }
+
+    > div:nth-child(2) {
+      display: grid;
+      grid-template-columns: 10fr 10fr;
+      grid-auto-flow: column;
+    }
+  }
+  .styles.status_box_container {
+    position: relative;
+
+    width: 100%;
+  }
+
+  .edu_card {
+    display: grid;
+    grid-template-columns: 10fr 5fr 5fr 10fr 2fr;
+    color: var.$txt-color;
+    border-bottom: 1px solid var.$light-grey;
+    padding: 0.9rem 0 0.9rem 0;
+    > div:first-child {
+      margin-left: 0.75rem;
+    }
+
+    font-size: 1rem;
+
+    > div:nth-child(2) {
+      display: grid;
+      grid-template-columns: 10fr 10fr;
+      grid-auto-flow: column;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background: #7586ce10;
+      // border-radius: 4px;
+    }
+  }

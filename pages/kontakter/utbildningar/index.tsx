@@ -1,8 +1,8 @@
 import React, { ReactElement } from 'react';
 
-import EduList from '../../src/components/education/EduList';
-import ContactLayout from '../../src/layout/contactLayout';
-import Layout from '../../src/layout/layout';
+import EduList from '../../../src/components/education/EduList';
+import ContactLayout from '../../../src/layout/contactLayout';
+import Layout from '../../../src/layout/layout';
 
 const utbildningar = () => {
   return <EduList />;

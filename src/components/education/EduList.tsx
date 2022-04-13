@@ -15,6 +15,7 @@ interface IListData {
   type: string;
   managementList: string[];
   place: string;
+  _id: string;
 }
 
 const EduList = () => {
