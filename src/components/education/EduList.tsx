@@ -57,6 +57,7 @@ const EduList = () => {
               managementList={item.managementList}
               name={item.name}
               place={item.place}
+              _id={item._id}
             />
           );
         })
