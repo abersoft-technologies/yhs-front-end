@@ -16,6 +16,10 @@ interface IButtonNumProps {
 }
 interface IPaginationProps {
   setPage: (number: number) => void;
+  setSlicedPages: (number: number) => void;
+  setPagePosition: (number: number) => void;
+  slicedPages: number;
+  pagePosition: number;
   page: number;
   totalPages: number;
 }
@@ -31,9 +35,15 @@ const ActivePageLayer = styled.div`
   left: ${(props: IActivePageLayerProps) => props.pagePosition}px;
 `;
 
-const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
-  const [pagePosition, setPagePosition] = useState(0);
-  const [slicedPages, setSlicedpage] = useState(1);
+const Pagination = ({
+  page,
+  setPage,
+  totalPages,
+  slicedPages,
+  pagePosition,
+  setSlicedPages,
+  setPagePosition,
+}: IPaginationProps) => {
   const [hoverDotsLeft, setHoverDotsLeft] = useState(false);
   const [hoverDotsRight, setHoverDotsRight] = useState(false);
   let arrayPages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -55,19 +65,19 @@ const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
     if (doubleRight) {
       if (pagePosition <= 3) {
         setPagePosition(4);
-        setSlicedpage(3);
+        setSlicedPages(3);
         setPage(7);
       } else if (numbersLeft > 6) {
         setPagePosition(4);
-        setSlicedpage(slicedPages + 3);
+        setSlicedPages(slicedPages + 3);
         setPage(page + 3);
       } else if (numbersLeft === 6) {
         setPagePosition(4);
-        setSlicedpage(slicedPages + 2);
+        setSlicedPages(slicedPages + 2);
         setPage(page + 2);
       } else if (numbersLeft === 5) {
         setPagePosition(4);
-        setSlicedpage(slicedPages + 1);
+        setSlicedPages(slicedPages + 1);
         setPage(page + 1);
       }
       return;
@@ -75,36 +85,36 @@ const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
       if (pagePosition > 4) {
         setPagePosition(4);
         setPage(lastPageNumber - 6);
-        setSlicedpage(lastPageNumber - 10);
+        setSlicedPages(lastPageNumber - 10);
       } else if (page > 7) {
         setPagePosition(4);
-        setSlicedpage(slicedPages - 3);
+        setSlicedPages(slicedPages - 3);
         setPage(page - 3);
       } else if (page === 7) {
         setPagePosition(4);
-        setSlicedpage(slicedPages - 2);
+        setSlicedPages(slicedPages - 2);
         setPage(page - 2);
       } else if (page === 6) {
         setPagePosition(4);
-        setSlicedpage(slicedPages - 1);
+        setSlicedPages(slicedPages - 1);
         setPage(page - 1);
       }
     } else if (numberPressed === lastPageNumber) {
       setPagePosition(8);
       setPage(lastPageNumber);
-      setSlicedpage(lastPageNumber - 8);
+      setSlicedPages(lastPageNumber - 8);
     } else if (lastPageNumber - numberPressed <= 3) {
       setPage(numberPressed);
       setPagePosition(8 - (lastPageNumber - numberPressed));
-      setSlicedpage(lastPageNumber - 8);
+      setSlicedPages(lastPageNumber - 8);
     } else if (numberPressed > 5) {
       setPagePosition(4);
       setPage(numberPressed);
-      setSlicedpage(numberPressed - 4);
+      setSlicedPages(numberPressed - 4);
     } else {
       setPagePosition(numberPressed - 1);
       setPage(numberPressed);
-      setSlicedpage(1);
+      setSlicedPages(1);
     }
   };
 
@@ -117,7 +127,7 @@ const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
     if (direction === 'next' && page !== totalPages) {
       if (pagesLeftEnd > 4 && pagePosition === 4) {
         setPage(page + 1);
-        setSlicedpage(slicedPages + 1);
+        setSlicedPages(slicedPages + 1);
       } else {
         setPage(page + 1);
         setPagePosition(pagePosition + 1);
@@ -127,7 +137,7 @@ const Pagination = ({ page, setPage, totalPages }: IPaginationProps) => {
     if (direction === 'previous' && page !== 1) {
       if (pagesLeftStart > 4 && pagePosition === 4) {
         setPage(page - 1);
-        setSlicedpage(slicedPages - 1);
+        setSlicedPages(slicedPages - 1);
       } else {
         setPage(page - 1);
         setPagePosition(pagePosition - 1);

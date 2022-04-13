@@ -3,6 +3,7 @@ import AnimateHeight from 'react-animate-height';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilterOptions } from '../../store/slice/filterOptions';
+import { setFilterQuery } from '../../store/slice/filterQuery';
 
 import styles from './Filterinterface.module.scss';
 
@@ -57,6 +58,15 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
     branch: '',
     klassificering: '',
   });
+
+  useEffect(() => {
+    const filterObj = {
+      filterStatus: contactFilter.status,
+      filterTown: contactFilter.ort,
+      filterEdu: contactFilter.utbildning,
+    };
+    dispatch(setFilterQuery(filterObj));
+  }, [contactFilter]);
 
   useEffect(() => {
     dispatch(getFilterOptions());
