@@ -19,11 +19,11 @@ const EduCard = ({
     managementList
   }: ICorporateCardProps) => (
     <>
-    <article className={styles.corporate_card} onClick={openInfoCard}>
+    <article className={styles.edu_card} onClick={openInfoCard}>
       <div>{name}</div>
       <div>{shortName}</div>
       <div>{type}</div>
-      <div>{managementList[0] ? managementList[0] : "Ingen ledningsgrupp"}</div>
+      <div>{managementList.length ? managementList.length + " personer" : "Ingen ledningsgrupp"}</div>
       <div>{place ? place : "Ingen ort"}</div>
     </article>
     </>
