@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilterOptions } from '../../store/slice/filterOptions';
+import { setFilterQuery } from '../../store/slice/filterQuery';
 
 import styles from './Filterinterface.module.scss';
 
@@ -12,8 +15,8 @@ import {
   optionsStatus,
   optionsEduType,
   optionsBranches,
-  optionsTown,
 } from './FilterSelectOptions';
+import { RootState } from '../../store/store';
 
 interface IFilterInterfaceProps {
   isActive: boolean;
@@ -22,11 +25,9 @@ interface ContactFilterState {
   utbildning: string;
   status: string;
   ort: string;
-  // taggar?: string[];
 }
 interface CorpFilterState {
   branch: string;
-  // taggar?: string[];
 }
 interface EduFilterState {
   branch: string;
@@ -35,6 +36,15 @@ interface EduFilterState {
 
 const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const townsOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.towns.data
+  );
+  const eduOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.educations.data
+  );
+
   const height = isActive ? 'auto' : 0;
   const [contactFilter, setContactFilter] = useState<ContactFilterState>({
     utbildning: '',
@@ -48,6 +58,19 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
     branch: '',
     klassificering: '',
   });
+
+  useEffect(() => {
+    const filterObj = {
+      filterStatus: contactFilter.status,
+      filterTown: contactFilter.ort,
+      filterEdu: contactFilter.utbildning,
+    };
+    dispatch(setFilterQuery(filterObj));
+  }, [contactFilter]);
+
+  useEffect(() => {
+    dispatch(getFilterOptions());
+  }, []);
 
   const onChangeFilter = (label: string, value: string) => {
     if (router.pathname === '/kontakter/utbildningar') {
@@ -91,7 +114,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
       case '/kontakter':
         return [
           <Select
-            options={optionsStatus}
+            options={eduOptions}
             label='Utbildning'
             width='250px'
             value={contactFilter.utbildning}
@@ -109,7 +132,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             clearFieldFunc={handleClrField}
           />,
           <Select
-            options={optionsTown}
+            options={townsOptions}
             label='Ort'
             width='250px'
             value={contactFilter.ort}
@@ -119,7 +142,6 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
           />,
           <Input
             placeholder='Sök bland taggar...'
-            options={optionsStatus}
             label='Taggar'
             width='250px'
           />,
