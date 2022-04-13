@@ -10,6 +10,7 @@ interface IListData {
   type: string;
   managementList: string[];
   place: string;
+  _id: string;
 }
 
 import styles from './EduList.module.scss';
@@ -48,6 +49,7 @@ const EduList = () => {
             managementList={item.managementList}
             name={item.name}
             place={item.place}
+            _id={item._id}
           />
         })}
 

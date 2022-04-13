@@ -15,7 +15,7 @@ export const useLocalStorage = (option: "get" | "set" | "remove", storageType: "
         if(option === "set" && value) {
             return sessionStorage.setItem(key, value)
         }
-        if(option === "get") {
+        if(option === "get" && typeof window !== 'undefined') {
             const returnedItem = sessionStorage.getItem(key)
             if(!returnedItem) {
                 return console.log("No Item in sessionStorage")
