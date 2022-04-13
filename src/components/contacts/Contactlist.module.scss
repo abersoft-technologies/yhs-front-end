@@ -4,6 +4,13 @@
   // margin-top: var.$spacing-5x;
 }
 
+.not_found_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 8rem;
+}
+
 .label_bar_container {
   color: var.$txt-color;
   font-weight: bold;
