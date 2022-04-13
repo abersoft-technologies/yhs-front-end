@@ -21,6 +21,8 @@ interface IListDataMap {
 
 const ContactList = () => {
   const [page, setPage] = useState(1);
+  const [pagePosition, setPagePosition] = useState(0);
+  const [slicedPages, setSlicedPages] = useState(1);
   const dispatch = useDispatch();
 
   const contactListReducer = useSelector(
@@ -28,6 +30,9 @@ const ContactList = () => {
   );
   const searchQuery = useSelector(
     (state: any) => state.searchQueryReducer.value
+  );
+  const filterQuery = useSelector(
+    (state: RootState) => state.filterQueryReducer.filterObj
   );
 
   const ListData = contactListReducer.result.data
@@ -38,10 +43,29 @@ const ContactList = () => {
     : undefined;
 
   useEffect(() => {
+    setPage(1);
+    setPagePosition(0);
+    setSlicedPages(1);
     dispatch(
-      getContactListRedux({ limit: 10, page: page, queryParams: searchQuery })
+      getContactListRedux({
+        limit: 10,
+        page: page,
+        queryParams: searchQuery,
+        filterQuery,
+      })
     );
-  }, [page, searchQuery]);
+  }, [searchQuery, filterQuery]);
+
+  useEffect(() => {
+    dispatch(
+      getContactListRedux({
+        limit: 10,
+        page: page,
+        queryParams: searchQuery,
+        filterQuery,
+      })
+    );
+  }, [page]);
 
   return (
     <>
@@ -77,7 +101,11 @@ const ContactList = () => {
       </section>
       <Pagination
         page={page}
+        pagePosition={pagePosition}
+        slicedPages={slicedPages}
         setPage={setPage}
+        setPagePosition={setPagePosition}
+        setSlicedPages={setSlicedPages}
         totalPages={listValues ? listValues.totalPages : 0}
       />
     </>

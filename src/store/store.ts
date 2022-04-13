@@ -9,6 +9,7 @@ import corporateReducer from './slice/corporate';
 
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
+import filterQueryReducer from './slice/filterQuery';
 import filterOptionsReducer from './slice/filterOptions';
 
 import { persistReducer } from 'redux-persist';
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   corpListReducer,
   eduListReducer,
   searchQueryReducer,
+  filterQueryReducer,
   corporateReducer,
   filterOptionsReducer,
 });
