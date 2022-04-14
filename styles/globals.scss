@@ -2,6 +2,11 @@
 @use './ui/text.scss';
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+:root {
+  --nextui-colors-blue500: #8596df !important;
+  --nextui-colors-blue600: #6879c4 !important;
+}
+
 html,
 body {
   padding: 0;

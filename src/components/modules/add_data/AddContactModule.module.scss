@@ -2,37 +2,43 @@
 
 .add_contact_module_container {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   border-radius: $spacing-small;
   border: 1px solid $light-grey;
   background: #fff;
   box-shadow: $subtile-box-shadow;
-  top: 2%;
+  top: 0;
   z-index: 999;
   width: 580px;
-  height: 96%;
+  height: calc(100% - 20px);
+  margin: 10px;
   transition: all 0.65s cubic-bezier(0.3, 0, 0, 1);
-  overflow-y: auto;
+  .add_contact_module_inner_container {
+    position: relative;
+    height: 100%;
+  }
   form {
+    flex: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 0 $spacing-x-large 0 $spacing-x-large;
+    padding: $spacing-x-large;
     gap: $spacing-medium;
-    margin-top: $spacing-large;
-    margin-bottom: $spacing-medium;
-    // height: 96%;
-
-    // overflow: hidden;
-    // max-height: 350px;
+    height: calc(96% - 140px);
+    overflow-y: auto;
     .textarea_container {
       align-self: flex-start;
       width: 100%;
     }
   }
   header {
-    position: sticky;
-    top: 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 51px;
+    flex: 0 0 auto;
     z-index: 999;
     background: $primary-color-transparent;
     border-bottom: 1px solid $light-grey;
@@ -56,20 +62,42 @@
       color: $txt-color;
     }
   }
+  .af_section_container {
+    width: 100%;
+    margin: $spacing-x-large 0 $spacing-x-large 0;
+    p {
+      font-weight: bold;
+      padding-bottom: $spacing-small;
+      border-bottom: 1px solid $light-grey;
+      margin-bottom: $spacing-small;
+    }
+
+    .checkbox_group {
+      flex-wrap: wrap;
+      margin-top: $spacing-medium;
+      p {
+        width: 100%;
+        font-weight: 500;
+      }
+    }
+  }
   section {
-    position: sticky;
+    position: relative;
     background: #fff;
     z-index: 999;
     bottom: 0;
     width: 100%;
+    height: auto;
     padding: $spacing-x-large;
     border-top: 1px solid $light-grey;
     border-radius: 0 0 4px 4px;
+
     div {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: $spacing-x-large;
+      height: 100%;
     }
   }
 }

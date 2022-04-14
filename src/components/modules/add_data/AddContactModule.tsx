@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
 import { addContact } from '../../../apis/contact/add';
 
 /* Styles imports */
@@ -12,6 +14,8 @@ import { Flex } from '../../ui/Flex';
 import { FilledButton, OutlinedButton } from '../../ui/buttons/Buttons';
 import { Textarea } from '../../ui/form/textarea/Textarea';
 import { InfoBox } from '../../ui/info/InfoBox';
+import { Text } from '../../ui/text/Text';
+import { Checkbox } from '@nextui-org/react';
 
 interface IModuleProps {
   active: boolean;
@@ -27,18 +31,44 @@ interface IFormData {
   role?: string;
   town?: string;
   status: string;
+  letterOfIntent: {
+    edu: string[];
+    employment: string;
+    internship: string;
+    readEdu: boolean;
+    contributeEdu: boolean;
+    lecture: boolean;
+    studyVisit: boolean;
+    eduBoard: boolean;
+  };
 }
 
 const optionsSelect = [
   { value: 'Ny kontakt', label: 'Ny kontakt' },
   { value: 'Möte bokat', label: 'Möte bokat' },
-  { value: 'AF skriven', label: 'AF skriven' },
-  { value: 'AF Bekräftad', label: 'AF bekräftad' },
+  { value: 'AF Skriven', label: 'AF Skriven' },
+  { value: 'AF Bekräftad', label: 'AF Bekräftad' },
   { value: 'Dementerad', label: 'Dementerad' },
+];
+const optionsAnställning = [
+  { value: '0', label: '0' },
+  { value: '1-2', label: '1-2' },
+  { value: '3-5', label: '3-5' },
+  { value: '11-20', label: '11-20' },
+  { value: 'Annat', label: 'Annat' },
+];
+const optionsLia = [
+  { value: '0', label: '0' },
+  { value: '1', label: '1' },
+  { value: '2', label: '2' },
+  { value: '3', label: '3' },
+  { value: 'Annat', label: 'Annat' },
 ];
 
 const AddContactModule = ({ active, closeModule }: IModuleProps) => {
-  const [statusProp, setStatusProp] = useState(optionsSelect[0].value);
+  const eduOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.educations.data
+  );
   const [formData, setFormData] = useState<IFormData>({
     firstName: '',
     lastName: '',
@@ -48,9 +78,37 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     role: '',
     town: '',
     status: optionsSelect[0].value,
+    letterOfIntent: {
+      edu: [],
+      employment: '',
+      internship: '',
+      readEdu: false,
+      contributeEdu: false,
+      lecture: false,
+      studyVisit: false,
+      eduBoard: false,
+    },
   });
-  const { firstName, lastName, email, phoneNumber, company, role, town } =
-    formData;
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneNumber,
+    company,
+    role,
+    town,
+    status,
+  } = formData;
+  const {
+    readEdu,
+    contributeEdu,
+    lecture,
+    studyVisit,
+    eduBoard,
+    edu,
+    employment,
+    internship,
+  } = formData.letterOfIntent;
 
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
 
@@ -60,20 +118,81 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     setFormData({ ...formData, [name]: e.target.value });
   };
 
-  const handleOnChangeStatus = (label: string, value: string) => {
-    setStatusProp(value);
+  const checkActiveStatus = () => {
+    if (
+      status === 'AF Skriven' ||
+      status === 'AF Bekräftad' ||
+      status === 'Dementerad'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
+
+  const handleOnChangeSelect = (label: string, value: string) => {
+    switch (label) {
+      case 'Status':
+        return setFormData({ ...formData, status: value });
+      case 'Utbildningar':
+        return setFormData({
+          ...formData,
+          letterOfIntent: {
+            ...formData.letterOfIntent,
+            edu: [value],
+          },
+        });
+      case 'Anställning':
+        return setFormData({
+          ...formData,
+          letterOfIntent: {
+            ...formData.letterOfIntent,
+            employment: value,
+          },
+        });
+      case 'LIA':
+        return setFormData({
+          ...formData,
+          letterOfIntent: {
+            ...formData.letterOfIntent,
+            internship: value,
+          },
+        });
+      default:
+        return setFormData({
+          ...formData,
+        });
+    }
+  };
+
+  const handleOnChangeCheckbox = (e: any, key: string) => {
+    setFormData({
+      ...formData,
+      letterOfIntent: { ...formData.letterOfIntent, [key]: e.target.checked },
+    });
+  };
+
   const addContactFunc = () => {
     addContact(formData);
     setFormData({
       company: '',
       firstName: '',
       lastName: '',
-      status: '',
       email: '',
       phoneNumber: '',
       role: '',
       town: '',
+      status: optionsSelect[0].value,
+      letterOfIntent: {
+        edu: [],
+        employment: '',
+        internship: '',
+        readEdu: false,
+        contributeEdu: false,
+        lecture: false,
+        studyVisit: false,
+        eduBoard: false,
+      },
     });
     setDoShowInfoBox(true);
     closeModule();
@@ -82,21 +201,13 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     }, 3000);
   };
 
-  /*   const handleOnChangeStatus = (e: React.MouseEvent<HTMLDivElement>) => {
-    setStatusProp(e.currentTarget.id);
-  }; */
-
-  useEffect(() => {
-    setFormData({ ...formData, status: statusProp });
-  }, [statusProp]);
-
   return (
     <>
       <ModuleDarkLayer active={active} />
       <div
         style={
           active
-            ? { right: '2%', opacity: '1' }
+            ? { right: '0', opacity: '1' }
             : { right: '-55%', opacity: '0' }
         }
         className={styles.add_contact_module_container}
@@ -199,8 +310,8 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               label='Status'
               options={optionsSelect}
               width='50%'
-              onChangeFunction={handleOnChangeStatus}
-              value={statusProp}
+              onChangeFunction={handleOnChangeSelect}
+              value={status}
             />
           </Flex>
           <div className={styles.textarea_container}>
@@ -212,10 +323,87 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               placeholder='Fri text...'
             />
           </div>
+
+          {checkActiveStatus() && (
+            <Flex
+              direction='column'
+              gap='medium'
+              class={styles.af_section_container}
+            >
+              <Text text='Avsiktsförklaring' color='#464646' />
+              <Select
+                label='Utbildningar'
+                options={eduOptions}
+                width='100%'
+                onChangeFunction={handleOnChangeSelect}
+                value={edu[0]}
+              />
+              <Flex
+                direction='row'
+                gap='xxx-large'
+                width='full'
+                justify='space-between'
+              >
+                <Select
+                  label='Anställning'
+                  options={optionsAnställning}
+                  width='50%'
+                  onChangeFunction={handleOnChangeSelect}
+                  value={employment}
+                />
+                <Select
+                  label='LIA'
+                  options={optionsLia}
+                  width='50%'
+                  onChangeFunction={handleOnChangeSelect}
+                  value={internship}
+                />
+              </Flex>
+              <Flex direction='row' gap='x-large' class={styles.checkbox_group}>
+                <Text text='Övrig medverkan' color='#464646' />
+                <Checkbox
+                  checked={readEdu}
+                  onChange={(e) => handleOnChangeCheckbox(e, 'readEdu')}
+                  size='sm'
+                >
+                  Insatt i utb.p
+                </Checkbox>
+                <Checkbox
+                  checked={contributeEdu}
+                  onChange={(e) => handleOnChangeCheckbox(e, 'contributeEdu')}
+                  size='sm'
+                >
+                  Bidrag till utb.
+                </Checkbox>
+                <Checkbox
+                  checked={lecture}
+                  onChange={(e) => handleOnChangeCheckbox(e, 'lecture')}
+                  size='sm'
+                >
+                  Föreläsningar
+                </Checkbox>
+                <Checkbox
+                  checked={studyVisit}
+                  onChange={(e) => handleOnChangeCheckbox(e, 'studyVisit')}
+                  size='sm'
+                >
+                  Studiebesök
+                </Checkbox>
+                <Checkbox
+                  checked={eduBoard}
+                  onChange={(e) => handleOnChangeCheckbox(e, 'eduBoard')}
+                  size='sm'
+                >
+                  Ledningsgrupp
+                </Checkbox>
+              </Flex>
+            </Flex>
+          )}
         </form>
         <section>
           <div>
             <OutlinedButton onClick={closeModule} text='Avbryt' width='100%' />
+
             <FilledButton
               onClick={() => addContactFunc()}
               text='Lägg till kontakt'
