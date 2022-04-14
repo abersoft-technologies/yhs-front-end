@@ -12,6 +12,8 @@ import searchQueryReducer from './slice/searchQuery';
 import filterQueryReducer from './slice/filterQuery';
 import filterOptionsReducer from './slice/filterOptions';
 
+import contactReducer from './slice/contact';
+
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 const persistConfig = {
@@ -28,6 +30,7 @@ const reducers = combineReducers({
   filterQueryReducer,
   corporateReducer,
   filterOptionsReducer,
+  contactReducer,
 });
 
 const persist = persistReducer(persistConfig, reducers);
