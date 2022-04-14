@@ -1,8 +1,11 @@
+import InfoLayout from "../../../layout/infoLayout";
 import { ContactInfoCard } from "./ContactInfoCard";
 
 const ContactInfo = () => {
     return (
-        <ContactInfoCard />
+        <InfoLayout>
+            <ContactInfoCard />
+        </InfoLayout>
     )
 }
 

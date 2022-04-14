@@ -1,0 +1,48 @@
+@use './variables' as var;
+
+
+.container {
+    margin-top: -44px;
+    height: calc(100vh - 60px);
+    .sideLayout {
+        width: 35%;
+        height: 100%;
+        border-right: 1px solid grey;
+
+        .topBox {
+            border-bottom: 1px solid grey;
+            min-height: 20vh;
+            width: 100%;
+            padding-top: 40px;
+            padding-bottom: 40px;
+
+
+            .circleContainer {
+                width: 84px;
+                height: 84px;
+                background-color: var.$primary-color-dark;
+                border-radius: 50%;
+                color: white;
+            }
+
+            .placeContainer {
+                border-bottom: 1px solid grey;
+            }
+        }
+
+        .middleBox {
+            padding: var.$spacing-large;
+            border-bottom: 1px solid grey;
+            max-height: 45%;
+            overflow: auto;
+        }
+
+        .bottomBox {
+            padding-top: 20px;
+
+            img {
+                cursor: pointer;
+            }
+        }
+    }
+}

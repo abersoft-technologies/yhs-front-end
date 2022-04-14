@@ -2,11 +2,11 @@ import styles from "./EduInfo.module.scss"
 
 interface ICorporateCardProps {
     name?: string;
-    shortName: string;
-    type: string;
+    shortName?: string;
+    type?: string;
     managementList?: string[];
-    place: string;
-    _id: string;
+    place?: string;
+    _id?: string;
 }
 
 const EduListCard = ({

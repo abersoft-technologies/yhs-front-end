@@ -33,24 +33,29 @@ $size-properties: (
 
 @each $key, $py in $size-properties {
   .text--py-#{$key} {
-    padding: $py 0px;
+    padding-top: $py;
+    padding-bottom: $py;
   }
 }
 
 @each $key, $px in $size-properties {
   .text--px-#{$key} {
-    padding: 0px $px;
+    padding-right: $px;
+    padding-left: $px;
   }
 }
 
 @each $key, $my in $size-properties {
   .text--my-#{$key} {
-    margin: $my 0px;
+    margin-top: $my;
+    margin-bottom: $my;
+
   }
 }
 
 @each $key, $mx in $size-properties {
   .text--mx-#{$key} {
-    margin: 0px $mx;
+    margin-right: $mx;
+    margin-left: $mx;
   }
 }

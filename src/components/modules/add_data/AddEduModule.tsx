@@ -39,9 +39,6 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
 
-
-
-
   const placeList = [
     { value: 'Uppsala', label: 'Uppsala' },
     { value: 'Stockholm', label: 'Stockholm' },
@@ -144,7 +141,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
             />
             <Select
               options={types}
-              onChangeFunction={(e) => setFormData(prev => ({...prev, type: e.currentTarget.id}))}
+              onChangeFunction={(label: string, value: string) => setFormData(prev => ({...prev, type: value}))}
               width='100%'
               label='Typ av ansökan'
               value={formData.type}
@@ -156,7 +153,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
                 options={contactList}
                 width='100%'
                 label="Lägg till i ledningsgrupp"
-                onChangeFunction={(e) => setManagementValue(e.currentTarget.id)}
+                onChangeFunction={(label: string, value: string) => setManagementValue(value)}
               />
               <Flex direction='row' width='full'>
               <FilledButton
@@ -169,7 +166,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
             : null}
             <Select
               options={placeList}
-              onChangeFunction={(e) => setFormData(prev => ({...prev, place: e.currentTarget.id}))}
+              onChangeFunction={(label: string, value: string) => setFormData(prev => ({...prev, place: value}))}
               width='100%'
               label='Ort'
               value={formData.place}
