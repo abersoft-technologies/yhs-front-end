@@ -19,6 +19,7 @@ interface IListDataMap {
   status: string;
   email?: string;
   phoneNumber?: string;
+  _id?: string;
 }
 
 const ContactList = () => {
@@ -96,6 +97,7 @@ const ContactList = () => {
                   status={item.status}
                   email={item.email}
                   phoneNumber={item.phoneNumber}
+                  id={item._id}
                 />
               );
             })
