@@ -6,13 +6,12 @@ import userReducer from './slice/userSlice';
 import contactListReducer from './slice/contactList';
 import corpListReducer from './slice/corpList';
 import corporateReducer from './slice/corporate';
+import contactReducer from './slice/contact';
 
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
 import filterQueryReducer from './slice/filterQuery';
 import filterOptionsReducer from './slice/filterOptions';
-
-import contactReducer from './slice/contact';
 
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';

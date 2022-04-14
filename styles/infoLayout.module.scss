@@ -1,48 +1,60 @@
-@use './variables' as var;
-
+@import './variables';
 
 .container {
-    margin-top: -44px;
-    height: calc(100vh - 60px);
-    .sideLayout {
-        width: 35%;
-        height: 100%;
-        border-right: 1px solid grey;
+  margin-top: -44px;
+  height: calc(100vh - 60px);
+  .sideLayout {
+    width: 35%;
+    height: 100%;
+    border-right: 1px solid $very-light-grey;
 
-        .topBox {
-            border-bottom: 1px solid grey;
-            min-height: 20vh;
-            width: 100%;
-            padding-top: 40px;
-            padding-bottom: 40px;
+    .topBox {
+      border-bottom: 1px solid $very-light-grey;
+      min-height: 20vh;
+      width: 100%;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      overflow-y: auto;
 
+      .circleContainer {
+        min-width: 64px;
+        min-height: 64px;
+        // background-color: $primary-color-dark;
 
-            .circleContainer {
-                width: 84px;
-                height: 84px;
-                background-color: var.$primary-color-dark;
-                border-radius: 50%;
-                color: white;
-            }
+        background: #7586ce40;
+        border-radius: 50%;
+        color: $primary-color-dark;
+      }
 
-            .placeContainer {
-                border-bottom: 1px solid grey;
-            }
-        }
-
-        .middleBox {
-            padding: var.$spacing-large;
-            border-bottom: 1px solid grey;
-            max-height: 45%;
-            overflow: auto;
-        }
-
-        .bottomBox {
-            padding-top: 20px;
-
-            img {
-                cursor: pointer;
-            }
-        }
+      .placeContainer {
+        border-bottom: 1px solid $very-light-grey;
+        padding: 0 $spacing-small $spacing-small $spacing-small;
+      }
     }
+
+    .middleBox {
+      padding: $spacing-large;
+      border-bottom: 1px solid $very-light-grey;
+      max-height: 45%;
+      overflow: auto;
+      > p:first-child {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 19px;
+        letter-spacing: 0em;
+        text-align: center;
+      }
+    }
+    .email_number_container {
+      text-align: center;
+    }
+
+    .bottomBox {
+      padding-top: 20px;
+
+      img {
+        cursor: pointer;
+      }
+    }
+  }
 }
