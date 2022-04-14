@@ -114,7 +114,6 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
-    console.log(name, e.target.value, formData);
     setFormData({ ...formData, [name]: e.target.value });
   };
 

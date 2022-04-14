@@ -1,0 +1,30 @@
+@import '../../../../styles/variables';
+
+.info_canvas {
+  background: $bg-grey;
+  margin-right: -48px;
+  width: calc(100% + 48px);
+}
+
+.letter_of_intent_container {
+  background: #fff;
+  padding: $spacing-xx-large;
+  box-shadow: $subtile-box-shadow;
+  margin: $spacing-x-large;
+  border-radius: $spacing-x-small;
+
+  > form {
+    max-width: 580px;
+  }
+
+  .checkbox_group {
+    > p {
+      width: 100%;
+      font-weight: 600;
+      border-bottom: 1px solid $very-light-grey;
+      padding-bottom: $spacing-small;
+    }
+    flex-wrap: wrap;
+    // max-width: 520px;
+  }
+}
