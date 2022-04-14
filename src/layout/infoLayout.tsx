@@ -10,7 +10,7 @@ interface IInfoLayoutProps extends ICorpProps, IEduProps {
   title?: string;
   subTitle?: string;
   info?: string;
-  contact: IContactSchema;
+  contact?: IContactSchema;
 }
 
 interface ICorpProps {

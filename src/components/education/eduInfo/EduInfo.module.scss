@@ -15,11 +15,18 @@
 }
 
 .cardContainer {
-    height: 100%;
-    width: 50%;
-    border: 1px solid var.$dark-grey;
-    margin-left: 1.5rem;
-    padding: var.$spacing-large;
+  width: calc(100% + 48px);
+  margin-left: 1.5rem;
+  padding: var.$spacing-large;
+  height: 50%;
+
+  .card {
+    background: #fff;
+    padding: var.$spacing-xx-large;
+    box-shadow: var.$subtile-box-shadow;
+    margin: var.$spacing-x-large;
+    border-radius: var.$spacing-x-small;
+  }
 }
 
 .label_bar_container {
