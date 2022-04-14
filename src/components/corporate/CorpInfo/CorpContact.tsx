@@ -4,6 +4,7 @@ import { Select } from "../../ui/form/select/Select";
 import { CorpTag } from "./CorpTag"
 import styles from "./CorpCardInfo.module.scss"
 import contactStyle from "../../../components/contacts/ContactList.module.scss"
+import corpCardStyle from "./CorpCardInfo.module.scss";
 import ContactCard from "./ContactCard";
 
 interface ICorporateContactProps {
@@ -78,9 +79,9 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
     }, [contactData])
 
     return (
-        <Flex direction="column" gap="large" width="full">
+        <Flex direction="column" gap="large" width="full" class={corpCardStyle.card}>
             <h1>Anknyta kontakter</h1>
-            <Flex direction="row" justify="space-between" width="full" gap="large">
+            <Flex direction="row" width="full" gap="large">
                 {corpData && corpData.tags.map((item: string, i: number) => {
                     return <CorpTag key={i} value={item} />
                 })}

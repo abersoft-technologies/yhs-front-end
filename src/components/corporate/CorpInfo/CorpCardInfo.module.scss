@@ -1,14 +1,22 @@
-@use '../../../../styles/variables' as var;
+@import '../../../../styles/variables';
 
 
 .cardContainer {
-    height: 100%;
-    width: 50%;
-    border: 1px solid var.$dark-grey;
+    width: calc(100% + 48px);
+    // border: 1px solid $dark-grey;
     margin-left: 1.5rem;
-    padding: var.$spacing-large;
+    padding: $spacing-large;
+    height: 50%;
+
+    .card {
+        background: #fff;
+        padding: $spacing-xx-large;
+        box-shadow: $subtile-box-shadow;
+        margin: $spacing-x-large;
+        border-radius: $spacing-x-small;
+    }
 }
 
 .buttonContainer {
-    width: 75%;
+    width: 10%;
 }
