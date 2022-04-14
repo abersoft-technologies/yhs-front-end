@@ -55,9 +55,9 @@ export const Select = ({
           <path
             d='M1.66699 8.33332L8.33366 1.66666M1.66699 1.66666L8.33366 8.33332L1.66699 1.66666Z'
             stroke='#C4C4C4'
-            stroke-width='1.5'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='1.5'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </button>
@@ -95,9 +95,9 @@ export const Select = ({
             <path
               d='M1 1L5.78125 6.0625L10.5625 1'
               stroke='#C4C4C4'
-              stroke-width='1.5'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeWidth='1.5'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           </svg>
         </button>

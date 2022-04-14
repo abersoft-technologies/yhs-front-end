@@ -10,6 +10,16 @@ interface IAddContactParams {
   role?: string;
   town?: string;
   status: string;
+  letterOfIntent: {
+    edu: string[];
+    employment: string;
+    internship: string;
+    readEdu: boolean;
+    contributeEdu: boolean;
+    lecture: boolean;
+    studyVisit: boolean;
+    eduBoard: boolean;
+  };
 }
 
 export const addContact = async (data: IAddContactParams) => {
