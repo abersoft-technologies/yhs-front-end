@@ -1,4 +1,5 @@
 import styles from '../Contactlist.module.scss';
+import { useRouter } from "next/router"
 
 interface IContactCardProps {
   firstName: string;
@@ -9,6 +10,7 @@ interface IContactCardProps {
   status: string;
   email?: string;
   phoneNumber?: string;
+  id?: string;
 }
 
 interface IStatusBoxProps {
@@ -64,8 +66,12 @@ const ContactCard = ({
   district,
   status,
   email,
-}: IContactCardProps) => (
-  <article className={styles.contact_card}>
+  id
+}: IContactCardProps) => {
+  const router = useRouter();
+
+  return (
+  <article className={styles.contact_card} onClick={() => router.push(`kontakter/${id}`)}>
     <div>{firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}</div>
     <div>
       <div>{company ? company : 'Ej angivet'}</div>
@@ -75,6 +81,7 @@ const ContactCard = ({
     <StatusBox status={status} />
     <div>{email ? email : 'Ingen assosierad email'}</div>
   </article>
-);
+  )
+};
 
 export default ContactCard;
