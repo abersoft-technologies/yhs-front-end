@@ -6,7 +6,7 @@ import listStyles from "./EduInfo.module.scss"
 import EduListCard from "./EduListCard";
 
 interface IEduInfoCardProps {
-    data: IEduData;
+    data?: IEduData;
 }
 
 interface IEduData {
@@ -26,7 +26,7 @@ export const EduInfoCard = ({data}: IEduInfoCardProps) => {
 
     return (
         <Flex direction="column" gap="large" width="full">
-            <Text textSize="large" text={data && data.name}/>
+            <Text textSize="large" text={data && data.name ? data.name : ""}/>
             <Flex direction="column">
             <Text text="Ledningsgrupp" textSize="large" mY="x-small" />
                 <Flex direction="row" gap="medium">

@@ -8,11 +8,11 @@ import ContactCard from "./ContactCard";
 
 interface ICorporateContactProps {
     corpData: any;
-    contactData: ContactObject;
+    contactData?: contacts;
     listValues: any;
 }
 
-interface ContactObject {
+interface contacts {
     contacts: Array<IContactData>;
 }
 
@@ -64,7 +64,7 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
     const [page, setPage] = useState(1);
 
     const createSelectArray = () => {
-        if(contactData) {
+        if(contactData && contactData.contacts.length) {
             let list: Array<IContactData> = [];
             contactData.contacts.forEach((item: IContactData) => {
                 list.push(item);

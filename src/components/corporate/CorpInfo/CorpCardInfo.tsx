@@ -8,6 +8,7 @@ import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { getContactsInCorp, getCorp } from "../../../apis/corp/get";
 import { useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../../hooks/useStore";
+import InfoLayout from "../../../layout/infoLayout";
 
 interface IEduCardInfoProps {
     // contacts?: Array<any>;
@@ -33,12 +34,17 @@ interface IContactData {
   _id: string;
 }
 
+interface contacts {
+  contacts: Array<IContactData>;
+}
+
 export const CorpCardInfo = () => {
     const router = useRouter();
     const userData = useLocalStorage("get", "session", "user");
     const { name, id } = router.query;
     const [dataCorp, setDataCorp] = useState<any>();
-    const [dataContacts, setDataContacts] = useState<any>();
+    const [dataContacts, setDataContacts] = useState<contacts>();
+    const [placeList, setPlaceList] = useState<Array<string>>();
 
     const dispatch = useAppDispatch();
 
@@ -67,14 +73,30 @@ export const CorpCardInfo = () => {
           // dispatch(getContactListRedux({ limit: 10, page: 1, queryParams: 'KYH' }));
     }
 
+    const createPlaceArray = () => {
+      const list: string[] = [];
+      if(dataContacts && dataContacts.contacts.length) {
+        dataContacts.contacts.forEach((item) => {
+          list.push(item.town)
+        })
+      }
+      let uniqueList = list.filter((c, index) => {
+        return list.indexOf(c) === index;
+      });
+      setPlaceList(uniqueList)
+    }
+
         useEffect(() => {
           getData();
-        }, [name, id])
+          createPlaceArray();
+        }, [name, id, dataContacts?.contacts.length])
 
 
     return (
+      <InfoLayout title={dataCorp && dataCorp.name} subTitle={dataCorp && dataCorp.name} tags={dataCorp && dataCorp.tags} place={placeList} info={dataCorp && dataCorp.info} >
         <Flex direction="row" class={styles.cardContainer} align={"center"} justify={"center"} width="full" height="full">
           <CorporateContact corpData={dataCorp} contactData={dataContacts} listValues={listValues} />
         </Flex>
+        </InfoLayout>
     )
 }
