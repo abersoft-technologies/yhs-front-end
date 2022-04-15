@@ -1,5 +1,5 @@
 import styles from '../Contactlist.module.scss';
-import { useRouter } from "next/router"
+import { useRouter } from 'next/router';
 
 interface IContactCardProps {
   firstName: string;
@@ -19,16 +19,16 @@ interface IStatusBoxProps {
 
 const StatusBox = ({ status }: IStatusBoxProps) => {
   function setClassName() {
-    switch (status) {
-      case 'AF Bekräftad':
+    switch (status.toLocaleLowerCase()) {
+      case 'af bekräftad':
         return styles.green_box;
-      case 'Dementerad':
+      case 'dementerad':
         return styles.red_box;
-      case 'Möte bokat':
+      case 'möte bokat':
         return styles.yellow_box;
-      case 'Ny kontakt':
+      case 'ny kontakt':
         return styles.blue_box;
-      case 'AF skriven':
+      case 'af skriven':
         return styles.green_box;
       default:
         break;
@@ -66,22 +66,27 @@ const ContactCard = ({
   district,
   status,
   email,
-  id
+  id,
 }: IContactCardProps) => {
   const router = useRouter();
 
   return (
-  <article className={styles.contact_card} onClick={() => router.push(`kontakter/${id}`)}>
-    <div>{firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}</div>
-    <div>
-      <div>{company ? company : 'Ej angivet'}</div>
-      <div>{role ? role : 'Ej angivet'}</div>
-    </div>
-    <div>{district ? district : 'Ej angivet'}</div>
-    <StatusBox status={status} />
-    <div>{email ? email : 'Ingen assosierad email'}</div>
-  </article>
-  )
+    <article
+      className={styles.contact_card}
+      onClick={() => router.push(`kontakter/${id}`)}
+    >
+      <div>
+        {firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}
+      </div>
+      <div>
+        <div>{company ? company : 'Ej angivet'}</div>
+        <div>{role ? role : 'Ej angivet'}</div>
+      </div>
+      <div>{district ? district : 'Ej angivet'}</div>
+      <StatusBox status={status} />
+      <div>{email ? email : 'Ingen assosierad email'}</div>
+    </article>
+  );
 };
 
 export default ContactCard;
