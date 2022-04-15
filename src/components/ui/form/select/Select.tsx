@@ -4,12 +4,13 @@ import styles from './Select.module.scss';
 
 interface ISelectProps {
   value: string;
-  onChangeFunction: (label: string, value: string) => void;
+  onChangeFunction: (label: string, value: string, id?: string) => void;
   clearFieldFunc?: (label: string) => void;
   label: string;
   width?: string;
-  options: { value: string; label: string }[];
+  options: { value: string; label: string, id?: string }[];
   clrAble?: boolean;
+  id?: string;
 }
 
 export const Select = ({
@@ -20,6 +21,7 @@ export const Select = ({
   options,
   width,
   clrAble,
+  id
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
 
@@ -114,7 +116,7 @@ export const Select = ({
               <div
                 key={i}
                 id={item.value}
-                onClick={() => onChangeFunction(label, item.value)}
+                onClick={() => onChangeFunction(label, item.value, item.id)}
                 className={styles.select_option}
               >
                 {item.label}

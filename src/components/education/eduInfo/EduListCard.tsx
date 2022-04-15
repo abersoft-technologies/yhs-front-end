@@ -1,6 +1,6 @@
 import styles from "./EduInfo.module.scss"
 
-interface ICorporateCardProps {
+interface IEduCardProps {
     name?: string;
     shortName?: string;
     type?: string;
@@ -13,7 +13,7 @@ const EduListCard = ({
     place,
     shortName,
     type,
-  }: ICorporateCardProps) => {
+  }: IEduCardProps) => {
     return (<>
     <article className={styles.edu_card} >
       <div>{shortName}</div>
