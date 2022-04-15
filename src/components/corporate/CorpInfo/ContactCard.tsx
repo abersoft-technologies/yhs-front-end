@@ -1,4 +1,4 @@
-import styles from '../../contacts/ContactList.module.scss';
+import styles from './CorpCardInfo.module.scss';
 
 interface IContactCardProps {
   firstName?: string;

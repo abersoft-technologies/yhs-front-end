@@ -20,3 +20,45 @@
 .buttonContainer {
     width: 10%;
 }
+
+.contact_list_container {
+    // margin-top: .$spacing-5x;
+}
+
+.label_bar_container {
+    color: $txt-color;
+    font-weight: bold;
+    display: grid;
+    grid-template-columns: 15fr 13fr 10fr;
+    padding-bottom: $spacing-small;
+    border-bottom: 1px solid $dark-grey;
+
+    > div:first-child {
+      margin-left: 0.75rem;
+    }
+
+    > div:nth-child(2) {
+      display: grid;
+      grid-template-columns: 10fr 15fr 15fr;
+      grid-auto-flow: column;
+    }
+}
+
+.contact_card {
+    display: grid;
+    grid-template-columns: 15fr 13fr 10fr;
+    color: $txt-color;
+    border-bottom: 1px solid $light-grey;
+    padding: 0.9rem 0 0.9rem 0;
+    font-size: 1rem;
+    > div:first-child {
+      margin-left: 0.75rem;
+    }
+
+
+    > div:nth-child(2) {
+      display: grid;
+      grid-template-columns: 10fr 10fr;
+      grid-auto-flow: column;
+    }
+}
