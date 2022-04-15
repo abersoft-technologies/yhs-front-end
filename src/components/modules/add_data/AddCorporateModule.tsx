@@ -27,6 +27,8 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   });
   const [tag, setTag] = useState<string>('');
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+  const [doShowTagInfoBox, setDoShowTagInfoBox] = useState<boolean>(false)
+
 
   const handleOnChange = (
     e:
@@ -43,14 +45,17 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
 
   const addTag = () => {
     if (tag === '') return;
+    setDoShowTagInfoBox(true)
     const tempTags = formData.tags;
     tempTags.push(tag);
     setFormData((prev) => ({ ...prev, tags: tempTags }));
-    setTag('');
+    setTimeout(() => {
+      setDoShowTagInfoBox(false)
+      setTag('');
+    }, 1000);
   };
 
   const submitForm = () => {
-    console.log('JP', formData);
     addCorp(formData);
     setFormData({ name: '', tags: [], info: '' });
     setTag('');
@@ -136,6 +141,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
         </section>
       </div>
       <InfoBox infoText='Du har lagt till ett nytt företag' showBox={doShowInfoBox} type="success" />
+      <InfoBox infoText={`Du har lagt till ${tag} som en ny tag`} showBox={doShowTagInfoBox} type="success" />
     </>
   );
 };

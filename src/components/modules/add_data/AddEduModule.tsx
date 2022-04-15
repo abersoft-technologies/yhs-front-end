@@ -38,7 +38,9 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   const [selectValue, setSelectValue] = useState<string>('');
   const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+  const [doShowManagementInfoBox, setDoShowManagementInfoBox] = useState<boolean>(false)
 
+  doShowManagementInfoBox
   const placeList = [
     { value: 'Uppsala', label: 'Uppsala' },
     { value: 'Stockholm', label: 'Stockholm' },
@@ -90,10 +92,14 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   };
 
   const addManagementValue = () => {
+    setDoShowManagementInfoBox(true);
     const list = formData.managementList;
     list.push(managementValue);
     setFormData(prev => ({...prev, managementList: list}))
-    setManagementValue("")
+    setTimeout(() => {
+      setDoShowManagementInfoBox(false)
+      setManagementValue("")
+    }, 1500);
   }
 
   return (
@@ -158,8 +164,8 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
               <Flex direction='row' width='full'>
               <FilledButton
                 onClick={addManagementValue}
-                text='Lägg till i ledningsform'
-                width='50%'
+                text='Lägg till'
+                width='40%'
               />
               </Flex>
               </>
@@ -185,6 +191,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
         </section>
       </div>
       <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
+      <InfoBox infoText={`Du har lagt till ${managementValue} som en ny person i ledningsgruppen`} showBox={doShowManagementInfoBox} type="success" />
     </>
   );
 };
