@@ -15,9 +15,6 @@ import { persistStore } from 'redux-persist';
 import '../styles/globals.scss';
 import '../styles/ui/flex.scss';
 
-/* Components import */
-import Layout from '../src/layout/layout';
-
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -31,9 +28,6 @@ const persistor = persistStore(store);
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
   const getLayout = Component.getLayout ?? ((page) => page);
-  /*   if (router.pathname === '/*') {
-    Redirect('/inloggning');
-  } */
 
   useEffect(() => {
     const user = useLocalStorage('get', 'session', 'user');
@@ -42,12 +36,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }
   }, [router.pathname]);
   return (
-    <Provider store={store}>
-        {getLayout(<Component {...pageProps} />)}
-        {/*   <Layout>
-          <Component {...pageProps} />
-        </Layout> */}
-    </Provider>
+    <Provider store={store}>{getLayout(<Component {...pageProps} />)}</Provider>
   );
 }
 

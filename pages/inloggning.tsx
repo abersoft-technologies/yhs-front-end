@@ -7,7 +7,7 @@ import { useAppDispatch } from '../src/hooks/useStore';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 import { IUserModelRedux } from '../src/types/global';
 
 /* Styles import */
@@ -49,9 +49,11 @@ const Login: NextPage = () => {
       .post(reqUrl, data)
       .then((res) => {
         const data = res.data;
-        console.log("JP userData", data)
+        console.log('JP userData', data);
         dispatch(add(data));
         useLocalStorage('set', 'session', 'user', JSON.stringify(data));
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
         setTimeout(() => {
           Redirect('/');
         }, 1000);
