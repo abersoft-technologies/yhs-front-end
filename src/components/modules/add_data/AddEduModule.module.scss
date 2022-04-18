@@ -19,9 +19,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding: $spacing-x-large;
+    justify-content: center;
+    // align-items: center;
+    padding: 0 $spacing-x-large 0 $spacing-x-large;
+
     gap: $spacing-medium;
     height: calc(96% - 140px);
     overflow-y: auto;
