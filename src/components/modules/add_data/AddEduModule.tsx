@@ -9,13 +9,13 @@ import { addCorp } from '../../../apis/corp/add';
 import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
 import { useSelector } from 'react-redux';
-import { InfoBox } from "../../ui/info/InfoBox"
+import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
 
 interface IModuleProps {
   active: boolean;
   closeModule: () => void;
-  contactList: Array<{value: string, label: string}>;
+  contactList: Array<{ value: string; label: string }>;
   listDataContacts: Array<IContactData>;
 }
 
@@ -47,26 +47,30 @@ interface IManagementObject {
   place: string;
 }
 
-
-
-const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IModuleProps) => {
+const AddEduModule = ({
+  active,
+  closeModule,
+  contactList,
+  listDataContacts,
+}: IModuleProps) => {
   const [formData, setFormData] = useState<IAddEduForm>({
     name: '',
-    place: "",
-    shortName: "",
-    type: "",
+    place: '',
+    shortName: '',
+    type: '',
     managementList: [],
   });
   const [selectValue, setSelectValue] = useState<string>('');
   const [id, setId] = useState<string>('');
 
-  const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
-  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
-  const [doShowManagementInfoBox, setDoShowManagementInfoBox] = useState<boolean>(false)
-  const [managementTexts, setManagementTexts] = useState<Array<string>>([])
+  const [managementValue, setManagementValue] = useState<string>(
+    contactList[0] ? contactList[0].value : ''
+  );
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
+  const [doShowManagementInfoBox, setDoShowManagementInfoBox] =
+    useState<boolean>(false);
 
-
-  doShowManagementInfoBox
+  doShowManagementInfoBox;
   const placeList = [
     { value: 'Uppsala', label: 'Uppsala' },
     { value: 'Stockholm', label: 'Stockholm' },
@@ -84,60 +88,62 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let name = e.target.name;
-    if(name === "shortName" && formData.shortName.length < 6) {
-      setFormData({ ...formData, shortName: e.target.value });
-      console.log("Kommer in hit", formData.shortName.length)
-    } else if(name !== "shortName") {
-      setFormData({ ...formData, [name]: e.target.value });
-    }
-    console.log(formData)
+    setFormData({ ...formData, [name]: e.target.value });
   };
 
   const handleSelectChange = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {
-    setSelectValue(e.currentTarget.id)
+    setSelectValue(e.currentTarget.id);
   };
 
   const onClose = () => {
-    setFormData({ name: '', place: "", shortName: "", type: "", managementList: [] });
-    setManagementTexts([])
+    setFormData({
+      name: '',
+      place: '',
+      shortName: '',
+      type: '',
+      managementList: [],
+    });
     setSelectValue('');
     closeModule();
   };
 
   const submitForm = () => {
     addEdu(formData);
-    setFormData({ name: '', place: "", shortName: "", type: "", managementList: []});
+    setFormData({
+      name: '',
+      place: '',
+      shortName: '',
+      type: '',
+      managementList: [],
+    });
     setSelectValue('');
     setDoShowInfoBox(true);
     onClose();
 
     setTimeout(() => {
-      setDoShowInfoBox(false)
+      setDoShowInfoBox(false);
     }, 3000);
   };
 
   const addManagementValue = () => {
     setDoShowManagementInfoBox(true);
-    const tempList: Array<string> = managementTexts;
     const list = formData.managementList;
-    tempList.push(managementValue)
-    setManagementTexts(tempList);
     list.push(id);
-    setFormData(prev => ({...prev, managementList: list}))
+    setFormData((prev) => ({ ...prev, managementList: list }));
     setTimeout(() => {
-      setDoShowManagementInfoBox(false)
-      setManagementValue("")
+      setDoShowManagementInfoBox(false);
+      setManagementValue('');
     }, 1500);
-    console.log(formData)
-
-  }
+    console.log(formData);
+  };
 
   const onChangeManagement = (label: string, value: string, id?: string) => {
-    setManagementValue(value)
-    setId(id!)
-  }
+    setManagementValue(value);
+    setId(id!);
+    console.log(formData);
+  };
 
   return (
     <>
@@ -145,7 +151,7 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
       <div
         style={
           active
-            ? { right: '2%', opacity: '1' }
+            ? { right: '0', opacity: '1' }
             : { right: '-55%', opacity: '0' }
         }
         className={styles.add_edu_module_container}
@@ -161,9 +167,9 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
         <form onSubmit={(e) => e.preventDefault()}>
           <Flex
             direction='column'
-            gap='xxx-large'
+            gap='medium'
             width='full'
-            justify='center'
+            justify='space-between'
             align='center'
           >
             <Input
@@ -174,47 +180,54 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
               value={formData.name}
               onChangeFunction={handleOnChange}
             />
-            <Input
-              width='100%'
-              name='shortName'
-              placeholder='Förkortad betäckning'
-              label='Förkortad betäckning'
-              value={formData.shortName}
-              onChangeFunction={handleOnChange}
-            />
+            <Flex direction='column' class={styles.short_name_container}>
+              <Input
+                width='100%'
+                name='shortName'
+                placeholder='Förkortad betäckning'
+                label='Förkortad betäckning'
+                value={formData.shortName}
+                onChangeFunction={handleOnChange}
+                maxLength={6}
+              />
+              <Text color='#c4c4c4' text='Max 6 tecken' />
+            </Flex>
             <Select
               options={types}
-              onChangeFunction={(label: string, value: string) => setFormData(prev => ({...prev, type: value}))}
+              onChangeFunction={(label: string, value: string) =>
+                setFormData((prev) => ({ ...prev, type: value }))
+              }
               width='100%'
               label='Typ av ansökan'
               value={formData.type}
             />
-            {formData.type === "Omsök" ?
-            <>
-              <Select
-                value={managementValue}
-                options={contactList}
-                width='100%'
-                label="Lägg till i ledningsgrupp"
-                onChangeFunction={(label: string, value: string, id?: string) => onChangeManagement(label, value, id)}
-              />
-              <Flex direction='row' align='flex-start' gap='medium' wrap='wrap'>
-                {managementTexts.map((item, i) => {
-                  return <Text text={item} key={i} color="grey" />
-                })}
-              </Flex>
-              <Flex direction='row' width='full'>
-              <FilledButton
-                onClick={addManagementValue}
-                text='Lägg till'
-                width='40%'
-              />
-              </Flex>
+            {formData.type === 'Omsök' ? (
+              <>
+                <Select
+                  value={managementValue}
+                  options={contactList}
+                  width='100%'
+                  label='Lägg till i ledningsgrupp'
+                  onChangeFunction={(
+                    label: string,
+                    value: string,
+                    id?: string
+                  ) => onChangeManagement(label, value, id)}
+                />
+                <Flex direction='row' width='full'>
+                  <FilledButton
+                    onClick={addManagementValue}
+                    text='Lägg till'
+                    width='40%'
+                  />
+                </Flex>
               </>
-            : null}
+            ) : null}
             <Select
               options={placeList}
-              onChangeFunction={(label: string, value: string) => setFormData(prev => ({...prev, place: value}))}
+              onChangeFunction={(label: string, value: string) =>
+                setFormData((prev) => ({ ...prev, place: value }))
+              }
               width='100%'
               label='Ort'
               value={formData.place}
@@ -232,8 +245,16 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
           </div>
         </section>
       </div>
-      <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
-      <InfoBox infoText={"Du har lagt till en ny utbildning"} showBox={doShowManagementInfoBox} type="success" />
+      <InfoBox
+        infoText='Du har lagt till en ny utbildning'
+        showBox={doShowInfoBox}
+        type='success'
+      />
+      <InfoBox
+        infoText={`Du har lagt till ${managementValue} som en ny person i ledningsgruppen`}
+        showBox={doShowManagementInfoBox}
+        type='success'
+      />
     </>
   );
 };

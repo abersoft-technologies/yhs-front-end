@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import AnimateHeight from 'react-animate-height';
+import React, { useEffect, useState } from 'react';
+import { RootState } from '../../store/store';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilterOptions } from '../../store/slice/filterOptions';
@@ -10,13 +11,13 @@ import styles from './Filterinterface.module.scss';
 import { Flex } from '../ui/Flex';
 import { Input } from '../ui/form/input/Input';
 import { Select } from '../ui/form/select/Select';
+import { MultipleSelect } from '../ui/form/select/MultipleSelect';
 
 import {
   optionsStatus,
   optionsEduType,
   optionsBranches,
 } from './FilterSelectOptions';
-import { RootState } from '../../store/store';
 
 interface IFilterInterfaceProps {
   isActive: boolean;
@@ -140,11 +141,11 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             clrAble={true}
             clearFieldFunc={handleClrField}
           />,
-          <Input
+          /*    <Input
             placeholder='Sök bland taggar...'
             label='Taggar'
             width='250px'
-          />,
+          />, */
         ];
       case '/kontakter/foretag':
         return [
@@ -157,11 +158,11 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             clrAble={true}
             clearFieldFunc={handleClrField}
           />,
-          <Input
-            placeholder='Sök bland taggar...'
+          <MultipleSelect
             options={optionsStatus}
             label='Taggar'
-            width='250px'
+            width='350px'
+            // addAble={true}
           />,
         ];
       case '/kontakter/utbildningar':
@@ -184,16 +185,17 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             clrAble={true}
             clearFieldFunc={handleClrField}
           />,
-          <Input
+          /*     <Input
             placeholder='Sök bland taggar...'
-            options={optionsStatus}
+            name='tags'
+            onChangeFunction={onChange}
             label='Taggar'
             width='250px'
-          />,
+          />, */
         ];
 
       default:
-        return [<Input label='Status' width='250px' />];
+        return [];
     }
   };
 
