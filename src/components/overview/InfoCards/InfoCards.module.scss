@@ -1,12 +1,12 @@
 @use '../../../../styles/variables' as var;
 
 .container {
-    padding: var.$spacing-medium 0;
+  padding-bottom: var.$spacing-medium;
 
-    .card {
-        width: 250px;
-        height: 90px;
-        border-radius: 20px;
-        box-shadow: var.$medium-box-shadow;
-    }
+  .card {
+    width: 250px;
+    height: 90px;
+    border-radius: var.$spacing-small;
+    box-shadow: var.$subtile-box-shadow;
+  }
 }
