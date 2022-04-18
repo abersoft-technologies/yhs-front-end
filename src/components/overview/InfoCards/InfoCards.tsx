@@ -1,5 +1,7 @@
+import react, { useEffect, useState } from "react";
 import { Flex } from "../../ui/Flex"
 import { Text } from "../../ui/text/Text";
+import {getLetters} from "../../../apis/contact/get"
 
 import styles from "./InfoCards.module.scss"
 
@@ -8,13 +10,37 @@ interface ICardProps {
     number: string;
 }
 
+interface ILetter {
+    edu: string[],
+    employment: string,
+    internship: string,
+    readEdu: boolean,
+    contributeEdu: boolean,
+    lecture: boolean,
+    studyVisit: boolean,
+    eduBoard: boolean,
+}
+
 export const InfoCards = () => {
-    const list = [{text: "Avsiktsförklaringar", value: "21"}, {text: "LIA Platser", value: "17"}, {text: "Placeholder", value: "80"}, {text: "Anställningar", value: "45"}];
+    const [letters, setLetters] = useState<Array<ILetter>>([])
+    const lettersLength = letters ? letters.length : 0;
+    const list = [{text: "Avsiktsförklaringar", value: lettersLength.toString()}, {text: "LIA Platser", value: "17"}, {text: "Placeholder", value: "80"}, {text: "Anställningar", value: "45"}];
+    const getData = async () => {
+        await getLetters().then(res => {
+            const data = res?.data;
+            setLetters(data.data.letters)
+            console.log("JP data", data.data.letters)
+        }).catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
 
     return (
         <Flex direction="row" width="full" justify="space-between" class={styles.container}>
             {list.map((item, i) => {
-                return <Card key={i} text={item.text} number={item.value}  />
+                return <Card key={i} text={item.text} number={item.value} />
             })}
         </Flex>
     )

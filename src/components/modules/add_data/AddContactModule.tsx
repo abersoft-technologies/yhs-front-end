@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import { addContact } from '../../../apis/contact/add';
+import { addContact, addLetter } from '../../../apis/contact/add';
 
 /* Styles imports */
 import styles from './AddContactModule.module.scss';
@@ -31,16 +31,27 @@ interface IFormData {
   role?: string;
   town?: string;
   status: string;
-  letterOfIntent: {
-    edu: string[];
-    employment: string;
-    internship: string;
-    readEdu: boolean;
-    contributeEdu: boolean;
-    lecture: boolean;
-    studyVisit: boolean;
-    eduBoard: boolean;
-  };
+  // letterOfIntent: {
+  //   edu: string[];
+  //   employment: string;
+  //   internship: string;
+  //   readEdu: boolean;
+  //   contributeEdu: boolean;
+  //   lecture: boolean;
+  //   studyVisit: boolean;
+  //   eduBoard: boolean;
+  // };
+}
+
+interface ILetterOfIntent {
+  edu: string[];
+  employment: string;
+  internship: string;
+  readEdu: boolean;
+  contributeEdu: boolean;
+  lecture: boolean;
+  studyVisit: boolean;
+  eduBoard: boolean;
 }
 
 const optionsSelect = [
@@ -78,17 +89,25 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     role: '',
     town: '',
     status: optionsSelect[0].value,
-    letterOfIntent: {
-      edu: [],
-      employment: '',
-      internship: '',
-      readEdu: false,
-      contributeEdu: false,
-      lecture: false,
-      studyVisit: false,
-      eduBoard: false,
-    },
+    // letterOfIntent: {
+    //   edu: [],
+    //   employment: '',
+    //   internship: '',
+    //   readEdu: false,
+    //   contributeEdu: false,
+    //   lecture: false,
+    //   studyVisit: false,
+    //   eduBoard: false,
+    // },
   });
+  const [letterOfIntent, setLetterOfIntent] = useState<ILetterOfIntent>({edu: [],
+    employment: '',
+    internship: '',
+    readEdu: false,
+    contributeEdu: false,
+    lecture: false,
+    studyVisit: false,
+    eduBoard: false});
   const {
     firstName,
     lastName,
@@ -108,9 +127,10 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     edu,
     employment,
     internship,
-  } = formData.letterOfIntent;
+  } = letterOfIntent;
 
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
+
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
@@ -134,41 +154,20 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       case 'Status':
         return setFormData({ ...formData, status: value });
       case 'Utbildningar':
-        return setFormData({
-          ...formData,
-          letterOfIntent: {
-            ...formData.letterOfIntent,
-            edu: [value],
-          },
-        });
+        return setLetterOfIntent({...letterOfIntent, edu: [value]})
       case 'Anställning':
-        return setFormData({
-          ...formData,
-          letterOfIntent: {
-            ...formData.letterOfIntent,
-            employment: value,
-          },
-        });
+        return setLetterOfIntent({...letterOfIntent, employment: value});
       case 'LIA':
-        return setFormData({
-          ...formData,
-          letterOfIntent: {
-            ...formData.letterOfIntent,
-            internship: value,
-          },
-        });
+        return setLetterOfIntent({...letterOfIntent, internship: value});;
       default:
-        return setFormData({
-          ...formData,
+        return setLetterOfIntent({
+          ...letterOfIntent,
         });
     }
   };
 
   const handleOnChangeCheckbox = (e: any, key: string) => {
-    setFormData({
-      ...formData,
-      letterOfIntent: { ...formData.letterOfIntent, [key]: e.target.checked },
-    });
+    setLetterOfIntent({...letterOfIntent, [key]: e.target.checked})
   };
 
   const addContactFunc = () => {
@@ -181,18 +180,19 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       phoneNumber: '',
       role: '',
       town: '',
-      status: optionsSelect[0].value,
-      letterOfIntent: {
-        edu: [],
-        employment: '',
-        internship: '',
-        readEdu: false,
-        contributeEdu: false,
-        lecture: false,
-        studyVisit: false,
-        eduBoard: false,
-      },
+      status: optionsSelect[0].value
+      // letterOfIntent: {
+      //   edu: [],
+      //   employment: '',
+      //   internship: '',
+      //   readEdu: false,
+      //   contributeEdu: false,
+      //   lecture: false,
+      //   studyVisit: false,
+      //   eduBoard: false,
+      // },
     });
+    addLetter(letterOfIntent)
     setDoShowInfoBox(true);
     closeModule();
     setTimeout(() => {
@@ -368,28 +368,28 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
                   Insatt i utb.p
                 </Checkbox>
                 <Checkbox
-                  checked={contributeEdu}
+                  checked={letterOfIntent.contributeEdu}
                   onChange={(e) => handleOnChangeCheckbox(e, 'contributeEdu')}
                   size='sm'
                 >
                   Bidrag till utb.
                 </Checkbox>
                 <Checkbox
-                  checked={lecture}
+                  checked={letterOfIntent.lecture}
                   onChange={(e) => handleOnChangeCheckbox(e, 'lecture')}
                   size='sm'
                 >
                   Föreläsningar
                 </Checkbox>
                 <Checkbox
-                  checked={studyVisit}
+                  checked={letterOfIntent.studyVisit}
                   onChange={(e) => handleOnChangeCheckbox(e, 'studyVisit')}
                   size='sm'
                 >
                   Studiebesök
                 </Checkbox>
                 <Checkbox
-                  checked={eduBoard}
+                  checked={letterOfIntent.eduBoard}
                   onChange={(e) => handleOnChangeCheckbox(e, 'eduBoard')}
                   size='sm'
                 >

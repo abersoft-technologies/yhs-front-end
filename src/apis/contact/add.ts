@@ -10,16 +10,27 @@ interface IAddContactParams {
   role?: string;
   town?: string;
   status: string;
-  letterOfIntent: {
-    edu: string[];
-    employment: string;
-    internship: string;
-    readEdu: boolean;
-    contributeEdu: boolean;
-    lecture: boolean;
-    studyVisit: boolean;
-    eduBoard: boolean;
-  };
+  // letterOfIntent: {
+  //   edu: string[];
+  //   employment: string;
+  //   internship: string;
+  //   readEdu: boolean;
+  //   contributeEdu: boolean;
+  //   lecture: boolean;
+  //   studyVisit: boolean;
+  //   eduBoard: boolean;
+  // };
+}
+
+interface ILetterOfIntent {
+  edu: string[];
+  employment: string;
+  internship: string;
+  readEdu: boolean;
+  contributeEdu: boolean;
+  lecture: boolean;
+  studyVisit: boolean;
+  eduBoard: boolean;
 }
 
 export const addContact = async (data: IAddContactParams) => {
@@ -29,6 +40,15 @@ export const addContact = async (data: IAddContactParams) => {
     const result = await api.post(`/contact`, data, {
       headers: { 'x-access-token': token },
     });
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const addLetter = async (data: ILetterOfIntent) => {
+  try {
+    const result = await api.post("/contact/letter", data);
     return result;
   } catch (err) {
     console.error(err);

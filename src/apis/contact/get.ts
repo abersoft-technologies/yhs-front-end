@@ -14,3 +14,12 @@ export const getContact = async (id: string | string[] | undefined) => {
       console.error(err);
     }
   };
+
+  export const getLetters = async () => {
+    try {
+      const result = await api.get("/contact/get/letters");
+      return result;
+    } catch (err) {
+      console.error(err);
+    }
+  };
