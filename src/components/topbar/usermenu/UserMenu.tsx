@@ -6,7 +6,7 @@ import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { RootState } from '../../../store/store';
 import { IUserModelRedux } from '../../../types/global';
 import { Flex } from '../../ui/Flex';
-import SelectCurrentUser from "../../../store/slice/userSlice"
+import SelectCurrentUser from '../../../store/slice/userSlice';
 
 import styles from './Usermenu.module.scss';
 import { useAppSelector } from '../../../hooks/useStore';
@@ -16,20 +16,19 @@ interface IUserMenu {
 }
 
 interface UserObject {
-    status: null,
-    data: {
-      token: string;
-      user: {
-        firstName: string,
-          lastName: string,
-          email: string,
-          date: string,
-          id: string,
-      }
-    }
-    message: string;
+  status: null;
+  data: {
+    token: string;
+    user: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      date: string;
+      id: string;
+    };
+  };
+  message: string;
 }
-
 
 const UserMenu = (props: IUserMenu) => {
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
@@ -50,7 +49,7 @@ const UserMenu = (props: IUserMenu) => {
     };
 
     window.addEventListener('click', onClick);
-    console.log("USER --->", user)
+    console.log('USER --->', user);
 
     return () => {
       window.removeEventListener('click', onClick);
@@ -59,6 +58,8 @@ const UserMenu = (props: IUserMenu) => {
 
   const logout = () => {
     useLocalStorage('remove', 'session', 'user');
+    sessionStorage.clear();
+    localStorage.clear();
     Redirect('/inloggning');
   };
 
@@ -70,8 +71,8 @@ const UserMenu = (props: IUserMenu) => {
           id='dropdown-usermenu'
           onClick={() => setOpenDropdown(!openDropdown)}
         >
-          <span>{user ? user.data.user.firstName : "Inget" }</span>
-          <span>{user ? user.data.user.lastName : "Namn"}</span>
+          <span>{user ? user.data.user.firstName : 'Inget'}</span>
+          <span>{user ? user.data.user.lastName : 'Namn'}</span>
           <img src='/chevron-down.svg' alt='Chevron down' />
         </button>
       </Flex>

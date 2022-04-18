@@ -73,7 +73,8 @@ const contactLayout = ({ children }: LayoutProps) => {
         text += item.firstName + " " + item.lastName;
         const obj = {
           value: text,
-          label: text
+          label: text,
+          id: item._id
         }
         list.push(obj)
       });
@@ -200,7 +201,7 @@ const contactLayout = ({ children }: LayoutProps) => {
         active={corpModuleToggle}
         closeModule={closeCorpModule}
       />
-      <AddEduModule active={eduModuleToggle} closeModule={closeEduModule} contactList={managementList} />
+      <AddEduModule active={eduModuleToggle} closeModule={closeEduModule} contactList={managementList} listDataContacts={ListData} />
     </>
   );
 };

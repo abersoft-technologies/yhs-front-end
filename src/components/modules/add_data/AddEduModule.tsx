@@ -10,11 +10,26 @@ import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
 import { useSelector } from 'react-redux';
 import { InfoBox } from "../../ui/info/InfoBox"
+import { Text } from '../../ui/text/Text';
 
 interface IModuleProps {
   active: boolean;
   closeModule: () => void;
   contactList: Array<{value: string, label: string}>;
+  listDataContacts: Array<IContactData>;
+}
+
+interface IContactData {
+  company: string;
+  date: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  role: string;
+  status: string;
+  town: string;
+  _id: string;
 }
 
 interface IAddEduForm {
@@ -25,9 +40,16 @@ interface IAddEduForm {
   managementList: Array<string>;
 }
 
+interface IManagementObject {
+  name: string;
+  phoneNumber: string;
+  email: string;
+  place: string;
+}
 
 
-const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
+
+const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IModuleProps) => {
   const [formData, setFormData] = useState<IAddEduForm>({
     name: '',
     place: "",
@@ -36,9 +58,15 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
     managementList: [],
   });
   const [selectValue, setSelectValue] = useState<string>('');
+  const [id, setId] = useState<string>('');
+
   const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
+  const [doShowManagementInfoBox, setDoShowManagementInfoBox] = useState<boolean>(false)
+  const [managementTexts, setManagementTexts] = useState<Array<string>>([])
 
+
+  doShowManagementInfoBox
   const placeList = [
     { value: 'Uppsala', label: 'Uppsala' },
     { value: 'Stockholm', label: 'Stockholm' },
@@ -73,6 +101,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
 
   const onClose = () => {
     setFormData({ name: '', place: "", shortName: "", type: "", managementList: [] });
+    setManagementTexts([])
     setSelectValue('');
     closeModule();
   };
@@ -90,10 +119,24 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
   };
 
   const addManagementValue = () => {
+    setDoShowManagementInfoBox(true);
+    const tempList: Array<string> = managementTexts;
     const list = formData.managementList;
-    list.push(managementValue);
+    tempList.push(managementValue)
+    setManagementTexts(tempList);
+    list.push(id);
     setFormData(prev => ({...prev, managementList: list}))
-    setManagementValue("")
+    setTimeout(() => {
+      setDoShowManagementInfoBox(false)
+      setManagementValue("")
+    }, 1500);
+    console.log(formData)
+
+  }
+
+  const onChangeManagement = (label: string, value: string, id?: string) => {
+    setManagementValue(value)
+    setId(id!)
   }
 
   return (
@@ -120,7 +163,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
             direction='column'
             gap='xxx-large'
             width='full'
-            justify='space-between'
+            justify='center'
             align='center'
           >
             <Input
@@ -153,13 +196,18 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
                 options={contactList}
                 width='100%'
                 label="Lägg till i ledningsgrupp"
-                onChangeFunction={(label: string, value: string) => setManagementValue(value)}
+                onChangeFunction={(label: string, value: string, id?: string) => onChangeManagement(label, value, id)}
               />
+              <Flex direction='row' align='flex-start' gap='medium' wrap='wrap'>
+                {managementTexts.map((item, i) => {
+                  return <Text text={item} key={i} color="grey" />
+                })}
+              </Flex>
               <Flex direction='row' width='full'>
               <FilledButton
                 onClick={addManagementValue}
-                text='Lägg till i ledningsform'
-                width='50%'
+                text='Lägg till'
+                width='40%'
               />
               </Flex>
               </>
@@ -185,6 +233,7 @@ const AddEduModule = ({ active, closeModule, contactList }: IModuleProps) => {
         </section>
       </div>
       <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
+      <InfoBox infoText={"Du har lagt till en ny utbildning"} showBox={doShowManagementInfoBox} type="success" />
     </>
   );
 };
