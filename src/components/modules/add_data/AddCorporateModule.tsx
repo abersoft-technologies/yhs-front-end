@@ -7,7 +7,6 @@ import ModuleDarkLayer from '../ModuleDarkLayer';
 import styles from './AddCorporateModule.module.scss';
 import { addCorp } from '../../../apis/corp/add';
 import { InfoBox } from '../../ui/info/InfoBox';
-import { Text } from '../../ui/text/Text';
 
 interface IModuleProps {
   active: boolean;
@@ -112,15 +111,10 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
                 value={tag}
                 onChangeFunction={handleOnChange}
               />
-              <Flex direction='row' gap='medium' wrap='wrap'>
-                {formData.tags.map((item, i) => {
-                  return <Text text={item} key={i} color="grey" />
-                })}
-              </Flex>
               <OutlinedButton
                 onClick={addTag}
                 text='Lägg till tag'
-                width='30%'
+                width='20%'
               />
             </Flex>
             <Textarea
@@ -147,7 +141,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
         </section>
       </div>
       <InfoBox infoText='Du har lagt till ett nytt företag' showBox={doShowInfoBox} type="success" />
-      <InfoBox infoText={"Du har lagt till en ny tag"} showBox={doShowTagInfoBox} type="success" />
+      <InfoBox infoText={`Du har lagt till ${tag} som en ny tag`} showBox={doShowTagInfoBox} type="success" />
     </>
   );
 };

@@ -10,7 +10,6 @@ import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
 import { useSelector } from 'react-redux';
 import { InfoBox } from "../../ui/info/InfoBox"
-import { Text } from '../../ui/text/Text';
 
 interface IModuleProps {
   active: boolean;
@@ -63,8 +62,6 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
   const [managementValue, setManagementValue] = useState<string>(contactList[0] ? contactList[0].value : "")
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
   const [doShowManagementInfoBox, setDoShowManagementInfoBox] = useState<boolean>(false)
-  const [managementTexts, setManagementTexts] = useState<Array<string>>([])
-
 
   doShowManagementInfoBox
   const placeList = [
@@ -101,7 +98,6 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
 
   const onClose = () => {
     setFormData({ name: '', place: "", shortName: "", type: "", managementList: [] });
-    setManagementTexts([])
     setSelectValue('');
     closeModule();
   };
@@ -120,10 +116,7 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
 
   const addManagementValue = () => {
     setDoShowManagementInfoBox(true);
-    const tempList: Array<string> = managementTexts;
     const list = formData.managementList;
-    tempList.push(managementValue)
-    setManagementTexts(tempList);
     list.push(id);
     setFormData(prev => ({...prev, managementList: list}))
     setTimeout(() => {
@@ -137,6 +130,7 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
   const onChangeManagement = (label: string, value: string, id?: string) => {
     setManagementValue(value)
     setId(id!)
+    console.log(formData)
   }
 
   return (
@@ -163,7 +157,7 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
             direction='column'
             gap='xxx-large'
             width='full'
-            justify='center'
+            justify='space-between'
             align='center'
           >
             <Input
@@ -198,11 +192,6 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
                 label="Lägg till i ledningsgrupp"
                 onChangeFunction={(label: string, value: string, id?: string) => onChangeManagement(label, value, id)}
               />
-              <Flex direction='row' align='flex-start' gap='medium' wrap='wrap'>
-                {managementTexts.map((item, i) => {
-                  return <Text text={item} key={i} color="grey" />
-                })}
-              </Flex>
               <Flex direction='row' width='full'>
               <FilledButton
                 onClick={addManagementValue}
@@ -233,7 +222,7 @@ const AddEduModule = ({ active, closeModule, contactList, listDataContacts }: IM
         </section>
       </div>
       <InfoBox infoText='Du har lagt till en ny utbildning' showBox={doShowInfoBox} type="success" />
-      <InfoBox infoText={"Du har lagt till en ny utbildning"} showBox={doShowManagementInfoBox} type="success" />
+      <InfoBox infoText={`Du har lagt till ${managementValue} som en ny person i ledningsgruppen`} showBox={doShowManagementInfoBox} type="success" />
     </>
   );
 };
