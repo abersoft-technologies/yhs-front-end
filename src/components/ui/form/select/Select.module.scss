@@ -68,8 +68,11 @@
     border: none;
     right: 0;
     padding: 0 $spacing-medium;
+    background: #fff;
+    border-radius: 8px;
     height: 100%;
     cursor: pointer;
+
     span {
       position: absolute;
       display: block;
@@ -101,5 +104,84 @@
     border: $transparent-border;
 
     box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
+  }
+}
+
+/*  Multiple select section */
+
+.select_no_option {
+  color: $txt-color;
+  > div {
+    font-size: 0.9rem;
+    padding: $spacing-x-small;
+  }
+}
+
+.clr_btn_multi {
+  font-size: 12px;
+  color: $primary-color-dark;
+  cursor: pointer;
+  background: none;
+  border: none;
+  align-self: flex-end;
+}
+.select__mutli_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  min-height: 38px;
+  gap: $spacing-x-small;
+  height: auto;
+  padding: 4px 0.75rem;
+  padding-right: 52px;
+  margin-right: $spacing-small;
+
+  input {
+    color: $txt-color;
+    height: 100%;
+    margin: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border: none;
+    outline: none;
+    width: 100%;
+    flex: 1;
+  }
+  .add_option_btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: $spacing-x-small;
+    font-size: 0.9rem;
+    &:hover {
+      background: $primary-color-transparent;
+      width: 100%;
+    }
+  }
+
+  .select_tag {
+    background-color: $primary-color-transparent;
+    border-radius: 2px;
+    display: flex;
+    margin: 2px;
+    min-width: 0px;
+    box-sizing: border-box;
+    .clr_tag {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    > div {
+      border-radius: 2px;
+      color: $primary-color-dark;
+      font-size: 85%;
+      overflow: hidden;
+      padding: 3px 3px 3px 6px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
   }
 }
