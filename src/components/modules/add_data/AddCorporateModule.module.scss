@@ -2,29 +2,36 @@
 
 .add_corp_module_container {
   position: fixed;
+  display: flex;
+  flex-direction: column;
   border-radius: $spacing-small;
   border: 1px solid $light-grey;
   background: #fff;
   box-shadow: $subtile-box-shadow;
-  top: 2%;
+  top: 0;
   z-index: 999;
   width: 400px;
-  height: 96%;
+  height: calc(100% - 20px);
+  margin: 10px;
   transition: all 0.65s cubic-bezier(0.3, 0, 0, 1);
   form {
+    flex: 1;
+    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0 $spacing-x-large 0 $spacing-x-large;
+    padding: $spacing-x-large;
     gap: $spacing-medium;
-    margin-top: $spacing-large;
+    height: calc(96% - 140px);
+    overflow-y: auto;
     .textarea_container {
       align-self: flex-start;
       width: 100%;
     }
   }
   header {
+    position: relative;
     background: $primary-color-transparent;
     border-bottom: 1px solid $light-grey;
     border-radius: $spacing-small $spacing-small 0 0;
@@ -48,9 +55,9 @@
     }
   }
   section {
-    position: absolute;
+    position: relative;
     bottom: 0;
-    width: calc(100% - $spacing-x-large * 2);
+    width: 100%;
     padding: $spacing-x-large;
     border-top: 1px solid $light-grey;
     div {

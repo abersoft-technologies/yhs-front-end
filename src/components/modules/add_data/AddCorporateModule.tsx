@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { RootState } from '../../../store/store';
+import { useSelector } from 'react-redux';
+import { addCorp } from '../../../apis/corp/add';
+
+/* Styles import */
+import styles from './AddCorporateModule.module.scss';
+
+/* Component imports */
 import { FilledButton, OutlinedButton } from '../../ui/buttons/Buttons';
 import { Flex } from '../../ui/Flex';
 import { Input } from '../../ui/form/input/Input';
 import { Textarea } from '../../ui/form/textarea/Textarea';
 import ModuleDarkLayer from '../ModuleDarkLayer';
-import styles from './AddCorporateModule.module.scss';
-import { addCorp } from '../../../apis/corp/add';
 import { InfoBox } from '../../ui/info/InfoBox';
+import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
 
 interface IModuleProps {
   active: boolean;
@@ -20,15 +27,15 @@ interface IAddCorporateForm {
 }
 
 const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
+  const tagsOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.tags.data
+  );
   const [formData, setFormData] = useState<IAddCorporateForm>({
     name: '',
     tags: [],
     info: '',
   });
-  const [tag, setTag] = useState<string>('');
-  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false)
-  const [doShowTagInfoBox, setDoShowTagInfoBox] = useState<boolean>(false)
-
+  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
 
   const handleOnChange = (
     e:
@@ -36,34 +43,21 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     let name = e.target.name;
-    console.log(name, e.target.value, formData);
     setFormData({ ...formData, [name]: e.target.value });
-    if (e.target.name === 'tag') {
-      setTag(e.target.value);
-    }
   };
 
-  const addTag = () => {
-    if (tag === '') return;
-    setDoShowTagInfoBox(true)
-    const tempTags = formData.tags;
-    tempTags.push(tag);
-    setFormData((prev) => ({ ...prev, tags: tempTags }));
-    setTimeout(() => {
-      setDoShowTagInfoBox(false)
-      setTag('');
-    }, 1000);
+  const handleSetTags = (tagArray: string[]) => {
+    setFormData((prev) => ({ ...prev, tags: tagArray }));
   };
 
   const submitForm = () => {
     addCorp(formData);
     setFormData({ name: '', tags: [], info: '' });
-    setTag('');
-    setDoShowInfoBox(true)
+    setDoShowInfoBox(true);
     closeModule();
 
     setTimeout(() => {
-      setDoShowInfoBox(false)
+      setDoShowInfoBox(false);
     }, 3000);
   };
 
@@ -73,7 +67,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
       <div
         style={
           active
-            ? { right: '2%', opacity: '1' }
+            ? { right: '0', opacity: '1' }
             : { right: '-55%', opacity: '0' }
         }
         className={styles.add_corp_module_container}
@@ -89,7 +83,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
         <form onSubmit={(e) => e.preventDefault()}>
           <Flex
             direction='column'
-            gap='xxx-large'
+            gap='medium'
             width='full'
             justify='space-between'
             align='center'
@@ -103,18 +97,12 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
               onChangeFunction={handleOnChange}
             />
             <Flex direction='column' width='full' gap='medium'>
-              <Input
+              <MultipleSelect
                 width='100%'
-                name='tag'
-                placeholder='Taggar'
+                onChangeFunction={handleSetTags}
                 label='Taggar'
-                value={tag}
-                onChangeFunction={handleOnChange}
-              />
-              <OutlinedButton
-                onClick={addTag}
-                text='Lägg till tag'
-                width='20%'
+                options={tagsOptions}
+                addAble={true}
               />
             </Flex>
             <Textarea
@@ -140,8 +128,11 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
-      <InfoBox infoText='Du har lagt till ett nytt företag' showBox={doShowInfoBox} type="success" />
-      <InfoBox infoText={`Du har lagt till ${tag} som en ny tag`} showBox={doShowTagInfoBox} type="success" />
+      <InfoBox
+        infoText='Du har lagt till ett nytt företag'
+        showBox={doShowInfoBox}
+        type='success'
+      />
     </>
   );
 };

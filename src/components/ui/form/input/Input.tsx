@@ -11,6 +11,7 @@ interface IInputProps {
   label?: string;
   autoComplete?: boolean;
   width?: string;
+  maxLength?: number;
 }
 
 export const Input = ({
@@ -22,6 +23,7 @@ export const Input = ({
   onChangeFunction,
   autoComplete,
   width,
+  maxLength,
 }: IInputProps) => {
   return (
     <div
@@ -43,6 +45,7 @@ export const Input = ({
         className={styles.input}
         autoComplete={autoComplete ? 'on' : 'new-password'}
         aria-multiline='false'
+        maxLength={maxLength && maxLength}
       />
     </div>
   );

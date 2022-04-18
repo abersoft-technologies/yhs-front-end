@@ -81,6 +81,7 @@
       justify-content: flex-start;
       align-items: center;
       gap: var.$spacing-small;
+      height: 37px;
       img {
         width: 20px;
         margin: 0 var.$spacing-x-small;
@@ -92,6 +93,7 @@
       &:hover {
         transition: background-color 0.15s ease-in-out;
         background-color: var.$primary-color-light-transparent;
+        width: 100%;
       }
     }
   }

@@ -12,8 +12,6 @@ api.interceptors.request.use(
     token = localStorage.getItem('accessToken');
     localStorage.getItem('accessToken');
 
-    console.log(token);
-
     if (token) {
       config.headers['x-access-token'] = token;
       config.headers['Content-Type'] = 'application/json';

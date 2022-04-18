@@ -5,23 +5,23 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export const getFilterOptions: any = createAsyncThunk(
   'redux/filterOptions',
   async (dispatch: any, getState) => {
-    const userData = useLocalStorage('get', 'session', 'user');
-    const token = userData.data.token;
-    const townsResult = await api.get(`/options/select/towns`, {
-      headers: { 'x-access-token': token },
-    });
-    const educationsResult = await api.get(`/options/select/educations`, {
-      headers: { 'x-access-token': token },
-    });
-    let towns, educations;
+    const townsResult = await api.get(`/options/select/towns`);
+    const educationsResult = await api.get(`/options/select/educations`);
+    const tagsResult = await api.get(`/options/select/tags`);
+
+    let towns, educations, tags;
+
     if (townsResult.status === 200) {
       towns = townsResult.data;
     }
     if (educationsResult.status === 200) {
       educations = educationsResult.data;
     }
+    if (tagsResult.status === 200) {
+      tags = tagsResult.data;
+    }
 
-    return { towns, educations };
+    return { towns, educations, tags };
   }
 );
 interface IfilterOptionsState {
@@ -32,6 +32,11 @@ interface IfilterOptionsState {
       message: string;
     };
     educations: {
+      data: [{ value: string; label: string }] | [];
+      status: number | null;
+      message: string;
+    };
+    tags: {
       data: [{ value: string; label: string }] | [];
       status: number | null;
       message: string;
@@ -47,6 +52,11 @@ const initialState: IfilterOptionsState = {
       message: '',
     },
     educations: {
+      data: [],
+      status: null,
+      message: '',
+    },
+    tags: {
       data: [],
       status: null,
       message: '',
