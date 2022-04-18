@@ -58,7 +58,7 @@ IParamsToggleProps) => {
           style={
             checkedParams.letter_of_intent
               ? { color: '#ffffff' }
-              : { color: '#5D5D5A' }
+              : { color: '#22376f' }
           }
         >
           AF
@@ -71,7 +71,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.letter_of_intent
-              ? { background: 'rgba(85, 141, 245, 0.5)' }
+              ? { background: '#7586ce' }
               : { background: 'none' }
           }
         />
@@ -82,10 +82,10 @@ IParamsToggleProps) => {
           style={
             checkedParams.employment
               ? { color: '#ffffff' }
-              : { color: '#5D5D5A' }
+              : { color: '#22376f' }
           }
         >
-          ANSTL.
+          Anst.
         </label>
         <input
           type='checkbox'
@@ -95,7 +95,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.employment
-              ? { background: 'rgba(85, 141, 245, 0.5)' }
+              ? { background: '#7586ce' }
               : { background: 'none' }
           }
         />
@@ -106,7 +106,7 @@ IParamsToggleProps) => {
           style={
             checkedParams.internship
               ? { color: '#ffffff' }
-              : { color: '#5D5D5A' }
+              : { color: '#22376f' }
           }
         >
           LIA
@@ -119,7 +119,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.internship
-              ? { background: 'rgba(85, 141, 245, 0.5)' }
+              ? { background: '#7586ce' }
               : { background: 'none' }
           }
         />

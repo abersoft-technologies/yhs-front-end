@@ -14,11 +14,14 @@ import ProgressCard from '../src/components/overview/progress_card/ProgressCard'
 import { Flex } from '../src/components/ui/Flex';
 import Layout from '../src/layout/layout';
 
+import { InfoCards } from '../src/components/overview/InfoCards/InfoCards';
+
 const Overview = () => {
   return (
     <>
       <div className={styles.overview_container}>
-        <header>
+      <InfoCards />
+        {/* <header>
           <div className={styles.header_bar_container}>
             <div>
               <h2>Överblick</h2>
@@ -30,12 +33,12 @@ const Overview = () => {
               </button>
             </div>
           </div>
-        </header>
+        </header> */}
         <section className={styles.overview_content_container}>
           <Milestones />
           <Flex direction='row' justify='space-between' gap='xxx-large'>
             <Barchart />
-            <ProgressCard />
+            {/* <ProgressCard /> */}
           </Flex>
         </section>
       </div>
