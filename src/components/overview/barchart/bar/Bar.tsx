@@ -68,19 +68,19 @@ const Bar = ({
         >
           {checkedParams.letter_of_intent && (
             <section
-              style={{ width: `${af_percent}%` }}
+              style={{ width: `${af_percent}%`, minHeight: "16px"}}
               className={styles.af_bar}
             ></section>
           )}
           {checkedParams.employment && (
             <section
-              style={{ width: `${employment_percent}%` }}
+              style={{ width: `${employment_percent}%`, minHeight: "16px" }}
               className={styles.employment_bar}
             ></section>
           )}
           {checkedParams.internship && (
             <section
-              style={{ width: `${lia_percent}%` }}
+              style={{ width: `${lia_percent}%`, minHeight: "16px" }}
               className={styles.lia_bar}
             ></section>
           )}
