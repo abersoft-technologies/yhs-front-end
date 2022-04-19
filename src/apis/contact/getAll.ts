@@ -12,4 +12,4 @@ export const getAll = async () => {
     } catch (err) {
       console.error(err);
     }
-  };
+};

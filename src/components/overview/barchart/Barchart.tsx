@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import { getAll } from '../../../apis/edu/get';
 import styles from './Barchart.module.scss';
 
 /* Mock data imports */
@@ -22,15 +22,36 @@ export interface ICheckedParams {
   internship: boolean;
 }
 
+interface Education {
+  managementList: Array<string>;
+  name: string;
+  place: string;
+  shortName: string;
+  type: string;
+}
+
 const Barchart = () => {
+
   const [checkedParams, setCheckedParams] = useState<ICheckedParams>({
     letter_of_intent: true,
     employment: true,
     internship: true,
   });
+  const [eduList, setEduList] = useState<Array<Education>>([]);
 
   const { numbersForBar } = NumbersForBar;
   const { coloredLabels } = ColorLabels;
+
+  const getAllEducations = async () => {
+    await getAll().then((res) => {
+      console.log(res?.data);
+      setEduList(res?.data.data.eduList);
+    }).catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    getAllEducations()
+  }, [eduList.length])
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex
@@ -85,7 +106,17 @@ const Barchart = () => {
           />
         </Flex>
       </Flex>
-      <Bar
+      {eduList.length ? eduList.map((item, i) => {
+        return <Bar
+          numbersForBar={numbersForBar}
+          labelName={item.name}
+          af_percent={20}
+          lia_percent={45}
+          employment_percent={80}
+          checkedParams={checkedParams}
+        />
+      }) : null}
+      {/* <Bar
         numbersForBar={numbersForBar}
         labelName={'Front-end Developer'}
         af_percent={20}
@@ -108,7 +139,7 @@ const Barchart = () => {
         lia_percent={45}
         employment_percent={80}
         checkedParams={checkedParams}
-      />
+      /> */}
     </Flex>
   );
 };
