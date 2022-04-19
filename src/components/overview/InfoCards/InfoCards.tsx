@@ -1,7 +1,7 @@
 import react, { useEffect, useState } from "react";
 import { Flex } from "../../ui/Flex"
 import { Text } from "../../ui/text/Text";
-import {getLetters} from "../../../apis/contact/get"
+import {getLetters} from "../../../apis/letter/get"
 
 import styles from "./InfoCards.module.scss"
 
@@ -28,8 +28,8 @@ export const InfoCards = () => {
     const getData = async () => {
         await getLetters().then(res => {
             const data = res?.data;
-            setLetters(data.data.letters)
-            console.log("JP data", data.data.letters)
+            setLetters(data.data)
+            console.log("JP data", data.data)
         }).catch(err => console.log(err))
     }
 
