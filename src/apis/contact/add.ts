@@ -22,16 +22,7 @@ interface IAddContactParams {
   // };
 }
 
-interface ILetterOfIntent {
-  edu: string[];
-  employment: string;
-  internship: string;
-  readEdu: boolean;
-  contributeEdu: boolean;
-  lecture: boolean;
-  studyVisit: boolean;
-  eduBoard: boolean;
-}
+
 
 export const addContact = async (data: IAddContactParams) => {
   const userData = useLocalStorage('get', 'session', 'user');
@@ -46,11 +37,4 @@ export const addContact = async (data: IAddContactParams) => {
   }
 };
 
-export const addLetter = async (data: ILetterOfIntent) => {
-  try {
-    const result = await api.post("/contact/letter", data);
-    return result;
-  } catch (err) {
-    console.error(err);
-  }
-};
+

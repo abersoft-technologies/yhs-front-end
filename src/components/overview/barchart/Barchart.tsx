@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAll } from '../../../apis/edu/get';
+import { getAllLetters } from '../../../apis/letter/get';
+
 import styles from './Barchart.module.scss';
 
 /* Mock data imports */
@@ -30,6 +32,30 @@ interface Education {
   type: string;
 }
 
+interface Letter {
+  edu: [string],
+  employment: string,
+  internship: string,
+  readEdu: boolean,
+  contributeEdu: boolean,
+  lecture: boolean,
+  studyVisit: boolean,
+  eduBoard: boolean,
+}
+
+interface ListItem {
+  education: Education,
+  letter: Array<Letter>,
+  letterNumber: Array<ILetterLength>,
+}
+
+interface ILetterLength {
+  number: number;
+  lastItem: boolean;
+  isSmall: boolean;
+
+}
+
 const Barchart = () => {
 
   const [checkedParams, setCheckedParams] = useState<ICheckedParams>({
@@ -38,6 +64,10 @@ const Barchart = () => {
     internship: true,
   });
   const [eduList, setEduList] = useState<Array<Education>>([]);
+  const [letterList, setLetterList] = useState<Array<Letter>>([]);
+
+  const [list, setList] = useState<Array<ListItem>>([]);
+
 
   const { numbersForBar } = NumbersForBar;
   const { coloredLabels } = ColorLabels;
@@ -49,9 +79,37 @@ const Barchart = () => {
     }).catch(err => console.log(err))
   }
 
+  const getLetters = async () => {
+    await getAllLetters().then((res) => {
+      console.log(res?.data);
+      setLetterList(res?.data.data);
+    }).catch(err => console.log(err))
+  }
+
+  const buildList = () => {
+    let letters: Letter[] = [];
+    let tempList: Array<ListItem> = [];
+    let obj: ListItem = {education: {managementList: [], name: "", place: "", shortName: "", type: ""}, letter: [], letterNumber: [{isSmall: false, lastItem: false, number: 0}] }
+    eduList.forEach((item) => {
+      letters = letterList.filter(letter => letter.edu[0] === item.name);
+      const list = []
+      list.push({number: letters.length, isSmall: false, lastItem: false})
+      obj = {
+        education: item,
+        letter: letters,
+        letterNumber: list
+      }
+      tempList.push(obj);
+    })
+    setList(tempList)
+  }
+
   useEffect(() => {
     getAllEducations()
-  }, [eduList.length])
+    getLetters()
+    buildList();
+    console.log("List List", list)
+  }, [eduList.length, letterList.length, list.length])
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex
@@ -106,14 +164,15 @@ const Barchart = () => {
           />
         </Flex>
       </Flex>
-      {eduList.length ? eduList.map((item, i) => {
+      {list.length ? list.map((item, i) => {
         return <Bar
-          numbersForBar={numbersForBar}
-          labelName={item.name}
-          af_percent={20}
+          numbersForBar={item.letterNumber}
+          labelName={item.education.name}
+          af_percent={item.letter.length * 4}
           lia_percent={45}
           employment_percent={80}
           checkedParams={checkedParams}
+          afNumber={item.letter.length}
         />
       }) : null}
       {/* <Bar

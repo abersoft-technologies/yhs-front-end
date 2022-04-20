@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import { addContact, addLetter } from '../../../apis/contact/add';
+import { addContact } from '../../../apis/contact/add';
+import { addLetter }from '../../../apis/letter/add';
 
 /* Styles imports */
 import styles from './AddContactModule.module.scss';
