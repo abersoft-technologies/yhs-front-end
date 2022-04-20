@@ -25,9 +25,9 @@ const ContactInfo = () => {
 
   const getInitails = () => {
     return `${
-      contact?.firstName?.substring(0, 1) +
+      contact?.firstName?.substring(0, 1).toLocaleUpperCase() +
       ' ' +
-      contact?.lastName?.substring(0, 1)
+      contact?.lastName?.substring(0, 1).toLocaleUpperCase()
     }`;
   };
 

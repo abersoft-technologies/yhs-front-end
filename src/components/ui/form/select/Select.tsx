@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Flex } from '../../Flex';
 
 import styles from './Select.module.scss';
 
@@ -8,7 +9,7 @@ interface ISelectProps {
   clearFieldFunc?: (label: string) => void;
   label: string;
   width?: string;
-  options: { value: string; label: string, id?: string }[];
+  options: { value: string; label: string; id?: string }[];
   clrAble?: boolean;
   id?: string;
 }
@@ -21,7 +22,7 @@ export const Select = ({
   options,
   width,
   clrAble,
-  id
+  id,
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
 
@@ -123,6 +124,16 @@ export const Select = ({
               </div>
             );
           })}
+          {!options ||
+            (options.length === 0 && (
+              <Flex
+                direction='row'
+                justify='center'
+                class={styles.select_no_option}
+              >
+                <div>Inga val</div>
+              </Flex>
+            ))}
         </div>
       </div>
     </div>
