@@ -6,14 +6,16 @@
     // border: 1px solid $dark-grey;
     margin-left: 1.5rem;
     padding: $spacing-large;
-    height: 50%;
+    max-height: 90%;
 
     .card {
-        background: #fff;
-        padding: $spacing-xx-large;
-        box-shadow: $subtile-box-shadow;
-        margin: $spacing-x-large;
-        border-radius: $spacing-x-small;
+      background: #fff;
+      padding: $spacing-xx-large;
+      box-shadow: $subtile-box-shadow;
+      margin: $spacing-x-large;
+      border-radius: $spacing-x-small;
+      overflow: auto;
+      height: 100%;
     }
 }
 
@@ -29,7 +31,7 @@
     color: $txt-color;
     font-weight: bold;
     display: grid;
-    grid-template-columns: 15fr 13fr 10fr;
+    grid-template-columns: 15fr 13fr 10fr 10fr;
     padding-bottom: $spacing-small;
     border-bottom: 1px solid $dark-grey;
 
@@ -46,7 +48,7 @@
 
 .contact_card {
     display: grid;
-    grid-template-columns: 15fr 13fr 10fr;
+    grid-template-columns: 15fr 13fr 10fr 10fr;
     color: $txt-color;
     border-bottom: 1px solid $light-grey;
     padding: 0.9rem 0 0.9rem 0;

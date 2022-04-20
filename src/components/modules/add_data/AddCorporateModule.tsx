@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RootState } from '../../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCorp } from '../../../apis/corp/add';
@@ -15,6 +15,8 @@ import ModuleDarkLayer from '../ModuleDarkLayer';
 import { InfoBox } from '../../ui/info/InfoBox';
 import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
 import { showInfoBox } from '../../../store/slice/infoBox';
+import { getCorporateListRedux } from '../../../store/slice/corpList';
+import { add } from '../../../store/slice/userSlice';
 
 interface IModuleProps {
   active: boolean;
@@ -27,11 +29,18 @@ interface IAddCorporateForm {
   info: string;
 }
 
+
+
 const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const corpListReducer = useSelector((state: any) => state.corpListReducer);
+
   const tagsOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.tags.data
   );
+  const ListData: IAddCorporateForm[] = corpListReducer.result.data
+    ? corpListReducer.result.data.corpList
+    : undefined;
   const [formData, setFormData] = useState<IAddCorporateForm>({
     name: '',
     tags: [],
@@ -53,11 +62,21 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   };
 
   const submitForm = () => {
-    addCorp(formData);
+    const tempList = ListData;
+    console.log("JP TempList",tempList)
+    addCorp(formData).then(res => {
+      console.log(res?.data);
+      tempList.push(res?.data)
+      // dispatch(add(tempList))
+    }).catch(err => console.log(err));
     setFormData({ name: '', tags: [], info: '' });
     dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", showBox: true, time: 3000, type: "success"}))
     closeModule();
   };
+
+  useEffect(() => {
+    dispatch(getCorporateListRedux({limit: 0, queryParams: ''}))
+  }, [])
 
   return (
     <>

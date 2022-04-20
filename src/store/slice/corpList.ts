@@ -22,7 +22,11 @@ const corpListSlice = createSlice({
       result: [],
       status: null,
     },
-    reducers: {},
+    reducers: {
+      add: (state, action: any) => {
+        state = action.payload;
+      }
+    },
     extraReducers: {
       [getCorporateListRedux.pending]: (
         state: any,
@@ -45,5 +49,6 @@ const corpListSlice = createSlice({
       },
     },
 });
+export const { add } = corpListSlice.actions;
 
 export default corpListSlice.reducer;

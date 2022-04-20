@@ -87,6 +87,7 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
             <section className={corpCardStyle.contact_list_container}>
                 <div className={corpCardStyle.label_bar_container}>
                 <div>Namn</div>
+                <div>Roll</div>
                 <div>Ort</div>
                 <div>Kontaktinfo.</div>
             </div>
@@ -97,6 +98,7 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
                             <ContactCard
                                 key={i}
                                 firstName={item.firstName}
+                                role={item.role}
                                 lastName={item.lastName}
                                 district={item.town}
                                 email={item.email}

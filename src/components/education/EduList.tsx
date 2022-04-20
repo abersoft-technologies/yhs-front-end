@@ -26,7 +26,7 @@ const EduList = () => {
 
   const eduListReducer = useSelector((state: any) => state.eduListReducer);
   const ListData = eduListReducer.result.data
-    ? eduListReducer.result.data.corpList
+    ? eduListReducer.result.data.eduList
     : undefined;
   const listValues = eduListReducer.result.data
     ? eduListReducer.result.data.listValues

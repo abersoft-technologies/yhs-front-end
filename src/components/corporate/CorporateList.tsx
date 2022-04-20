@@ -23,9 +23,6 @@ const CorporateList = () => {
   const [slicedPages, setSlicedPages] = useState(1);
   const [openInfoCard, setOpenInfoCard] = useState(false);
 
-  const openInfoCardFunc = () => {
-    setOpenInfoCard(true);
-  };
 
   const corpListReducer = useSelector((state: any) => state.corpListReducer);
   const ListData = corpListReducer.result.data
@@ -37,7 +34,6 @@ const CorporateList = () => {
 
   useEffect(() => {
     dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));
-    console.log(ListData, listValues);
   }, [page]);
 
   return (
