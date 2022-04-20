@@ -102,6 +102,7 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
                                 lastName={item.lastName}
                                 district={item.town}
                                 email={item.email}
+                                id={item._id}
                             />
                         );
                     })}
