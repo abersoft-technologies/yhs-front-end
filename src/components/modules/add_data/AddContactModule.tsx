@@ -137,7 +137,6 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
 
   const addContactFunc = async () => {
     const contact = await addContact(formData);
-    console.log(contact);
     let dataLetter;
     if (contact?.status === 200) {
       dataLetter = {

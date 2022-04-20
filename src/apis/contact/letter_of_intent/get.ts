@@ -1,6 +1,6 @@
 import api from '../../api';
 
-export const getLetter = async (id: { _id: string }) => {
+export const getLetter = async (id: string | string[] | undefined) => {
   try {
     const result = await api.get(`/letter/${id}`);
     return result;

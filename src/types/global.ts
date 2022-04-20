@@ -16,6 +16,7 @@ export interface IUserModelRedux {
 }
 
 export interface ILetterSchema {
+  _id?: string;
   edu: string[];
   employment: string;
   internship: string;

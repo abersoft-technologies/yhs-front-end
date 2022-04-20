@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { updateLetOfIntent } from '../../../apis/contact/letter_of_intent/update';
-import { getLetterRedux } from '../../../store/slice/letter';
 import { getLetter } from '../../../apis/contact/letter_of_intent/get';
+import { addLetter } from '../../../apis/contact/add';
 import { useRouter } from 'next/router';
 
 /* Import Styling */
 import styles from './ContactInfo.module.scss';
+
+/* Import interfaces */
+import { ILetterSchema } from '../../../types/global';
 
 /* Import components */
 import { Text } from '../../ui/text/Text';
@@ -15,6 +18,7 @@ import { Flex } from '../../ui/Flex';
 import { Select } from '../../ui/form/select/Select';
 import { Checkbox, Tooltip } from '@nextui-org/react';
 import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
+import { updateContact } from '../../../apis/contact/update';
 
 const optionsAnställning = [
   { value: '0', label: '0' },
@@ -31,17 +35,6 @@ const optionsLia = [
   { value: 'Annat', label: 'Annat' },
 ];
 
-interface IFormData {
-  edu: string[];
-  employment: string;
-  internship: string;
-  readEdu: boolean;
-  contributeEdu: boolean;
-  lecture: boolean;
-  studyVisit: boolean;
-  eduBoard: boolean;
-}
-
 const LetterOfIntent = () => {
   const router = useRouter();
   const contact = useSelector(
@@ -52,7 +45,8 @@ const LetterOfIntent = () => {
   );
 
   const [edited, setEdited] = useState(false);
-  const [letter, setLetter] = useState({
+
+  const [formData, setFormData] = useState<ILetterSchema>({
     edu: [],
     employment: '',
     internship: '',
@@ -62,26 +56,11 @@ const LetterOfIntent = () => {
     studyVisit: false,
     eduBoard: false,
   });
-  const [formData, setFormData] = useState<IFormData>({
-    edu: letter?.edu,
-    employment: letter?.employment,
-    internship: letter?.internship,
-    readEdu: letter?.readEdu,
-    contributeEdu: letter?.contributeEdu,
-    lecture: letter?.lecture,
-    studyVisit: letter?.studyVisit,
-    eduBoard: letter?.eduBoard,
-  });
-
-  useEffect(() => {
-    setFormData(letter);
-  }, [letter]);
 
   const handleGetLetter = async (id: any) => {
     const res = await getLetter(id);
-    console.log(res);
     if (res?.data) {
-      setLetter(res.data.data);
+      setFormData(res.data.data);
     }
     return res;
   };
@@ -96,7 +75,17 @@ const LetterOfIntent = () => {
   }, [contact]);
 
   const handleUpdateLetOfIntent = async () => {
-    if (!contact.letters) return;
+    if (!contact.letters || contact.letters.length < 1) {
+      const res = await addLetter(formData);
+      if (res?.status === 200) {
+        let _id = res.data.data._id;
+        await updateContact(contact._id, { letters: [{ _id }] });
+        handleGetLetter(contact._id);
+      }
+
+      return;
+    }
+
     const id = contact?.letters[0];
 
     const result = await updateLetOfIntent(id, formData);
