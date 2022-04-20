@@ -45,7 +45,7 @@ interface Letter {
 
 interface ListItem {
   education: Education,
-  letter: Array<Letter>,
+  allLetters: Array<Letter>,
   letterNumber: Array<ILetterLength>,
 }
 
@@ -89,14 +89,14 @@ const Barchart = () => {
   const buildList = () => {
     let letters: Letter[] = [];
     let tempList: Array<ListItem> = [];
-    let obj: ListItem = {education: {managementList: [], name: "", place: "", shortName: "", type: ""}, letter: [], letterNumber: [{isSmall: false, lastItem: false, number: 0}] }
+    let obj: ListItem = {education: {managementList: [], name: "", place: "", shortName: "", type: ""}, allLetters: [], letterNumber: [{isSmall: false, lastItem: false, number: 0}] }
     eduList.forEach((item) => {
       letters = letterList.filter(letter => letter.edu[0] === item.name);
       const list = []
       list.push({number: letters.length, isSmall: false, lastItem: false})
       obj = {
         education: item,
-        letter: letters,
+        allLetters: letters,
         letterNumber: list
       }
       tempList.push(obj);
@@ -166,13 +166,13 @@ const Barchart = () => {
       </Flex>
       {list.length ? list.map((item, i) => {
         return <Bar
-          numbersForBar={item.letterNumber}
+          numbersForBar={numbersForBar}
           labelName={item.education.name}
-          af_percent={item.letter.length * 4}
+          af_percent={item.allLetters.length}
           lia_percent={45}
           employment_percent={80}
           checkedParams={checkedParams}
-          afNumber={item.letter.length}
+          afNumber={item.allLetters.length}
         />
       }) : null}
       {/* <Bar

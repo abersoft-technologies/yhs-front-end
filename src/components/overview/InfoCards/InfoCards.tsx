@@ -1,7 +1,7 @@
 import react, { useEffect, useState } from "react";
 import { Flex } from "../../ui/Flex"
 import { Text } from "../../ui/text/Text";
-import {getLetters} from "../../../apis/letter/get"
+import {getAllLetters} from "../../../apis/letter/get"
 
 import styles from "./InfoCards.module.scss"
 
@@ -26,7 +26,7 @@ export const InfoCards = () => {
     const lettersLength = letters ? letters.length : 0;
     const list = [{text: "Avsiktsförklaringar", value: lettersLength.toString()}, {text: "LIA Platser", value: "17"}, {text: "Placeholder", value: "80"}, {text: "Anställningar", value: "45"}];
     const getData = async () => {
-        await getLetters().then(res => {
+        await getAllLetters().then(res => {
             const data = res?.data;
             setLetters(data.data)
             console.log("JP data", data.data)
