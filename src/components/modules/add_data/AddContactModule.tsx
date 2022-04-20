@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { addContact } from '../../../apis/contact/add';
 import { addLetter }from '../../../apis/letter/add';
@@ -21,6 +21,7 @@ import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
 import { Checkbox } from '@nextui-org/react';
 import { updateContact } from '../../../apis/contact/update';
+import {showInfoBox} from "../../../store/slice/infoBox"
 
 interface IModuleProps {
   active: boolean;
@@ -61,6 +62,7 @@ const optionsLia = [
 ];
 
 const AddContactModule = ({ active, closeModule }: IModuleProps) => {
+  const dispatch = useDispatch()
   const eduOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.educations.data
   );
@@ -167,14 +169,9 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         ],
       };
     }
+    dispatch(showInfoBox({infoText: "Du har lagt till en ny kontakt", showBox: true, time: 3000, type: "success"}))
     updateContact(contact?.data.data._id, dataContact);
-
-    console.log(letter);
-    setDoShowInfoBox(true);
     closeModule();
-    setTimeout(() => {
-      setDoShowInfoBox(false);
-    }, 3000);
   };
 
   return (
@@ -388,11 +385,6 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
-      <InfoBox
-        infoText='Du har lagt till en ny kontakt'
-        showBox={doShowInfoBox}
-        type='success'
-      />
     </>
   );
 };

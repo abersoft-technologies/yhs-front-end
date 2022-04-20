@@ -21,6 +21,7 @@ import AddEduModule from '../components/modules/add_data/AddEduModule';
 import { SearchBar } from '../components/shared/searchbar/Searchbar';
 import FilterInterface from '../components/filter_interface/FilterInterface';
 import { getAll } from "../apis/contact/getAll"
+import { InfoBox } from '../components/ui/info/InfoBox';
 
 interface LayoutProps {
   children: ReactNode;
@@ -37,6 +38,14 @@ interface IContactData {
   status: string;
   town: string;
   _id: string;
+}
+
+
+interface IInfoBoxProps {
+  infoText: string;
+  type: "warning" | "info" | "tip" | "success";
+  showBox: boolean;
+  time: number;
 }
 
 const contactLayout = ({ children }: LayoutProps) => {

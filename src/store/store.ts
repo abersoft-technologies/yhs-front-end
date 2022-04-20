@@ -8,6 +8,7 @@ import corpListReducer from './slice/corpList';
 import corporateReducer from './slice/corporate';
 import contactReducer from './slice/contact';
 import letterReducer from './slice/letter';
+import infoBoxReducer from './slice/infoBox'
 
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
@@ -32,6 +33,7 @@ const reducers = combineReducers({
   filterOptionsReducer,
   contactReducer,
   letterReducer,
+  infoBoxReducer
 });
 
 const persist = persistReducer(persistConfig, reducers);

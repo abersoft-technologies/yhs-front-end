@@ -1,16 +1,28 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {showInfoBox} from "../../../store/slice/infoBox"
+import { RootState } from "../../../store/store";
 
 import { Text } from "../text/Text"
 
 interface IInfoBoxProps {
     infoText: string;
-    type: "warning" | "info" | "tip" | "success";
+    type?: "warning" | "info" | "tip" | "success";
     showBox: boolean;
+    time: number;
 }
 
 import styles from "./InfoBox.module.scss";
 
-export const InfoBox = ({infoText, type, showBox}: IInfoBoxProps) => {
+export const InfoBox = ({infoText, type, showBox, time}: IInfoBoxProps) => {
+    const dispatch = useDispatch();
+    const infoBoxRedux = useSelector((state: RootState) => state.infoBoxReducer)
+
+    useEffect(() => {
+        setTimeout(() => {
+            dispatch(showInfoBox({infoText: "", showBox: false, time: 0}))
+        }, infoBoxRedux.time);
+    }, [infoBoxRedux.showBox])
 
     const renderContent = () => {
         let content = <></>

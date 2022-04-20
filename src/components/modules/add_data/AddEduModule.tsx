@@ -8,9 +8,10 @@ import styles from './AddEduModule.module.scss';
 import { addCorp } from '../../../apis/corp/add';
 import { Select } from '../../ui/form/select/Select';
 import { addEdu } from '../../../apis/edu/add';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
+import { showInfoBox } from '../../../store/slice/infoBox';
 
 interface IModuleProps {
   active: boolean;
@@ -53,6 +54,8 @@ const AddEduModule = ({
   contactList,
   listDataContacts,
 }: IModuleProps) => {
+  const dispatch = useDispatch()
+
   const [formData, setFormData] = useState<IAddEduForm>({
     name: '',
     place: '',
@@ -119,12 +122,8 @@ const AddEduModule = ({
       managementList: [],
     });
     setSelectValue('');
-    setDoShowInfoBox(true);
+    dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", showBox: true, time: 3000, type: "success"}))
     onClose();
-
-    setTimeout(() => {
-      setDoShowInfoBox(false);
-    }, 3000);
   };
 
   const addManagementValue = () => {
@@ -245,16 +244,6 @@ const AddEduModule = ({
           </div>
         </section>
       </div>
-      <InfoBox
-        infoText='Du har lagt till en ny utbildning'
-        showBox={doShowInfoBox}
-        type='success'
-      />
-      <InfoBox
-        infoText={`Du har lagt till ${managementValue} som en ny person i ledningsgruppen`}
-        showBox={doShowManagementInfoBox}
-        type='success'
-      />
     </>
   );
 };
