@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RootState } from '../../../store/store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCorp } from '../../../apis/corp/add';
 
 /* Styles import */
@@ -14,6 +14,7 @@ import { Textarea } from '../../ui/form/textarea/Textarea';
 import ModuleDarkLayer from '../ModuleDarkLayer';
 import { InfoBox } from '../../ui/info/InfoBox';
 import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
+import { showInfoBox } from '../../../store/slice/infoBox';
 
 interface IModuleProps {
   active: boolean;
@@ -27,6 +28,7 @@ interface IAddCorporateForm {
 }
 
 const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
+  const dispatch = useDispatch()
   const tagsOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.tags.data
   );
@@ -53,12 +55,8 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   const submitForm = () => {
     addCorp(formData);
     setFormData({ name: '', tags: [], info: '' });
-    setDoShowInfoBox(true);
+    dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", showBox: true, time: 3000, type: "success"}))
     closeModule();
-
-    setTimeout(() => {
-      setDoShowInfoBox(false);
-    }, 3000);
   };
 
   return (
@@ -128,11 +126,6 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
           </div>
         </section>
       </div>
-      <InfoBox
-        infoText='Du har lagt till ett nytt företag'
-        showBox={doShowInfoBox}
-        type='success'
-      />
     </>
   );
 };
