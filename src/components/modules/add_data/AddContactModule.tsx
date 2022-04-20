@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { addContact, addLetter } from '../../../apis/contact/add';
 
+/* Imports global interfaces */
+import { ILetterSchema } from '../../../types/global';
+
 /* Styles imports */
 import styles from './AddContactModule.module.scss';
 
@@ -16,6 +19,7 @@ import { Textarea } from '../../ui/form/textarea/Textarea';
 import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
 import { Checkbox } from '@nextui-org/react';
+import { updateContact } from '../../../apis/contact/update';
 
 interface IModuleProps {
   active: boolean;
@@ -31,27 +35,6 @@ interface IFormData {
   role?: string;
   town?: string;
   status: string;
-  // letterOfIntent: {
-  //   edu: string[];
-  //   employment: string;
-  //   internship: string;
-  //   readEdu: boolean;
-  //   contributeEdu: boolean;
-  //   lecture: boolean;
-  //   studyVisit: boolean;
-  //   eduBoard: boolean;
-  // };
-}
-
-interface ILetterOfIntent {
-  edu: string[];
-  employment: string;
-  internship: string;
-  readEdu: boolean;
-  contributeEdu: boolean;
-  lecture: boolean;
-  studyVisit: boolean;
-  eduBoard: boolean;
 }
 
 const optionsSelect = [
@@ -89,25 +72,17 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     role: '',
     town: '',
     status: optionsSelect[0].value,
-    // letterOfIntent: {
-    //   edu: [],
-    //   employment: '',
-    //   internship: '',
-    //   readEdu: false,
-    //   contributeEdu: false,
-    //   lecture: false,
-    //   studyVisit: false,
-    //   eduBoard: false,
-    // },
   });
-  const [letterOfIntent, setLetterOfIntent] = useState<ILetterOfIntent>({edu: [],
+  const [letterOfIntent, setLetterOfIntent] = useState<ILetterSchema>({
+    edu: [],
     employment: '',
     internship: '',
     readEdu: false,
     contributeEdu: false,
     lecture: false,
     studyVisit: false,
-    eduBoard: false});
+    eduBoard: false,
+  });
   const {
     firstName,
     lastName,
@@ -118,19 +93,9 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     town,
     status,
   } = formData;
-  const {
-    readEdu,
-    contributeEdu,
-    lecture,
-    studyVisit,
-    eduBoard,
-    edu,
-    employment,
-    internship,
-  } = letterOfIntent;
+  const { readEdu, edu, employment, internship } = letterOfIntent;
 
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
-
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
@@ -154,11 +119,11 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       case 'Status':
         return setFormData({ ...formData, status: value });
       case 'Utbildningar':
-        return setLetterOfIntent({...letterOfIntent, edu: [value]})
+        return setLetterOfIntent({ ...letterOfIntent, edu: [value] });
       case 'Anställning':
-        return setLetterOfIntent({...letterOfIntent, employment: value});
+        return setLetterOfIntent({ ...letterOfIntent, employment: value });
       case 'LIA':
-        return setLetterOfIntent({...letterOfIntent, internship: value});;
+        return setLetterOfIntent({ ...letterOfIntent, internship: value });
       default:
         return setLetterOfIntent({
           ...letterOfIntent,
@@ -167,11 +132,19 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   };
 
   const handleOnChangeCheckbox = (e: any, key: string) => {
-    setLetterOfIntent({...letterOfIntent, [key]: e.target.checked})
+    setLetterOfIntent({ ...letterOfIntent, [key]: e.target.checked });
   };
 
-  const addContactFunc = () => {
-    addContact(formData);
+  const addContactFunc = async () => {
+    const contact = await addContact(formData);
+    console.log(contact);
+    let dataLetter;
+    if (contact?.status === 200) {
+      dataLetter = {
+        name: contact.data.data.firstname,
+        _id: contact.data.data._id,
+      };
+    }
     setFormData({
       company: '',
       firstName: '',
@@ -180,19 +153,23 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       phoneNumber: '',
       role: '',
       town: '',
-      status: optionsSelect[0].value
-      // letterOfIntent: {
-      //   edu: [],
-      //   employment: '',
-      //   internship: '',
-      //   readEdu: false,
-      //   contributeEdu: false,
-      //   lecture: false,
-      //   studyVisit: false,
-      //   eduBoard: false,
-      // },
+      status: optionsSelect[0].value,
     });
-    addLetter(letterOfIntent)
+    const letterData = { ...letterOfIntent, dataLetter };
+    const letter = await addLetter(letterData);
+    let dataContact;
+    if (letter?.status === 200) {
+      dataContact = {
+        letters: [
+          {
+            _id: letter.data.data._id,
+          },
+        ],
+      };
+    }
+    updateContact(contact?.data.data._id, dataContact);
+
+    console.log(letter);
     setDoShowInfoBox(true);
     closeModule();
     setTimeout(() => {

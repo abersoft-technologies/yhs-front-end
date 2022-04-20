@@ -15,7 +15,19 @@ export interface IUserModelRedux {
   };
 }
 
+export interface ILetterSchema {
+  edu: string[];
+  employment: string;
+  internship: string;
+  readEdu: boolean;
+  contributeEdu: boolean;
+  lecture: boolean;
+  studyVisit: boolean;
+  eduBoard: boolean;
+}
+
 export interface IContactSchema {
+  _id: string;
   firstName: string;
   lastName: string;
   email?: string;
@@ -34,4 +46,5 @@ export interface IContactSchema {
     studyVisit: boolean;
     eduBoard: boolean;
   };
+  letters: [{ _id: string }] | undefined;
 }

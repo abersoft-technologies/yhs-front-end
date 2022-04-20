@@ -12,6 +12,18 @@
   box-shadow: $subtile-box-shadow;
   margin: $spacing-x-large;
   border-radius: $spacing-x-small;
+  .af_update_btn {
+    display: flex;
+    align-items: center;
+    gap: $spacing-x-small;
+    background: none;
+    border: none;
+    height: 100%;
+    align-self: flex-end;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: $txt-color;
+  }
 
   > form {
     max-width: 580px;

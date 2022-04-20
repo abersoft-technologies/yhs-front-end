@@ -1,17 +1,16 @@
-import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Flex } from '../../Flex';
 
 import styles from './Select.module.scss';
 
 interface ISelectProps {
-  // value: string;
   onChangeFunction: (selectedArray: string[]) => void;
-  // clearFieldFunc?: (label: string) => void;
   label: string;
   width?: string;
   options: { value: string; label: string; id?: string; tagName?: string }[];
   addAble?: boolean;
   id?: string;
+  value?: string[];
 }
 
 type selectedArrType = string[];
@@ -22,11 +21,19 @@ export const MultipleSelect = ({
   options,
   width,
   addAble,
-  id,
+  value,
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
+  const [valAlreadySet, setValAlreadySet] = useState(false);
   const [inputVal, setInputVal] = useState('');
   const [selectedArr, setSelectedArr] = useState<selectedArrType>([]);
+
+  useEffect(() => {
+    if (value && value.length > 0 && !valAlreadySet) {
+      setSelectedArr(value);
+      setValAlreadySet(true);
+    }
+  }, [value]);
 
   useEffect(() => {
     const onClick = (event: any) => {
@@ -45,7 +52,6 @@ export const MultipleSelect = ({
   useEffect(() => {
     if (onChangeFunction) {
       onChangeFunction(selectedArr);
-      console.log('Here now and Sel arr is -->', selectedArr);
     }
   }, [selectedArr]);
 
@@ -67,7 +73,6 @@ export const MultipleSelect = ({
     }
   };
   const handleKeypressInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // console.log(e.key, addAble, inputVal.length, areOptions);
     if (e.key === 'Enter') {
       e.preventDefault();
     }
@@ -206,7 +211,7 @@ export const MultipleSelect = ({
           }
           className={styles.select_open_container}
         >
-          {areOptions && finalOptions.length > 0 ? (
+          {finalOptions.length > 0 && (
             <>
               {finalOptions.map((item, i) => {
                 if (
@@ -227,7 +232,8 @@ export const MultipleSelect = ({
                 }
               })}
             </>
-          ) : (
+          )}
+          {(!areOptions || finalOptions.length === 0) && (
             <Flex
               direction='row'
               justify='center'

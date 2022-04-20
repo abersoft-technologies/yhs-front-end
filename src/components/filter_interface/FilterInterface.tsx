@@ -26,6 +26,7 @@ interface ContactFilterState {
   utbildning: string;
   status: string;
   ort: string;
+  taggar: string[];
 }
 interface CorpFilterState {
   branch: string;
@@ -45,12 +46,16 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
   const eduOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.educations.data
   );
+  const tagOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.tags.data
+  );
 
   const height = isActive ? 'auto' : 0;
   const [contactFilter, setContactFilter] = useState<ContactFilterState>({
     utbildning: '',
     status: '',
     ort: '',
+    taggar: [],
   });
   const [corpFilter, setCorpFilter] = useState<CorpFilterState>({
     branch: '',
@@ -141,11 +146,12 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             clrAble={true}
             clearFieldFunc={handleClrField}
           />,
-          /*    <Input
-            placeholder='Sök bland taggar...'
+          <MultipleSelect
             label='Taggar'
-            width='250px'
-          />, */
+            onChangeFunction={handleSetTags}
+            options={tagOptions}
+            // width='350px'
+          />,
         ];
       case '/kontakter/foretag':
         return [
@@ -160,9 +166,9 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
           />,
           <MultipleSelect
             options={optionsStatus}
+            onChangeFunction={handleSetTags}
             label='Taggar'
             width='350px'
-            // addAble={true}
           />,
         ];
       case '/kontakter/utbildningar':
@@ -197,6 +203,10 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
       default:
         return [];
     }
+  };
+
+  const handleSetTags = (tagArray: string[]) => {
+    setContactFilter((prev) => ({ ...prev, taggar: tagArray }));
   };
 
   let inputsArray = decideFilterInputs();

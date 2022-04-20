@@ -1,5 +1,5 @@
+import { ILetterSchema } from '../../types/global';
 import api from '../api';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface IAddContactParams {
   firstName: string;
@@ -10,45 +10,20 @@ interface IAddContactParams {
   role?: string;
   town?: string;
   status: string;
-  // letterOfIntent: {
-  //   edu: string[];
-  //   employment: string;
-  //   internship: string;
-  //   readEdu: boolean;
-  //   contributeEdu: boolean;
-  //   lecture: boolean;
-  //   studyVisit: boolean;
-  //   eduBoard: boolean;
-  // };
-}
-
-interface ILetterOfIntent {
-  edu: string[];
-  employment: string;
-  internship: string;
-  readEdu: boolean;
-  contributeEdu: boolean;
-  lecture: boolean;
-  studyVisit: boolean;
-  eduBoard: boolean;
 }
 
 export const addContact = async (data: IAddContactParams) => {
-  const userData = useLocalStorage('get', 'session', 'user');
-  const token = userData.data.token;
   try {
-    const result = await api.post(`/contact`, data, {
-      headers: { 'x-access-token': token },
-    });
+    const result = await api.post(`/contact`, data);
     return result;
   } catch (err) {
     console.error(err);
   }
 };
 
-export const addLetter = async (data: ILetterOfIntent) => {
+export const addLetter = async (data: ILetterSchema) => {
   try {
-    const result = await api.post("/contact/letter", data);
+    const result = await api.post('/letter', data);
     return result;
   } catch (err) {
     console.error(err);
