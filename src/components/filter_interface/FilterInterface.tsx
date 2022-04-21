@@ -150,7 +150,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             label='Taggar'
             onChangeFunction={handleSetTags}
             options={tagOptions}
-            // width='350px'
+            width='350px'
           />,
         ];
       case '/kontakter/foretag':
@@ -168,7 +168,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             options={optionsStatus}
             onChangeFunction={handleSetTags}
             label='Taggar'
-            width='350px'
+            width='320px'
           />,
         ];
       case '/kontakter/utbildningar':

@@ -57,6 +57,7 @@ const ContactList = () => {
         filterQuery,
       })
     );
+    window.scrollTo(0, 0);
   }, [searchQuery, filterQuery]);
 
   useEffect(() => {
@@ -68,21 +69,12 @@ const ContactList = () => {
         filterQuery,
       })
     );
+    window.scrollTo(0, 0);
   }, [page]);
 
   return (
     <>
       <section className={styles.contact_list_container}>
-        <div className={styles.label_bar_container}>
-          <div>Namn</div>
-          <div>
-            <div>Företag</div>
-            <div>Roll</div>
-          </div>
-          <div>Ort</div>
-          <div>Status</div>
-          <div>Kontaktinfo.</div>
-        </div>
         <div>
           {ListData && ListData.length > 0 ? (
             ListData.map((item: IListDataMap, i: number) => {

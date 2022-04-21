@@ -20,8 +20,9 @@ import { Dropdown } from '../components/shared/dropdown/Dropdown';
 import AddEduModule from '../components/modules/add_data/AddEduModule';
 import { SearchBar } from '../components/shared/searchbar/Searchbar';
 import FilterInterface from '../components/filter_interface/FilterInterface';
-import { getAll } from "../apis/contact/getAll"
+import { getAll } from '../apis/contact/getAll';
 import { InfoBox } from '../components/ui/info/InfoBox';
+import { route } from 'next/dist/server/router';
 
 interface LayoutProps {
   children: ReactNode;
@@ -40,10 +41,9 @@ interface IContactData {
   _id: string;
 }
 
-
 interface IInfoBoxProps {
   infoText: string;
-  type: "warning" | "info" | "tip" | "success";
+  type: 'warning' | 'info' | 'tip' | 'success';
   showBox: boolean;
   time: number;
 }
@@ -62,9 +62,10 @@ const contactLayout = ({ children }: LayoutProps) => {
 
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
-  const [managementList, setManagementList] = useState<Array<{value: string, label: string}>>([]);
+  const [managementList, setManagementList] = useState<
+    Array<{ value: string; label: string }>
+  >([]);
   const [ListData, setListData] = useState<Array<IContactData>>([]);
-
 
   const closeContactModule = () => setContactModuleToggle(false);
   const closeCorpModule = () => setCorpModuleToggle(false);
@@ -74,21 +75,20 @@ const contactLayout = ({ children }: LayoutProps) => {
     setToggleDropdown(!toggleDropdown);
   };
 
-
-    const createContactList = (data: Array<IContactData>) => {
-      const list: Array<{value: string, label: string}> = [];
-      data.forEach((item: IContactData, i: number) => {
-        let text = "";
-        text += item.firstName + " " + item.lastName;
-        const obj = {
-          value: text,
-          label: text,
-          id: item._id
-        }
-        list.push(obj)
-      });
-      setManagementList(list);
-    }
+  const createContactList = (data: Array<IContactData>) => {
+    const list: Array<{ value: string; label: string }> = [];
+    data.forEach((item: IContactData, i: number) => {
+      let text = '';
+      text += item.firstName + ' ' + item.lastName;
+      const obj = {
+        value: text,
+        label: text,
+        id: item._id,
+      };
+      list.push(obj);
+    });
+    setManagementList(list);
+  };
 
   useEffect(() => {
     const handleQuerySearch = () => {
@@ -101,14 +101,16 @@ const contactLayout = ({ children }: LayoutProps) => {
   }, [searchWord]);
 
   useEffect(() => {
-    getAll().then(res => {
-      console.log("RES --->", res?.data)
-      setListData(res?.data.data.contactList)
-      createContactList(res?.data.data.contactList);
-    }).catch(err => {
-      console.log(err)
-    })
-  }, [])
+    getAll()
+      .then((res) => {
+        console.log('RES --->', res?.data);
+        setListData(res?.data.data.contactList);
+        createContactList(res?.data.data.contactList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const setSearchPlaceholder = () => {
     switch (router.pathname) {
@@ -200,8 +202,43 @@ const contactLayout = ({ children }: LayoutProps) => {
           </Flex>
           <FilterInterface isActive={filterIsActive} />
         </header>
-        {children}
+        <div
+          className={`${styles.label_bar_container} ${
+            router.pathname === '/kontakter/utbildningar' &&
+            styles.label_bar_container_edu
+          }`}
+        >
+          {router.pathname === '/kontakter/foretag' && (
+            <>
+              <div>Namn</div>
+              <div>Taggar</div>
+              <div>Övrig info</div>
+            </>
+          )}
+          {router.pathname === '/kontakter' && (
+            <>
+              <div>Namn</div>
+              <div>
+                <div>Företag</div>
+                <div>Roll</div>
+              </div>
+              <div>Ort</div>
+              <div>Status</div>
+              <div>Kontaktinfo.</div>
+            </>
+          )}
+          {router.pathname === '/kontakter/utbildningar' && (
+            <>
+              <div>Namn</div>
+              <div>Förkortning</div>
+              <div>typ</div>
+              <div>Ledningsgrupp</div>
+              <div>Ort</div>
+            </>
+          )}
+        </div>
       </div>
+      <div className={styles.children_container}>{children}</div>
       <AddContactModule
         active={contactModuleToggle}
         closeModule={closeContactModule}
@@ -210,7 +247,12 @@ const contactLayout = ({ children }: LayoutProps) => {
         active={corpModuleToggle}
         closeModule={closeCorpModule}
       />
-      <AddEduModule active={eduModuleToggle} closeModule={closeEduModule} contactList={managementList} listDataContacts={ListData} />
+      <AddEduModule
+        active={eduModuleToggle}
+        closeModule={closeEduModule}
+        contactList={managementList}
+        listDataContacts={ListData}
+      />
     </>
   );
 };

@@ -22,7 +22,9 @@
         // background-color: $primary-color-dark;
 
         background: #7586ce40;
-        border-radius: 50%;
+        // border-radius: 50%;
+        border-radius: $spacing-x-small;
+        padding: 0 $spacing-medium;
         color: $primary-color-dark;
       }
 

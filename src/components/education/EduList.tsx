@@ -39,13 +39,13 @@ const EduList = () => {
 
   return (
     <section className={styles.edu_list_container}>
-      <div className={styles.label_bar_container}>
+      {/*     <div className={styles.label_bar_container}>
         <div>Namn</div>
         <div>Förkortning</div>
         <div>typ</div>
         <div>Ledningsgrupp</div>
         <div>Ort</div>
-      </div>
+      </div> */}
       <div></div>
       {ListData && ListData.length > 0 ? (
         ListData.map((item: IListData, i: number) => {

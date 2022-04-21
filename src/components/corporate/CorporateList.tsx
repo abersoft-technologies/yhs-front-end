@@ -23,7 +23,6 @@ const CorporateList = () => {
   const [slicedPages, setSlicedPages] = useState(1);
   const [openInfoCard, setOpenInfoCard] = useState(false);
 
-
   const corpListReducer = useSelector((state: any) => state.corpListReducer);
   const ListData = corpListReducer.result.data
     ? corpListReducer.result.data.corpList
@@ -39,11 +38,6 @@ const CorporateList = () => {
   return (
     <>
       <section className={styles.corporate_list_container}>
-        <div className={styles.label_bar_container}>
-          <div>Namn</div>
-          <div>Taggar</div>
-          <div>Övrig info</div>
-        </div>
         <div></div>
         {ListData && ListData.length > 0 ? (
           ListData.map((item: IListData, i: number) => {
