@@ -8,7 +8,12 @@ import { Flex } from '../ui/Flex';
 import SearchBar from './searchbar/SearchBar';
 import UserMenu from './usermenu/UserMenu';
 
-const Topbar = () => {
+interface ITopBarProps {
+  handleToggleSidebar: () => void;
+  narrow: boolean;
+}
+
+const Topbar = ({ handleToggleSidebar, narrow }: ITopBarProps) => {
   const router = useRouter();
   const setPageTitle = () => {
     if (router.pathname === '/') return 'Överblick';
@@ -16,9 +21,9 @@ const Topbar = () => {
     if (router.pathname.includes('/kontakter')) return 'Kontakter';
   };
   return (
-    <section className={styles.topbar}>
+    <section className={`${styles.topbar} ${narrow && styles.topbar_wide}`}>
       <Flex direction='row' gap='large' align='center'>
-        <button>
+        <button onClick={handleToggleSidebar}>
           <img src='/close-hamburger.svg' alt='Hamburger menu' />
         </button>
         <h2>{setPageTitle()}</h2>

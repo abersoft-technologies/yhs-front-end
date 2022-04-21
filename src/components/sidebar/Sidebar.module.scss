@@ -2,7 +2,6 @@
 
 .sidebar {
   background: var.$primary-color-dark;
-
   position: fixed;
   left: 0;
   top: 0;
@@ -11,35 +10,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  // box-shadow: 1px 1px 15px 0px rgba(34, 55, 111, 0.135);
+  transition: width 500ms cubic-bezier(0.3, 0, 0, 1);
+  padding: 0 var.$spacing-small;
 
   .active_link {
     transition: all 200ms ease-in-out;
-    background: #ffffff20;
     border-radius: 8px;
     padding: 0.75rem;
-    /*     > svg > path {
-      transition: fill 200ms ease-in-out;
-    } */
+    width: 100%;
+    background: #ffffff10;
   }
   .active_link_contacts {
     transition: all 200ms ease-in-out;
-    background: #ffffff20;
+    background: #ffffff10;
+
     border-radius: 8px;
     padding: 0.75rem;
-    /*   > svg > path {
-      transition: stroke 100ms ease-in-out;
-    } */
   }
 
-  div > img {
+  > div {
     margin-top: 0.75rem;
+  }
+  .svg_txt {
+    transition: all 200ms ease;
     border-bottom: 1px solid #fff;
-    padding: 0 1.75rem 1rem 1.5rem;
+    margin: 0.75rem 1.75rem 1rem 1.5rem;
+    padding-bottom: 1rem;
+    height: 32px;
+    width: 100%;
   }
   ul {
     margin-top: 2.5rem;
-    // height: 370px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -53,26 +55,79 @@
       height: 1px;
       border: none;
     }
+    > li {
+      width: 100%;
+    }
 
     li > a {
+      transition: all 200ms ease;
       font-size: 1.1rem;
       font-weight: 500;
       letter-spacing: 1.5px;
       display: flex;
       justify-content: flex-start;
       flex-direction: row;
+
       gap: 0.5rem;
-      width: 160px;
+      width: 100%;
       align-items: center;
       margin-top: 0.35rem;
       text-decoration: none;
       color: #fff;
-      background: #ffffff00;
-      border-radius: 8px;
+
       padding: 0.75rem;
-      > svg {
-        margin-bottom: 0.25rem;
-      }
+      padding-left: 10px;
+    }
+  }
+}
+
+.wide_late {
+  .active_link {
+    transition: background 150ms ease-in;
+    background: #ffffff10;
+  }
+  .active_link_contacts {
+    background: #ffffff10;
+  }
+}
+
+.narrow_active {
+  background: var.$primary-color-dark;
+
+  width: 71px;
+  height: 100%;
+
+  > div > svg {
+    width: 80% !important;
+    background-origin: padding-box;
+  }
+  > div {
+    margin-top: 0;
+    border-bottom: 1px solid #fff;
+  }
+
+  .active_link {
+    transition: all 200ms ease-in-out;
+    transition: width 0s ease-in-out;
+
+    padding: 0.75rem;
+  }
+  .active_link_contacts {
+    transition: all 200ms ease-in-out;
+    transition: width 0s ease-in-out;
+    padding: 0.75rem;
+  }
+
+  div > svg {
+    margin-top: 0.75rem;
+    padding: 0;
+    width: 100%;
+  }
+  ul {
+    align-items: center;
+
+    li > a {
+      justify-content: center;
     }
   }
 }

@@ -33,31 +33,29 @@ interface Education {
 }
 
 interface Letter {
-  edu: [string],
-  employment: string,
-  internship: string,
-  readEdu: boolean,
-  contributeEdu: boolean,
-  lecture: boolean,
-  studyVisit: boolean,
-  eduBoard: boolean,
+  edu: [string];
+  employment: string;
+  internship: string;
+  readEdu: boolean;
+  contributeEdu: boolean;
+  lecture: boolean;
+  studyVisit: boolean;
+  eduBoard: boolean;
 }
 
 interface ListItem {
-  education: Education,
-  allLetters: Array<Letter>,
-  letterNumber: Array<ILetterLength>,
+  education: Education;
+  allLetters: Array<Letter>;
+  letterNumber: Array<ILetterLength>;
 }
 
 interface ILetterLength {
   number: number;
   lastItem: boolean;
   isSmall: boolean;
-
 }
 
 const Barchart = () => {
-
   const [checkedParams, setCheckedParams] = useState<ICheckedParams>({
     letter_of_intent: true,
     employment: true,
@@ -68,47 +66,67 @@ const Barchart = () => {
 
   const [list, setList] = useState<Array<ListItem>>([]);
 
-
   const { numbersForBar } = NumbersForBar;
   const { coloredLabels } = ColorLabels;
 
   const getAllEducations = async () => {
-    await getAll().then((res) => {
-      console.log(res?.data);
-      setEduList(res?.data.data.eduList);
-    }).catch(err => console.log(err))
-  }
+    await getAll()
+      .then((res: any) => {
+        console.log(res?.data);
+        setEduList(res?.data.data.eduList);
+      })
+      .catch((err: any) => console.log(err));
+  };
 
   const getLetters = async () => {
-    await getAllLetters().then((res) => {
-      console.log(res?.data);
-      setLetterList(res?.data.data);
-    }).catch(err => console.log(err))
-  }
+    await getAllLetters()
+      .then((res) => {
+        console.log(res?.data);
+        setLetterList(res?.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const buildList = () => {
     let letters: Letter[] = [];
     let tempList: Array<ListItem> = [];
-    let obj: ListItem = {education: {managementList: [], name: "", place: "", shortName: "", type: ""}, allLetters: [], letterNumber: [{isSmall: false, lastItem: false, number: 0}] }
-    eduList && eduList.forEach((item) => {
-      letters = letterList.filter(letter => letter.edu[0] === item.name);
-      const list = []
-      list.push({number: letters.length, isSmall: false, lastItem: false})
-      obj = {
-        education: item,
-        allLetters: letters,
-        letterNumber: list
-      }
-      tempList.push(obj);
-    })
-    setList(tempList)
-  }
+    let obj: ListItem = {
+      education: {
+        managementList: [],
+        name: '',
+        place: '',
+        shortName: '',
+        type: '',
+      },
+      allLetters: [],
+      letterNumber: [{ isSmall: false, lastItem: false, number: 0 }],
+    };
+    eduList &&
+      eduList.forEach((item) => {
+        letters = letterList.filter((letter) => letter.edu[0] === item.name);
+        const list = [];
+        list.push({ number: letters.length, isSmall: false, lastItem: false });
+        obj = {
+          education: item,
+          allLetters: letters,
+          letterNumber: list,
+        };
+        tempList.push(obj);
+      });
+    // console.log(tempList);
+    console.log(tempList);
+    setList(tempList);
+  };
 
   useEffect(() => {
-    getAllEducations()
-    getLetters()
+    getAllEducations();
+    getLetters();
     buildList();
-  }, [eduList && eduList.length, letterList && letterList.length, list && list.length])
+  }, [
+    eduList && eduList.length,
+    letterList && letterList.length,
+    list && list.length,
+  ]);
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex
@@ -163,17 +181,21 @@ const Barchart = () => {
           />
         </Flex>
       </Flex>
-      {list.length ? list.map((item, i) => {
-        return <Bar
-          numbersForBar={numbersForBar}
-          labelName={item.education.name}
-          af_percent={item.allLetters.length * 4}
-          lia_percent={45}
-          employment_percent={80}
-          checkedParams={checkedParams}
-          afNumber={item.allLetters.length}
-        />
-      }) : null}
+      {list.length
+        ? list.map((item, i) => {
+            return (
+              <Bar
+                numbersForBar={numbersForBar}
+                labelName={item.education.name}
+                af_percent={item.allLetters.length * 4}
+                lia_percent={45}
+                employment_percent={80}
+                checkedParams={checkedParams}
+                afNumber={item.allLetters.length}
+              />
+            );
+          })
+        : null}
     </Flex>
   );
 };

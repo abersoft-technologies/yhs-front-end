@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 
 import styles from '../../styles/Layout.module.scss';
@@ -6,9 +6,7 @@ import styles from '../../styles/Layout.module.scss';
 /* Components for layout */
 import Sidebar from '../components/sidebar/Sidebar';
 import Topbar from '../components/topbar/Topbar';
-import {InfoBox} from '../components/ui/info/InfoBox';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -17,17 +15,39 @@ interface ILayoutProps {
 
 interface IInfoBoxProps {
   infoText: string;
-  type?: "warning" | "info" | "tip" | "success";
+  type?: 'warning' | 'info' | 'tip' | 'success';
   showBox: boolean;
   time: number;
 }
 
 export default function Layout({ children }: ILayoutProps) {
-  let infoBoxState: IInfoBoxProps = {infoText: "", showBox: false, time: 0}
-  const infoBoxRedux = useSelector((state: RootState) => state.infoBoxReducer)
+  const windowSize = useWindowSize();
+
+  const [narrow, setNarrow] = useState(false);
+  const [showBarItems, setShowBarItems] = useState(false);
+  const [late, setLate] = useState(false);
+
   useEffect(() => {
-    infoBoxState = infoBoxRedux;
-  }, [infoBoxRedux])
+    if (windowSize.width && windowSize?.width < 1440 && !narrow) {
+      handleToggleSidebar();
+    }
+    if (windowSize.width && windowSize?.width > 1440 && narrow) {
+      handleToggleSidebar();
+    }
+  }, [windowSize]);
+
+  const handleToggleSidebar = () => {
+    setNarrow(!narrow);
+    if (!narrow) {
+      setShowBarItems(true);
+      setLate(true);
+    } else {
+      setTimeout(() => {
+        setLate(false);
+        setShowBarItems(false);
+      }, 400);
+    }
+  };
   return (
     <>
       <Head>
@@ -38,13 +58,11 @@ export default function Layout({ children }: ILayoutProps) {
         />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <Sidebar />
-      <Topbar />
-
-      <main className={styles.main}>
+      <Sidebar showBarItems={showBarItems} narrow={narrow} late={late} />
+      <Topbar handleToggleSidebar={handleToggleSidebar} narrow={narrow} />
+      <main className={`${styles.main} ${narrow && styles.main_narrow}`}>
         {children}
-        <InfoBox infoText={infoBoxRedux.infoText} showBox={infoBoxRedux.showBox} time={infoBoxRedux.time} type={infoBoxRedux.type} />
-        </main>
+      </main>
     </>
   );
 }
