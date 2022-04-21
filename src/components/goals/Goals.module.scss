@@ -1,0 +1,14 @@
+@use '../../../styles/variables' as var;
+
+.selectContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: var.$spacing-medium;
+
+    .buttonContainer {
+        width: 25%;
+    }
+}

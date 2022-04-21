@@ -78,7 +78,7 @@ const UserMenu = (props: IUserMenu) => {
       </Flex>
       {openDropdown ? (
         <div className={styles.usermenu_dropdown}>
-          <button>Dina mål</button>
+          <button><Link href={"/dinamal"}>Dina mål</Link></button>
           <button>Inställningar</button>
           <button onClick={logout}>Logga ut</button>
         </div>
