@@ -4,7 +4,7 @@ interface IPropsButton {
   text: string;
   width?: string;
   color?: 'primary' | 'primary-dark';
-  onClick?: () => void;
+  onClick?: (e: any) => void;
   iconRight?: JSX.Element;
 }
 
@@ -45,7 +45,7 @@ export const OutlinedButton = ({
 }: IPropsButton) => {
   return (
     <button
-      onClick={onClick}
+      onClick={(e) => onClick ? onClick(e) : undefined}
       style={width ? { width: width } : { width: 'auto' }}
       className={`${styles.button} ${iconRight ? styles.button_icon : ''} ${
         styles.button_outlined
