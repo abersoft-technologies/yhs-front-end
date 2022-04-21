@@ -33,6 +33,7 @@
     width: 200px;
     display: flex;
     flex-direction: column;
+    z-index: 99999;
     background: #fff;
     box-shadow: var.$intense-black-shadow;
     border-radius: var.$spacing-x-small;

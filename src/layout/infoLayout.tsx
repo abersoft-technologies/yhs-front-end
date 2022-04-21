@@ -4,6 +4,7 @@ import { Flex } from '../components/ui/Flex';
 import styles from '../../styles/infoLayout.module.scss';
 import { Text } from '../components/ui/text/Text';
 import { IContactSchema } from '../types/global';
+import { is } from 'immer/dist/internal';
 
 interface IInfoLayoutProps extends ICorpProps, IEduProps {
   children: ReactNode;
@@ -51,7 +52,7 @@ const InfoLayout = ({
             <Text color='#363636' text={title ? title : ''} textSize='large' />
           </Flex>
           <Text text={subTitle ? subTitle : ''} textSize='medium' />
-          <Flex direction='row'  class={styles.placeContainer}>
+          <Flex direction='row' class={styles.placeContainer}>
             {place && place.length ? (
               place.map((item, i) => {
                 return <Text mX='x-small' key={i} text={item} color='grey' />;
@@ -67,12 +68,16 @@ const InfoLayout = ({
           {tags && (
             <Flex direction='row' wrap='wrap'>
               {tags
-                ? tags.map((item, i) => {
+                ? tags.slice(0, 4).map((item, i) => {
+                    let isLastI = false;
+                    if (i === tags.length - 1) {
+                      isLastI = true;
+                    }
                     return (
                       <Text
                         mX='x-small'
                         key={i}
-                        text={item + ', '}
+                        text={!isLastI ? item + ', ' : item}
                         color='grey'
                       />
                     );

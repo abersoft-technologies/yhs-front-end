@@ -2,6 +2,16 @@
 
 .contacts_container {
   padding-left: 1.5rem;
+  padding-top: 24px;
+  margin-top: -24px;
+  position: sticky;
+  top: 60px;
+  background: #fff;
+  z-index: 2;
+  // padding-bottom: var.$spacing-x-small;
+  // margin-bottom: var.$spacing-medium;
+  // border-bottom: 1px solid var.$very-light-grey;
+  // box-shadow: 0 3px 2px -2px rgba(31, 31, 31, 0.221);
 
   > nav {
     border-bottom: 1px solid var.$light-grey;
@@ -26,6 +36,31 @@
       }
     }
   }
+}
+.children_container {
+  padding-left: 1.5rem;
+}
+
+.label_bar_container {
+  color: var.$txt-color;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 10fr 15fr 5fr 5fr 10fr;
+  padding-bottom: var.$spacing-small;
+  border-bottom: 1px solid var.$light-grey;
+
+  > div:first-child {
+    margin-left: 0.75rem;
+  }
+
+  > div:nth-child(2) {
+    display: grid;
+    grid-template-columns: 10fr 10fr;
+    grid-auto-flow: column;
+  }
+}
+.label_bar_container_edu {
+  grid-template-columns: 10fr 5fr 5fr 10fr 10fr;
 }
 
 .add_btn {

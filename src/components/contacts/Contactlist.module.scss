@@ -12,6 +12,10 @@
 }
 
 .label_bar_container {
+  position: sticky;
+  top: 250px;
+  background: #fff;
+
   color: var.$txt-color;
   font-weight: bold;
   display: grid;
