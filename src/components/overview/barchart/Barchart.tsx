@@ -109,7 +109,7 @@ const Barchart = () => {
     getLetters()
     buildList();
     console.log("List List", list)
-  }, [eduList && eduList.length, letterList.length, list.length])
+  }, [eduList && eduList.length, letterList && letterList.length, list && list.length])
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex

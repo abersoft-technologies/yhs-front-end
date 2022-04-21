@@ -1,5 +1,6 @@
 @use './ui/loading.scss';
 @use './ui/text.scss';
+@use './variables' as var;
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 /* Overwrite NextUI colors to apdapt to out color scheme */
@@ -20,4 +21,22 @@ body {
 * {
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+}
+
+*::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px var.$primary-color;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: var.$primary-color-dark;
 }
