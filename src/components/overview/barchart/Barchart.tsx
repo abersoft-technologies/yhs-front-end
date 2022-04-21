@@ -108,7 +108,6 @@ const Barchart = () => {
     getAllEducations()
     getLetters()
     buildList();
-    console.log("List List", list)
   }, [eduList && eduList.length, letterList && letterList.length, list && list.length])
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
@@ -168,7 +167,7 @@ const Barchart = () => {
         return <Bar
           numbersForBar={numbersForBar}
           labelName={item.education.name}
-          af_percent={item.allLetters.length}
+          af_percent={item.allLetters.length * 4}
           lia_percent={45}
           employment_percent={80}
           checkedParams={checkedParams}
