@@ -90,7 +90,7 @@ const Barchart = () => {
     let letters: Letter[] = [];
     let tempList: Array<ListItem> = [];
     let obj: ListItem = {education: {managementList: [], name: "", place: "", shortName: "", type: ""}, allLetters: [], letterNumber: [{isSmall: false, lastItem: false, number: 0}] }
-    eduList.forEach((item) => {
+    eduList && eduList.forEach((item) => {
       letters = letterList.filter(letter => letter.edu[0] === item.name);
       const list = []
       list.push({number: letters.length, isSmall: false, lastItem: false})
@@ -109,7 +109,7 @@ const Barchart = () => {
     getLetters()
     buildList();
     console.log("List List", list)
-  }, [eduList.length, letterList.length, list.length])
+  }, [eduList && eduList.length, letterList.length, list.length])
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex
@@ -175,30 +175,6 @@ const Barchart = () => {
           afNumber={item.allLetters.length}
         />
       }) : null}
-      {/* <Bar
-        numbersForBar={numbersForBar}
-        labelName={'Front-end Developer'}
-        af_percent={20}
-        lia_percent={45}
-        employment_percent={80}
-        checkedParams={checkedParams}
-      />
-      <Bar
-        numbersForBar={numbersForBar}
-        labelName={'FE Developer'}
-        af_percent={20}
-        lia_percent={45}
-        employment_percent={80}
-        checkedParams={checkedParams}
-      />
-      <Bar
-        numbersForBar={numbersForBar}
-        labelName={'Lönekonsult'}
-        af_percent={44}
-        lia_percent={45}
-        employment_percent={80}
-        checkedParams={checkedParams}
-      /> */}
     </Flex>
   );
 };

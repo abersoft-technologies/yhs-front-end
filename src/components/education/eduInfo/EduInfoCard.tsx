@@ -59,6 +59,7 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
     return (
         <Flex direction="column" gap="large" width="full" class={listStyles.card}>
             <Text textSize="x-large" text={data && data.name ? data.name : ""}/>
+            <h1>Ledningsgrupp</h1>
 
             <section className={listStyles.edu_list_container}>
                 <div className={listStyles.label_bar_container}>
@@ -93,6 +94,7 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
                         place={item.town}
                         email={item.email}
                         phone={item.phoneNumber}
+                        _id={item._id}
                     />
 
                 }) : null}

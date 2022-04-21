@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./EduInfo.module.scss"
 
 interface IEduCardProps {
@@ -12,16 +13,17 @@ const ManagementListCard = ({
     name,
     phone,
     email,
-    place
+    place,
+    _id
   }: IEduCardProps) => {
-    return (<>
+    return (<Link href={`/kontakter/${_id}`}>
     <article className={styles.edu_contact_card} >
       <div>{name}</div>
       <div>{place}</div>
       <div>{email}</div>
       <div>{phone}</div>
     </article>
-    </>)
+    </Link>)
   };
 
   export default ManagementListCard;

@@ -51,7 +51,7 @@ const InfoLayout = ({
             <Text color='#363636' text={title ? title : ''} textSize='large' />
           </Flex>
           <Text text={subTitle ? subTitle : ''} textSize='medium' />
-          <Flex direction='row' class={styles.placeContainer}>
+          <Flex direction='row'  class={styles.placeContainer}>
             {place && place.length ? (
               place.map((item, i) => {
                 return <Text mX='x-small' key={i} text={item} color='grey' />;
@@ -65,7 +65,7 @@ const InfoLayout = ({
             )}
           </Flex>
           {tags && (
-            <Flex direction='row'>
+            <Flex direction='row' wrap='wrap'>
               {tags
                 ? tags.map((item, i) => {
                     return (

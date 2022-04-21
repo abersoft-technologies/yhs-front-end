@@ -1,5 +1,4 @@
 import styles from './CorpCardInfo.module.scss';
-import { useRouter } from 'next/router';
 import Link from "next/link"
 
 interface IContactCardProps {
@@ -19,7 +18,6 @@ const ContactCard = ({
   email,
   id
 }: IContactCardProps) => {
-  const router = useRouter();
   return (<Link href={`/kontakter/${id}`}><article className={styles.contact_card}>
     <div>{firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}</div>
     <div>{role ? role : 'Ej angivet'}</div>
