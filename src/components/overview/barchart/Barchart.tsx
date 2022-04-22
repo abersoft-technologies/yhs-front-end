@@ -14,6 +14,9 @@ import { Flex } from '../../ui/Flex';
 import BarsParamsToggle from './bars_params_toggle/BarsParamsToggle';
 import { getData } from '../../../apis/contact/letter_of_intent/get';
 
+/* Interfaces */
+import { ILetterSchema, IEducationSchema } from "../../../types/global"
+
 interface ILabelColorsProps {
   labelName: string;
   labelColor: string;
@@ -23,42 +26,6 @@ export interface ICheckedParams {
   letter_of_intent: boolean;
   employment: boolean;
   internship: boolean;
-}
-
-interface Education {
-  managementList: Array<string>;
-  name: string;
-  place: string;
-  shortName: string;
-  type: string;
-  goal?: {
-    letters: number,
-    employements: number,
-    internships: number,
-  }
-}
-
-interface Letter {
-  edu: [string];
-  employment: string;
-  internship: string;
-  readEdu: boolean;
-  contributeEdu: boolean;
-  lecture: boolean;
-  studyVisit: boolean;
-  eduBoard: boolean;
-}
-
-interface ListItem {
-  education: Education;
-  allLetters: Array<Letter>;
-  letterNumber: Array<ILetterLength>;
-}
-
-interface ILetterLength {
-  number: number;
-  lastItem: boolean;
-  isSmall: boolean;
 }
 
 interface ITotalDataEdu {
@@ -73,8 +40,8 @@ interface ITotalDataEdu {
 }
 
 interface IAllData {
-  education: Education;
-  letters: Array<Letter>;
+  education: IEducationSchema;
+  letters: Array<ILetterSchema>;
   totalDataEdu: ITotalDataEdu;
 }
 
@@ -84,81 +51,19 @@ const Barchart = () => {
     employment: true,
     internship: true,
   });
-  const [eduList, setEduList] = useState<Array<Education>>([]);
-  const [letterList, setLetterList] = useState<Array<Letter>>([]);
-
-  const [list, setList] = useState<Array<ListItem>>([]);
   const [allData, setAllData] = useState<Array<IAllData>>([]);
-
 
   const { numbersForBar } = NumbersForBar;
   const { coloredLabels } = ColorLabels;
-
-  const getAllEducations = async () => {
-    await getAll()
-      .then((res: any) => {
-        console.log(res?.data);
-        setEduList(res?.data.data.eduList);
-      })
-      .catch((err: any) => console.log(err));
-  };
-
-  const getLetters = async () => {
-    await getAllLetters()
-      .then((res) => {
-        console.log(res?.data);
-        setLetterList(res?.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const getAllData = async () => {
     const result = await getData();
     setAllData(result?.data.data)
   }
 
-  const buildList = () => {
-    let letters: Letter[] = [];
-    let tempList: Array<ListItem> = [];
-    let obj: ListItem = {
-      education: {
-        managementList: [],
-        name: '',
-        place: '',
-        shortName: '',
-        type: '',
-      },
-      allLetters: [],
-      letterNumber: [{ isSmall: false, lastItem: false, number: 0 }],
-    };
-    eduList &&
-      eduList.forEach((item) => {
-        letters = letterList.filter((letter) => letter.edu[0] === item.name);
-        const list = [];
-        list.push({ number: letters.length, isSmall: false, lastItem: false });
-        obj = {
-          education: item,
-          allLetters: letters,
-          letterNumber: list,
-        };
-        tempList.push(obj);
-      });
-    // console.log(tempList);
-    console.log(tempList);
-    setList(tempList);
-  };
-
   useEffect(() => {
-    getAllEducations();
-    getLetters();
-    buildList();
     getAllData();
-    console.log("ALLDATA", allData)
-  }, [
-    eduList && eduList.length,
-    letterList && letterList.length,
-    list && list.length,
-  ]);
+  }, [allData && allData.length]);
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex

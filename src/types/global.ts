@@ -15,6 +15,19 @@ export interface IUserModelRedux {
   };
 }
 
+export interface IEducationSchema {
+  managementList: Array<string>;
+  name: string;
+  place: string;
+  shortName: string;
+  type: string;
+  goal?: {
+    letters: number,
+    employements: number,
+    internships: number,
+  }
+}
+
 export interface ILetterSchema {
   _id?: string;
   edu: string[];
