@@ -220,8 +220,8 @@ const Barchart = () => {
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
                 af_percent={item.education.goal ?  (item.totalDataEdu.totalLetters /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  25) * 100}
-                lia_percent={item.education.goal ?  (item.totalDataEdu.internship /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  100) * 100}
-                employment_percent={item.education.goal ?  (item.totalDataEdu.employment.low /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  100) * 100}
+                lia_percent={item.education.goal ?  (item.totalDataEdu.internship /  item.education.goal.internships) * 100 : (item.totalDataEdu.internship /  100) * 100}
+                employment_percent={item.education.goal ?  (item.totalDataEdu.employment.low /  item.education.goal.employements) * 100 : (item.totalDataEdu.employment.low /  100) * 100}
                 checkedParams={checkedParams}
                 afNumber={item.totalDataEdu.totalLetters}
                 internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
