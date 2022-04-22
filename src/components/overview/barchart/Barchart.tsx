@@ -61,6 +61,15 @@ const Barchart = () => {
     setAllData(result?.data.data)
   }
 
+  const calculatePrecent = (current: number, goal: number | undefined): number => {
+    if(!current) return 0;
+    if(!goal) return (current / 100) * 100;
+    if(current >= goal) {
+      return 100;
+    }
+    return (current / goal) * 100;
+  }
+
   useEffect(() => {
     getAllData();
   }, [allData && allData.length]);
@@ -124,9 +133,9 @@ const Barchart = () => {
               <Bar
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
-                af_percent={item.education.goal ?  (item.totalDataEdu.totalLetters /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  25) * 100}
-                lia_percent={item.education.goal ?  (item.totalDataEdu.internship /  item.education.goal.internships) * 100 : (item.totalDataEdu.internship /  100) * 100}
-                employment_percent={item.education.goal ?  (item.totalDataEdu.employment.low /  item.education.goal.employements) * 100 : (item.totalDataEdu.employment.low /  100) * 100}
+                af_percent={calculatePrecent(item.totalDataEdu.totalLetters, item.education.goal?.letters)}
+                lia_percent={calculatePrecent(item.totalDataEdu.internship, item.education.goal?.internships)}
+                employment_percent={calculatePrecent(item.totalDataEdu.employment.low, item.education.goal?.employements)}
                 checkedParams={checkedParams}
                 afNumber={item.totalDataEdu.totalLetters}
                 internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
