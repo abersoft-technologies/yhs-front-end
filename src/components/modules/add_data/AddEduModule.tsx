@@ -142,7 +142,7 @@ const AddEduModule = ({
       }
     });
     setSelectValue('');
-    dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", showBox: true, time: 3000, type: "success"}))
+    dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", time: 3000, type: "success"}))
     onClose();
   };
 

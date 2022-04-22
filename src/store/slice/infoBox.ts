@@ -6,14 +6,14 @@ interface StateObject {
     infoText: string;
     time: number;
     type?: "warning" | "info" | "tip" | "success";
-    showBox: boolean;
+    // showBox: boolean;
 }
 
 const initialState: StateObject = {
     infoText: "",
     time: 0,
     type: undefined,
-    showBox: false,
+    // showBox: false,
 };
 
 export const infoBoxSlice = createSlice({
