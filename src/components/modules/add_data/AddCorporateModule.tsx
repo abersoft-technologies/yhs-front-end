@@ -70,7 +70,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
       // dispatch(add(tempList))
     }).catch(err => console.log(err));
     setFormData({ name: '', tags: [], info: '' });
-    dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", showBox: true, time: 3000, type: "success"}))
+    dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", time: 3000, type: "success"}))
     closeModule();
   };
 

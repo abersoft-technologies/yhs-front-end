@@ -68,7 +68,7 @@ const Goals = () => {
         e.preventDefault();
         const result = await updateEdu(id, {goal: {...goalData}});
         if(result?.status === 200) {
-            dispatch(showInfoBox({infoText: "Du har uppdaterat målen för denna utbildning", showBox: true, time: 3000, type: "success"}))
+            dispatch(showInfoBox({infoText: "Du har uppdaterat målen för denna utbildning", time: 3000, type: "success"}))
         }
       }
 

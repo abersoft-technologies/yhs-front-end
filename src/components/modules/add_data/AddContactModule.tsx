@@ -169,7 +169,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         ],
       };
     }
-    dispatch(showInfoBox({infoText: "Du har lagt till en ny kontakt", showBox: true, time: 3000, type: "success"}))
+    dispatch(showInfoBox({infoText: "Du har lagt till en ny kontakt", time: 3000, type: "success"}))
     updateContact(contact?.data.data._id, dataContact);
     closeModule();
   };

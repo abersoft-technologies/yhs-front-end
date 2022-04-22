@@ -20,9 +20,9 @@ export const InfoBox = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            dispatch(showInfoBox({infoText: "", showBox: false, time: 0}))
+            dispatch(showInfoBox({infoText: "", time: 0}))
         }, infoBoxRedux.time);
-    }, [infoBoxRedux.showBox])
+    }, [infoBoxRedux.infoText])
 
     const renderContent = () => {
         let content = <></>
@@ -61,7 +61,7 @@ export const InfoBox = () => {
     }
 
     return (
-        infoBoxRedux.showBox ?
+        infoBoxRedux.infoText !== "" ?
             renderContent()
         : null
     )

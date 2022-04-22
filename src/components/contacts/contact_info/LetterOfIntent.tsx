@@ -86,7 +86,6 @@ const LetterOfIntent = () => {
         dispatch(
           showInfoBox({
             infoText: 'Uppdatering genomförd',
-            showBox: true,
             time: 3000,
             type: 'success',
           })
@@ -104,7 +103,6 @@ const LetterOfIntent = () => {
       dispatch(
         showInfoBox({
           infoText: 'Uppdatering genomförd',
-          showBox: true,
           time: 3000,
           type: 'success',
         })
