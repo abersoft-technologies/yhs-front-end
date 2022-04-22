@@ -6,6 +6,8 @@ import { Select } from "../ui/form/select/Select";
 import styles from "./Goals.module.scss"
 import { getAll, getEdu } from "../../apis/edu/get"
 import { updateEdu } from "../../apis/edu/update"
+import { useAppDispatch } from "../../hooks/useStore";
+import { showInfoBox } from "../../store/slice/infoBox";
 
 
 interface IGoalData {
@@ -33,14 +35,12 @@ interface IEducation {
 }
 
 const Goals = () => {
+    const dispatch = useAppDispatch();
     const [goalData, setGoalData] = useState<IGoalData>({letters: 0, employements: 0, internships: 0});
     const [educations, setEducations] = useState<Array<IEduObject>>([]);
     const [optionList, setOptionList] = useState<Array<{value: string, label: string, id: string}>>([]);
     const [education, setEducation] = useState<IEducation>({label: "", value: ""});
     const [id, setId] = useState<string>("");
-
-
-
 
     const getAllEdus = async () => {
         await getAll().then(res => {
@@ -67,6 +67,9 @@ const Goals = () => {
       const onSubmit = async (e: any) => {
         e.preventDefault();
         const result = await updateEdu(id, {goal: {...goalData}});
+        if(result?.status === 200) {
+            dispatch(showInfoBox({infoText: "Du har uppdaterat målen för denna utbildning", showBox: true, time: 3000, type: "success"}))
+        }
       }
 
       const handleOnChangeSelect = (label: string, value: string, _id?: string) => {
