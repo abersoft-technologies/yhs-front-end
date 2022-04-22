@@ -49,3 +49,29 @@ export interface IContactSchema {
   };
   letters: [{ _id: string }] | undefined;
 }
+
+export interface eduLettersData {
+  education: {
+    _id: string;
+    name: string;
+    shortName: string;
+    place: string;
+    managmentlist: [];
+    type: string;
+    __v: number;
+  };
+  totalDataEdu: {
+    totalLetters: number;
+    employment: {
+      low: number;
+      high: number;
+    };
+    internship: number;
+    readEdu: number;
+    contributeEdu: number;
+    lecture: number;
+    studyVisit: number;
+    eduBoard: number;
+  };
+  letters: ILetterSchema[];
+}

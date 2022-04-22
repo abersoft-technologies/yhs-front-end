@@ -8,12 +8,13 @@ import corpListReducer from './slice/corpList';
 import corporateReducer from './slice/corporate';
 import contactReducer from './slice/contact';
 import letterReducer from './slice/letter';
-import infoBoxReducer from './slice/infoBox'
+import infoBoxReducer from './slice/infoBox';
 
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
 import filterQueryReducer from './slice/filterQuery';
 import filterOptionsReducer from './slice/filterOptions';
+import lettersDataReducer from './slice/lettersData';
 
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -33,7 +34,8 @@ const reducers = combineReducers({
   filterOptionsReducer,
   contactReducer,
   letterReducer,
-  infoBoxReducer
+  infoBoxReducer,
+  lettersDataReducer,
 });
 
 const persist = persistReducer(persistConfig, reducers);

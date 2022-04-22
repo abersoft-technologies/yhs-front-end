@@ -1,8 +1,7 @@
 import React, { ReactElement, useEffect } from 'react';
-import type { NextPage } from 'next';
-import Router from 'next/router';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { Redirect } from '../src/globalFunctions/redirect';
+
+import { getLettersDataRedux } from '../src/store/slice/lettersData';
+import { useDispatch } from 'react-redux';
 
 /* Styling components */
 import styles from '../styles/Overview.module.scss';
@@ -17,10 +16,15 @@ import Layout from '../src/layout/layout';
 import { InfoCards } from '../src/components/overview/InfoCards/InfoCards';
 
 const Overview = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getLettersDataRedux());
+  }, []);
+
   return (
     <>
       <div className={styles.overview_container}>
-      <InfoCards />
+        <InfoCards />
         {/* <header>
           <div className={styles.header_bar_container}>
             <div>
