@@ -7,6 +7,8 @@ import styles from '../../styles/Layout.module.scss';
 import Sidebar from '../components/sidebar/Sidebar';
 import Topbar from '../components/topbar/Topbar';
 import { useWindowSize } from '../hooks/useWindowSize';
+import { InfoBox } from '../components/ui/info/InfoBox';
+import { useSelector } from 'react-redux';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -26,6 +28,10 @@ export default function Layout({ children }: ILayoutProps) {
   const [narrow, setNarrow] = useState(false);
   const [showBarItems, setShowBarItems] = useState(false);
   const [late, setLate] = useState(false);
+
+  const infoBoxReducer: IInfoBoxProps = useSelector(
+    (state: any) => state.infoBoxReducer
+  );
 
   useEffect(() => {
     if (windowSize.width && windowSize?.width < 1440 && !narrow) {
@@ -62,6 +68,7 @@ export default function Layout({ children }: ILayoutProps) {
       <Topbar handleToggleSidebar={handleToggleSidebar} narrow={narrow} />
       <main className={`${styles.main} ${narrow && styles.main_narrow}`}>
         {children}
+        <InfoBox infoText={infoBoxReducer.infoText} showBox={infoBoxReducer.showBox} time={infoBoxReducer.time} type={infoBoxReducer.type} />
       </main>
     </>
   );
