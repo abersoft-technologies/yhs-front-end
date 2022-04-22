@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { updateLetOfIntent } from '../../../apis/contact/letter_of_intent/update';
 import { getLetter } from '../../../apis/contact/letter_of_intent/get';
 import { addLetter } from '../../../apis/contact/add';
 import { useRouter } from 'next/router';
+import { updateContact } from '../../../apis/contact/update';
+import { showInfoBox } from '../../../store/slice/infoBox';
 
 /* Import Styling */
 import styles from './ContactInfo.module.scss';
@@ -18,7 +20,6 @@ import { Flex } from '../../ui/Flex';
 import { Select } from '../../ui/form/select/Select';
 import { Checkbox, Tooltip } from '@nextui-org/react';
 import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
-import { updateContact } from '../../../apis/contact/update';
 
 const optionsAnställning = [
   { value: '0', label: '0' },
@@ -37,6 +38,7 @@ const optionsLia = [
 
 const LetterOfIntent = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const contact = useSelector(
     (state: RootState) => state.contactReducer.result
   );
@@ -81,6 +83,15 @@ const LetterOfIntent = () => {
         let _id = res.data.data._id;
         await updateContact(contact._id, { letters: [{ _id }] });
         handleGetLetter(contact._id);
+        dispatch(
+          showInfoBox({
+            infoText: 'Uppdatering genomförd',
+            showBox: true,
+            time: 3000,
+            type: 'success',
+          })
+        );
+        setEdited(false);
       }
 
       return;
@@ -90,6 +101,14 @@ const LetterOfIntent = () => {
 
     const result = await updateLetOfIntent(id, formData);
     if (result?.status === 200) {
+      dispatch(
+        showInfoBox({
+          infoText: 'Uppdatering genomförd',
+          showBox: true,
+          time: 3000,
+          type: 'success',
+        })
+      );
       setEdited(false);
     }
   };
@@ -119,8 +138,8 @@ const LetterOfIntent = () => {
     }
   };
 
-  const handleSetEdu = (tagArray: string[]) => {
-    if (!edited) setEdited(true);
+  const handleSetEdu = (tagArray: string[], setValue?: boolean) => {
+    if (!edited && !setValue) setEdited(true);
     setFormData((prev) => ({ ...prev, edu: tagArray }));
   };
   const handleOnChangeCheckbox = (e: any, key: string) => {
