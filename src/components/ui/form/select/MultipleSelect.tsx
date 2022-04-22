@@ -4,7 +4,7 @@ import { Flex } from '../../Flex';
 import styles from './Select.module.scss';
 
 interface ISelectProps {
-  onChangeFunction: (selectedArray: string[]) => void;
+  onChangeFunction: (selectedArray: string[], setValue?: boolean) => void;
   label: string;
   width?: string;
   options: { value: string; label: string; id?: string; tagName?: string }[];
@@ -28,9 +28,17 @@ export const MultipleSelect = ({
   const [inputVal, setInputVal] = useState('');
   const [selectedArr, setSelectedArr] = useState<selectedArrType>([]);
 
+  const setSelArrAndChangeFunc = (arr: string[], setValue?: boolean) => {
+    setSelectedArr(arr);
+    if (onChangeFunction) {
+      onChangeFunction(arr, setValue);
+    }
+  };
+
   useEffect(() => {
     if (value && value.length > 0 && !valAlreadySet) {
-      setSelectedArr(value);
+      // setSelectedArr(value);
+      setSelArrAndChangeFunc(value, true);
       setValAlreadySet(true);
     }
   }, [value]);
@@ -49,11 +57,11 @@ export const MultipleSelect = ({
     };
   }, []);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (onChangeFunction) {
       onChangeFunction(selectedArr);
     }
-  }, [selectedArr]);
+  }, [selectedArr]); */
 
   const handleClrTag = (e: React.MouseEvent<HTMLButtonElement>) => {
     const innerTxt = e.currentTarget.closest('div')?.innerText;
@@ -63,7 +71,8 @@ export const MultipleSelect = ({
     let resultArr = [...selectedArr];
     resultArr.splice(index, 1);
 
-    setSelectedArr(resultArr);
+    // setSelectedArr(resultArr);
+    setSelArrAndChangeFunc(resultArr);
   };
 
   const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,25 +88,30 @@ export const MultipleSelect = ({
     if (e.key === 'Enter' && addAble && inputVal.length > 0) {
       if (selectedArr.length > 0) {
         let result = [...selectedArr, inputVal];
-        setSelectedArr(result);
+        // setSelectedArr(result);
+        setSelArrAndChangeFunc(result);
         setInputVal('');
       } else {
-        setSelectedArr([inputVal]);
+        // setSelectedArr([inputVal]);
+        setSelArrAndChangeFunc([inputVal]);
         setInputVal('');
       }
     }
     if (e.key === 'Backspace' && inputVal.length === 0) {
       let newArr = [...selectedArr];
       newArr.pop();
-      setSelectedArr(newArr);
+      // setSelectedArr(newArr);
+      setSelArrAndChangeFunc(newArr);
     }
   };
 
   const handleMultiSelect = (value: string) => {
-    setSelectedArr([...selectedArr, value]);
+    // setSelectedArr([...selectedArr, value]);
+    setSelArrAndChangeFunc([...selectedArr, value]);
   };
   const handleAddOption = () => {
-    setSelectedArr([...selectedArr, inputVal]);
+    // setSelectedArr([...selectedArr, inputVal]);
+    setSelArrAndChangeFunc([...selectedArr, inputVal]);
     setInputVal('');
   };
 
