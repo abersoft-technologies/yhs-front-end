@@ -4,7 +4,7 @@ import { Text } from '../../ui/text/Text';
 import { getAllLetters } from '../../../apis/letter/get';
 
 import styles from './InfoCards.module.scss';
-import { ILetterSchema, eduLettersData } from '../../../types/global';
+import { ILetterSchema } from '../../../types/global';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
@@ -13,12 +13,25 @@ interface ICardProps {
   number: string;
   svg: string;
 }
-/* interface CardsProps {
-  data: eduLettersData;
-} */
+interface ItotalData {
+  employment: {
+    low: number;
+    high: number;
+  };
+  internship: number;
+  other: number;
+}
 
 export const InfoCards = () => {
   const [letters, setLetters] = useState<Array<ILetterSchema>>([]);
+  const [totalData, setTotalData] = useState<ItotalData>({
+    employment: {
+      low: 0,
+      high: 0,
+    },
+    internship: 0,
+    other: 0,
+  });
   const lettersData = useSelector(
     (state: RootState) => state.lettersDataReducer.result
   );
@@ -31,17 +44,17 @@ export const InfoCards = () => {
     },
     {
       text: 'Anställningar',
-      value: '17',
+      value: totalData.employment.low + '-' + totalData.employment.high,
       svg: '/svgs/overview/cards/employment.svg',
     },
     {
       text: 'LIA Platser',
-      value: '80',
+      value: totalData.internship,
       svg: '/svgs/overview/cards/student.svg',
     },
     {
       text: 'Övrig medverkan',
-      value: '45',
+      value: totalData.other,
       svg: '/svgs/overview/cards/dots.svg',
     },
   ];
@@ -62,20 +75,28 @@ export const InfoCards = () => {
         high: 0,
       },
       internship: 0,
+      other: 0,
     };
 
     if (lettersData) {
       lettersData.forEach((item) => {
         res.employment.high += item.totalDataEdu.employment.high;
         res.employment.low += item.totalDataEdu.employment.low;
-
-        // console.log(item.totalDataEdu.employment.high);
+        res.internship += item.totalDataEdu.internship;
+        res.other +=
+          item.totalDataEdu.lecture +
+          item.totalDataEdu.studyVisit +
+          item.totalDataEdu.eduBoard;
       });
     }
     console.log(res);
     return res;
   };
-  calcAllTotalValues();
+
+  useEffect(() => {
+    const totalData = calcAllTotalValues();
+    setTotalData(totalData);
+  }, [lettersData]);
 
   useEffect(() => {
     getData();
