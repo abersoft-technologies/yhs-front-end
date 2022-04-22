@@ -5,7 +5,7 @@ import styles from './Input.module.scss';
 interface IInputProps {
   placeholder: string;
   name: string;
-  value: string;
+  value: string | number;
   onChangeFunction: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
   label?: string;

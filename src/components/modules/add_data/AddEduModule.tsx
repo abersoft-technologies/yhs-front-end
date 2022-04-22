@@ -39,6 +39,11 @@ interface IAddEduForm {
   shortName: string;
   type: string;
   managementList: Array<string>;
+  goal: {
+    letters: Number,
+    internships: Number,
+    employements: Number,
+}
 }
 
 interface IManagementObject {
@@ -62,6 +67,11 @@ const AddEduModule = ({
     shortName: '',
     type: '',
     managementList: [],
+    goal: {
+      employements: 0,
+      internships: 0,
+      letters: 0
+    }
   });
   const [selectValue, setSelectValue] = useState<string>('');
   const [id, setId] = useState<string>('');
@@ -107,6 +117,11 @@ const AddEduModule = ({
       shortName: '',
       type: '',
       managementList: [],
+      goal: {
+        employements: 0,
+        internships: 0,
+        letters: 0
+      }
     });
     setSelectValue('');
     closeModule();
@@ -120,6 +135,11 @@ const AddEduModule = ({
       shortName: '',
       type: '',
       managementList: [],
+      goal: {
+        employements: 0,
+        internships: 0,
+        letters: 0
+      }
     });
     setSelectValue('');
     dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", showBox: true, time: 3000, type: "success"}))

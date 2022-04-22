@@ -14,7 +14,7 @@ interface IInfoBoxProps {
 
 import styles from "./InfoBox.module.scss";
 
-export const InfoBox = ({infoText, type, showBox, time}: IInfoBoxProps) => {
+export const InfoBox = () => {
     const dispatch = useDispatch();
     const infoBoxRedux = useSelector((state: RootState) => state.infoBoxReducer)
 
@@ -26,32 +26,32 @@ export const InfoBox = ({infoText, type, showBox, time}: IInfoBoxProps) => {
 
     const renderContent = () => {
         let content = <></>
-        switch(type) {
+        switch(infoBoxRedux.type) {
             case "warning":
                 content = (
                     <div className={`${styles.container} ${styles.warningBox}`}>
-                        <Text text={infoText} />
+                        <Text text={infoBoxRedux.infoText} />
                     </div>
                 )
             break;
             case "info":
                 content = (
                     <div className={`${styles.container} ${styles.infoBox}`}>
-                        <Text text={infoText} />
+                        <Text text={infoBoxRedux.infoText} />
                     </div>
                 )
             break;
             case "tip":
                 content = (
                     <div className={`${styles.container} ${styles.tipBox}`}>
-                        <Text text={infoText} />
+                        <Text text={infoBoxRedux.infoText} />
                     </div>
                 )
             break;
             case "success":
                 content = (
                     <div className={`${styles.container} ${styles.successBox}`}>
-                        <Text text={infoText} />
+                        <Text text={infoBoxRedux.infoText} />
                     </div>
                 )
             break;
@@ -61,7 +61,7 @@ export const InfoBox = ({infoText, type, showBox, time}: IInfoBoxProps) => {
     }
 
     return (
-        showBox ?
+        infoBoxRedux.showBox ?
             renderContent()
         : null
     )

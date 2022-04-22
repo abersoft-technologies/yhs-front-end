@@ -1,66 +1,105 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { OutlinedButton } from "../ui/buttons/Buttons";
 import { Flex } from "../ui/Flex";
 import {Input} from "../ui/form/input/Input";
 import { Select } from "../ui/form/select/Select";
 import styles from "./Goals.module.scss"
+import { getAll, getEdu } from "../../apis/edu/get"
+import { updateEdu } from "../../apis/edu/update"
+
 
 interface IGoalData {
-    letters: string;
-    employements: string;
-    internships: string;
+    letters: number;
+    employements: number;
+    internships: number;
 }
 
-const options = [
-    { value: '0', label: '0' },
-    { value: '1-2', label: '1-2' },
-    { value: '3-5', label: '3-5' },
-    { value: '7-10', label: '7-10' },
-    { value: '11-20', label: '11-20' },
-];
+interface IEduObject {
+    name: string;
+    place: string;
+    shortName: string;
+    type: string;
+    _id: string;
+    goal?: {
+        letters: Number,
+        internships: Number,
+        employements: Number,
+    }
+}
+
+interface IEducation {
+    value: string;
+    label: string;
+}
 
 const Goals = () => {
-    const [goalData, setGoalData] = useState<IGoalData>({letters: "", employements: "", internships: ""});
+    const [goalData, setGoalData] = useState<IGoalData>({letters: 0, employements: 0, internships: 0});
+    const [educations, setEducations] = useState<Array<IEduObject>>([]);
+    const [optionList, setOptionList] = useState<Array<{value: string, label: string, id: string}>>([]);
+    const [education, setEducation] = useState<IEducation>({label: "", value: ""});
+    const [id, setId] = useState<string>("");
 
-    const handleOnChange = (label: string, value: string) => {
-        switch (label) {
-            case 'Avsiktsförklaringar':
-              return setGoalData({
-                ...goalData,
-                letters: value,
-              });
-            case 'Anställningar':
-              return setGoalData({
-                ...goalData,
-                employements: value,
-              });
-            case 'LIA':
-              return setGoalData({
-                ...goalData,
-                internships: value,
-              });
-            default:
-              return setGoalData({
-                ...goalData,
-              });
-          }
+
+
+
+    const getAllEdus = async () => {
+        await getAll().then(res => {
+            console.log("Edus ->", res?.data.data.eduList)
+            setEducations(res?.data.data.eduList)
+        }).catch(err => console.log(err))
+    }
+
+    const createOptionList = () => {
+        const list: Array<{value: string, label: string, id: string}> = [];
+
+        educations && educations.forEach((item) => {
+            const obj = {value: item.name, label: item.name, id: item._id}
+            list.push(obj)
+        })
+        setOptionList(list)
+    }
+
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let name = e.target.name;
+        setGoalData({ ...goalData, [name]: e.target.value });
       };
 
-      const onSubmit = (e: any) => {
+      const onSubmit = async (e: any) => {
         e.preventDefault();
-        console.log(goalData)
-        setGoalData({employements: "", internships: "", letters: ""})
+        const result = await updateEdu(id, {goal: {...goalData}});
       }
+
+      const handleOnChangeSelect = (label: string, value: string, _id?: string) => {
+        setEducation({label: label, value: value})
+        setId(_id!)
+      };
+
+
+      useEffect(() => {
+        getAllEdus();
+        createOptionList()
+      }, [educations && educations.length, optionList && optionList.length])
 
     return (
         <Flex direction="column" width="full" align="center" justify="center">
             <h1>
-                Dina Mål
+                Sätt dina Mål
             </h1>
                 <form style={{width: "100%"}} className={styles.selectContainer}>
-                    <Select label="Avsiktsförklaringar" value={goalData.letters} onChangeFunction={handleOnChange} options={options} width="25%"/>
-                    <Select label="Anställningar" value={goalData.employements} onChangeFunction={handleOnChange} options={options} width="25%"/>
-                    <Select label="LIA" value={goalData.internships} onChangeFunction={handleOnChange} options={options} width="25%"/>
+                    <Select
+                        options={optionList}
+                        label="utbildning"
+                        value={education.value}
+                        onChangeFunction={(
+                            label: string,
+                            value: string,
+                            id?: string
+                        ) => handleOnChangeSelect(label, value, id)}
+                        width="25%"
+                    />
+                    <Input type="number" name="letters" label="Avsiktsförklaringar" placeholder="Skriv här..." value={goalData.letters} onChangeFunction={handleOnChange}  width="25%"/>
+                    <Input type="number" name="employements" label="Anställningar" placeholder="Skriv här..." value={goalData.employements} onChangeFunction={handleOnChange}  width="25%"/>
+                    <Input type="number" name="internships" label="LIA" placeholder="Skriv här..." value={goalData.internships} onChangeFunction={handleOnChange} width="25%"/>
                     <Flex direction="row" align="flex-start" class={styles.buttonContainer}>
                         <OutlinedButton text="Lägg till dina mål" onClick={(e: any) => onSubmit(e)} />
                     </Flex>

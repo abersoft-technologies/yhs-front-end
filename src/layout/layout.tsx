@@ -29,9 +29,9 @@ export default function Layout({ children }: ILayoutProps) {
   const [showBarItems, setShowBarItems] = useState(false);
   const [late, setLate] = useState(false);
 
-  const infoBoxReducer: IInfoBoxProps = useSelector(
-    (state: any) => state.infoBoxReducer
-  );
+  // const infoBoxReducer: IInfoBoxProps = useSelector(
+  //   (state: any) => state.infoBoxReducer
+  // );
 
   useEffect(() => {
     if (windowSize.width && windowSize?.width < 1440 && !narrow) {
@@ -68,7 +68,7 @@ export default function Layout({ children }: ILayoutProps) {
       <Topbar handleToggleSidebar={handleToggleSidebar} narrow={narrow} />
       <main className={`${styles.main} ${narrow && styles.main_narrow}`}>
         {children}
-        <InfoBox infoText={infoBoxReducer.infoText} showBox={infoBoxReducer.showBox} time={infoBoxReducer.time} type={infoBoxReducer.type} />
+        <InfoBox />
       </main>
     </>
   );
