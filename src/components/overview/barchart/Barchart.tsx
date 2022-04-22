@@ -219,13 +219,15 @@ const Barchart = () => {
               <Bar
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
-                af_percent={item.education.goal ? item.totalDataEdu.totalLetters / item.education.goal.letters : 0}
-                lia_percent={45}
-                employment_percent={80}
+                af_percent={item.education.goal ?  (item.totalDataEdu.totalLetters /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  25) * 100}
+                lia_percent={item.education.goal ?  (item.totalDataEdu.internship /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  100) * 100}
+                employment_percent={item.education.goal ?  (item.totalDataEdu.employment.low /  item.education.goal.letters) * 100 : (item.totalDataEdu.totalLetters /  100) * 100}
                 checkedParams={checkedParams}
                 afNumber={item.totalDataEdu.totalLetters}
                 internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
-                employeeNumber={item.totalDataEdu.employment.low !== null ? item.totalDataEdu.employment.low : item.totalDataEdu.employment.high}
+                employeeNumberLow={item.totalDataEdu.employment.low !== null ? item.totalDataEdu.employment.low : 0}
+                employeeNumberHigh={item.totalDataEdu.employment.high !== null ? item.totalDataEdu.employment.high : 0}
+
               />
             );
           })
