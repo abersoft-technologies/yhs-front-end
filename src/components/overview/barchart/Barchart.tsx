@@ -12,6 +12,7 @@ import NumbersForBar from '../../../apis/mock/barchart/NumbersForBar.json';
 import Bar from './bar/Bar';
 import { Flex } from '../../ui/Flex';
 import BarsParamsToggle from './bars_params_toggle/BarsParamsToggle';
+import { getData } from '../../../apis/contact/letter_of_intent/get';
 
 interface ILabelColorsProps {
   labelName: string;
@@ -30,6 +31,11 @@ interface Education {
   place: string;
   shortName: string;
   type: string;
+  goal?: {
+    letters: number,
+    employements: number,
+    internships: number,
+  }
 }
 
 interface Letter {
@@ -55,6 +61,23 @@ interface ILetterLength {
   isSmall: boolean;
 }
 
+interface ITotalDataEdu {
+  contributeEdu: number;
+  eduBoard: number;
+  employment: {low: number, high: number}
+  internship: number;
+  lecture: number;
+  readEdu: number;
+  studyVisit: number;
+  totalLetters: number;
+}
+
+interface IAllData {
+  education: Education;
+  letters: Array<Letter>;
+  totalDataEdu: ITotalDataEdu;
+}
+
 const Barchart = () => {
   const [checkedParams, setCheckedParams] = useState<ICheckedParams>({
     letter_of_intent: true,
@@ -65,6 +88,8 @@ const Barchart = () => {
   const [letterList, setLetterList] = useState<Array<Letter>>([]);
 
   const [list, setList] = useState<Array<ListItem>>([]);
+  const [allData, setAllData] = useState<Array<IAllData>>([]);
+
 
   const { numbersForBar } = NumbersForBar;
   const { coloredLabels } = ColorLabels;
@@ -86,6 +111,11 @@ const Barchart = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const getAllData = async () => {
+    const result = await getData();
+    setAllData(result?.data.data)
+  }
 
   const buildList = () => {
     let letters: Letter[] = [];
@@ -122,6 +152,8 @@ const Barchart = () => {
     getAllEducations();
     getLetters();
     buildList();
+    getAllData();
+    console.log("ALLDATA", allData)
   }, [
     eduList && eduList.length,
     letterList && letterList.length,
@@ -181,17 +213,19 @@ const Barchart = () => {
           />
         </Flex>
       </Flex>
-      {list.length
-        ? list.map((item, i) => {
+      {allData && allData.length
+        ? allData.map((item, i) => {
             return (
               <Bar
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
-                af_percent={item.allLetters.length * 4}
+                af_percent={item.education.goal ? item.totalDataEdu.totalLetters / item.education.goal.letters : 0}
                 lia_percent={45}
                 employment_percent={80}
                 checkedParams={checkedParams}
-                afNumber={item.allLetters.length}
+                afNumber={item.totalDataEdu.totalLetters}
+                internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
+                employeeNumber={item.totalDataEdu.employment.low !== null ? item.totalDataEdu.employment.low : item.totalDataEdu.employment.high}
               />
             );
           })

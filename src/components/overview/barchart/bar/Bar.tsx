@@ -28,6 +28,8 @@ interface IBarProps {
   employment_percent: number;
   checkedParams: ICheckedParams;
   afNumber: number;
+  employeeNumber: number;
+  internNumber: number;
 }
 
 const Bar = ({
@@ -38,6 +40,8 @@ const Bar = ({
   employment_percent,
   checkedParams,
   afNumber,
+  employeeNumber,
+  internNumber
 }: IBarProps) => {
   const determentHeightOfBar = () => {
     let height = 0;
@@ -59,8 +63,8 @@ const Bar = ({
 
           <Flex direction='row' gap='small'>
             <div>{afNumber} Avsiktsförklaringar |</div>
-            <div>{17} Anställningar |</div>
-            <div>{120} LIA-platser</div>
+            <div>{employeeNumber} Anställningar |</div>
+            <div>{internNumber} LIA-platser</div>
           </Flex>
         </Flex>
 

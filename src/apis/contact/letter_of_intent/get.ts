@@ -8,3 +8,12 @@ export const getLetter = async (id: string | string[] | undefined) => {
     console.error(err);
   }
 };
+
+export const getData = async () => {
+  try {
+    const result = await api.get("/letter/data");
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
