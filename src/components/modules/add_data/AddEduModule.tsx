@@ -128,6 +128,10 @@ const AddEduModule = ({
   };
 
   const submitForm = () => {
+    const validation = validate();
+    if(!validation) {
+      return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
+    }
     addEdu(formData);
     setFormData({
       name: '',
@@ -145,6 +149,15 @@ const AddEduModule = ({
     dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", time: 3000, type: "success"}))
     onClose();
   };
+
+  const validate = () => {
+    if(!formData.name
+      || !formData.place
+      || !formData.shortName
+      ) return false;
+      if(formData.type === "Omsök" && !formData.managementList.length) return false;
+      return true;
+  }
 
   const addManagementValue = () => {
     setDoShowManagementInfoBox(true);

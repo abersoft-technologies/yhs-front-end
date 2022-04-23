@@ -29,8 +29,6 @@ interface IAddCorporateForm {
   info: string;
 }
 
-
-
 const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   const dispatch = useDispatch();
   const corpListReducer = useSelector((state: any) => state.corpListReducer);
@@ -62,6 +60,10 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   };
 
   const submitForm = () => {
+    const validation = validate();
+    if(!validation) {
+      return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
+    }
     const tempList = ListData;
     console.log("JP TempList",tempList)
     addCorp(formData).then(res => {
@@ -73,6 +75,14 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", time: 3000, type: "success"}))
     closeModule();
   };
+
+  const validate = () => {
+    if(!formData.info
+      || !formData.name
+      || !formData.tags.length
+      ) return false;
+      return true;
+  }
 
   useEffect(() => {
     dispatch(getCorporateListRedux({limit: 0, queryParams: ''}))
