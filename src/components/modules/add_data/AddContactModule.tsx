@@ -37,6 +37,7 @@ interface IFormData {
   role?: string;
   town?: string;
   status: string;
+  info?: string;
 }
 
 const optionsSelect = [
@@ -75,6 +76,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     role: '',
     town: '',
     status: optionsSelect[0].value,
+    info: ''
   });
   const [letterOfIntent, setLetterOfIntent] = useState<ILetterSchema>({
     edu: [],
@@ -138,7 +140,15 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     setLetterOfIntent({ ...letterOfIntent, [key]: e.target.checked });
   };
 
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData(prev => ({...prev, info: e.target.value}))
+  }
+
   const addContactFunc = async () => {
+    const validation = validate();
+    if(!validation) {
+      return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
+    }
     const contact = await addContact(formData);
     let dataLetter;
     if (contact?.status === 200) {
@@ -156,7 +166,18 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       role: '',
       town: '',
       status: optionsSelect[0].value,
+      info: ''
     });
+    setLetterOfIntent({
+      edu: [],
+      employment: '',
+      internship: '',
+      readEdu: false,
+      contributeEdu: false,
+      lecture: false,
+      studyVisit: false,
+      eduBoard: false,
+    })
     const letterData = { ...letterOfIntent, dataLetter };
     const letter = await addLetter(letterData);
     let dataContact;
@@ -173,6 +194,20 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     updateContact(contact?.data.data._id, dataContact);
     closeModule();
   };
+
+  const validate = () => {
+    if(!formData.firstName
+      || !formData.lastName
+      || !formData.company
+      || !formData.email
+      || !formData.phoneNumber
+      || !formData.role
+      || !formData.status
+      || !formData.town
+      ) return false;
+      if(checkActiveStatus() && !edu.length || !employment || !internship) return false;
+      return true;
+  }
 
   return (
     <>
@@ -294,6 +329,8 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
               rows={5}
               label='Övrig information'
               placeholder='Fri text...'
+              onChangeFunc={handleTextChange}
+              value={formData.info}
             />
           </div>
 
