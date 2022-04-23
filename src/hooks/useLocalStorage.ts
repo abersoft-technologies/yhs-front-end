@@ -20,8 +20,10 @@ export const useLocalStorage = (option: "get" | "set" | "remove", storageType: "
             if(!returnedItem) {
                 return console.log("No Item in sessionStorage")
             }
-            const parsedReturnedItem = JSON.parse(returnedItem)
-            return parsedReturnedItem;
+            if(typeof returnedItem !== "string") {
+                return JSON.parse(returnedItem)
+            }
+            return returnedItem;
         }
     } else if(option === "remove") {
         if(storageType === "local") localStorage.removeItem(key)

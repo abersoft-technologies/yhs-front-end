@@ -23,6 +23,7 @@ import FilterInterface from '../components/filter_interface/FilterInterface';
 import { getAll } from '../apis/contact/getAll';
 import { InfoBox } from '../components/ui/info/InfoBox';
 import { route } from 'next/dist/server/router';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface LayoutProps {
   children: ReactNode;
@@ -101,6 +102,8 @@ const contactLayout = ({ children }: LayoutProps) => {
   }, [searchWord]);
 
   useEffect(() => {
+    const currentTab = useLocalStorage("get", "session", "currentTab")
+    if(currentTab) router.push(currentTab)
     getAll()
       .then((res) => {
         console.log('RES --->', res?.data);
@@ -111,6 +114,10 @@ const contactLayout = ({ children }: LayoutProps) => {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    useLocalStorage("set", "session", "currentTab", router.pathname)
+  }, [router.pathname])
 
   const setSearchPlaceholder = () => {
     switch (router.pathname) {
