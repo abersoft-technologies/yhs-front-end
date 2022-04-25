@@ -12,6 +12,7 @@ import { Text } from '../ui/text/Text';
 interface IListData {
   name: string;
   tags: string[];
+  branch?: string;
   info: string;
   _id: string;
 }
@@ -58,6 +59,7 @@ const CorporateList = () => {
                 key={i}
                 name={item.name}
                 info={item.info}
+                branch={item.branch}
                 tags={item.tags}
                 id={item._id}
               />

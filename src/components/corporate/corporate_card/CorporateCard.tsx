@@ -8,11 +8,12 @@ import { useRouter } from 'next/router';
 interface ICorporateCardProps {
     name: string;
     tags: string[];
+    branch?: string;
     info: string;
     id: string;
 }
 
-const CorporateCard = ({name, tags, info, id }: ICorporateCardProps) => {
+const CorporateCard = ({name, tags, info, id, branch }: ICorporateCardProps) => {
   const router = useRouter();
 
   const createInfoText = (): string => {
@@ -25,6 +26,7 @@ const CorporateCard = ({name, tags, info, id }: ICorporateCardProps) => {
     <article id={id} className={styles.corporate_card} onClick={(e) => router.push(`/kontakter/foretag/${name}/${e.currentTarget.id}`)}>
       <div>{name}</div>
       <div>{tags ? tags[0] : "Ingar taggar"}</div>
+      <div>{branch ? branch : "Ingen branch"}</div>
       <div>{createInfoText()}</div>
     </article>
   )

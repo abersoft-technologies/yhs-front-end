@@ -216,12 +216,14 @@ const contactLayout = ({ children }: LayoutProps) => {
           className={`${styles.label_bar_container} ${
             router.pathname === '/kontakter/utbildningar' &&
             styles.label_bar_container_edu
-          }`}
+          } ${ router.pathname === '/kontakter/foretag' &&
+          styles.label_bar_container_corp}`}
         >
           {router.pathname === '/kontakter/foretag' && (
             <>
               <div>Namn</div>
               <div>Taggar</div>
+              <div>Branch</div>
               <div>Övrig info</div>
             </>
           )}
