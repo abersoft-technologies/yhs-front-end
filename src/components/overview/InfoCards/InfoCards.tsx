@@ -49,12 +49,12 @@ export const InfoCards = () => {
     },
     {
       text: 'LIA Platser',
-      value: totalData.internship,
+      value: totalData.internship.toString(),
       svg: '/svgs/overview/cards/student.svg',
     },
     {
       text: 'Övrig medverkan',
-      value: totalData.other,
+      value: totalData.other.toString(),
       svg: '/svgs/overview/cards/dots.svg',
     },
   ];
@@ -62,8 +62,8 @@ export const InfoCards = () => {
     await getAllLetters()
       .then((res) => {
         const data = res?.data;
-        setLetters(data.data);
         console.log('JP data', data.data);
+        setLetters(data.data);
       })
       .catch((err) => console.log(err));
   };
@@ -96,11 +96,8 @@ export const InfoCards = () => {
   useEffect(() => {
     const totalData = calcAllTotalValues();
     setTotalData(totalData);
-  }, [lettersData]);
-
-  useEffect(() => {
     getData();
-  }, []);
+  }, [lettersData]);
 
   return (
     <Flex
