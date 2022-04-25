@@ -38,3 +38,31 @@
     margin: 10px;
   }
 }
+.loading-wheel-page {
+  border: 4px solid #fff;
+
+  border-radius: 50%;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transition: all 4s;
+  animation-name: circleLoader;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+
+  width: 50px;
+  height: 50px;
+}
+
+.loading-page-container {
+  height: 100vh;
+  width: 100vw;
+  background: $primary-gradiant-bg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    margin-top: -20%;
+  }
+}

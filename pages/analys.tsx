@@ -1,12 +1,20 @@
 import { ReactElement } from 'react';
 import React from 'react';
 import Layout from '../src/layout/layout';
+import { Flex } from '../src/components/ui/Flex';
 
 const Analys = () => {
   return (
-    <div>
-      <h1>ANALYS</h1>
-    </div>
+    <Flex
+      direction='column'
+      width='full'
+      height='full'
+      justify='center'
+      align='center'
+    >
+      <h1>Under konstruktion </h1>
+      <span style={{ fontSize: '6rem' }}>🚧</span>
+    </Flex>
   );
 };
 

@@ -38,7 +38,15 @@ const reducers = combineReducers({
   lettersDataReducer,
 });
 
-const persist = persistReducer(persistConfig, reducers);
+const rootReducer = (state: any, action: any) => {
+  if (action.type === 'user/logout') {
+    storage.removeItem('persist:root');
+    return reducers(undefined, action);
+  }
+
+  return reducers(state, action);
+};
+const persist = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persist,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { logOutUser } from '../globalFunctions/logout';
 const API = 'https://yhs-back-end.herokuapp.com/';
 
 const api = axios.create({
@@ -20,23 +21,25 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
-    console.log('Reacing error');
     Promise.reject(error);
   }
 );
 
 api.interceptors.response.use(
   (response) => {
+    console.log(response);
     return response;
   },
   function (error) {
     const originalRequest = error.config;
+    console.log(originalRequest);
     if (
       error.response.status === 401 &&
       originalRequest.url === `${API}refresh`
     ) {
       localStorage.clear();
       sessionStorage.clear();
+      logOutUser();
       return Promise.reject(error);
     }
 
