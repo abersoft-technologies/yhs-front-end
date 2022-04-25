@@ -32,20 +32,23 @@ const EduList = () => {
     ? eduListReducer.result.data.listValues
     : undefined;
 
+    const searchQuery = useSelector(
+      (state: any) => state.searchQueryReducer.value
+    );
+
+    useEffect(() => {
+      setPage(1);
+      setPagePosition(0);
+      setSlicedPages(1);
+      dispatch(getEduListRedux({ limit: 10, page: page, queryParams: searchQuery }));
+    }, [searchQuery]);
+
   useEffect(() => {
     dispatch(getEduListRedux({ limit: 10, page: page, queryParams: '' }));
-    console.log(ListData, listValues);
   }, [page]);
 
   return (
     <section className={styles.edu_list_container}>
-      {/*     <div className={styles.label_bar_container}>
-        <div>Namn</div>
-        <div>Förkortning</div>
-        <div>typ</div>
-        <div>Ledningsgrupp</div>
-        <div>Ort</div>
-      </div> */}
       <div></div>
       {ListData && ListData.length > 0 ? (
         ListData.map((item: IListData, i: number) => {

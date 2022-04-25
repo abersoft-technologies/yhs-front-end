@@ -6,12 +6,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export const getEduListRedux: any = createAsyncThunk(
     'redux/eduList',
     async (dispatch: any, getState) => {
-        const userData = useLocalStorage("get", "session", "user");
-        const token = userData.data.token;
         const {limit, page, queryParams} = dispatch;
-        const response = await api.get(`/edu/getAll?limit=${limit}&page=${page}&queryParams=${queryParams}`, {
-            headers: { 'x-access-token': token },
-        });
+        const response = await api.get(`/edu/getAll?limit=${limit}&page=${page}&queryParams=${queryParams}`);
         return response.data;
     }
 )

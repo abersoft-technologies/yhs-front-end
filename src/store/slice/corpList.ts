@@ -6,12 +6,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export const getCorporateListRedux: any = createAsyncThunk(
     'redux/corpList',
     async (dispatch: any, getState) => {
-        const userData = useLocalStorage("get", "session", "user");
-        const token = userData.data.token;
         const {limit, page, queryParams} = dispatch;
-        const response = await api.get(`/corp/getAll?limit=${limit}&page=${page}`, {
-            headers: { 'x-access-token': token },
-        });
+        const response = await api.get(`/corp/getAll?limit=${limit}&page=${page}&queryParams=${queryParams}`);
         return response.data;
     }
 )

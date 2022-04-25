@@ -21,7 +21,6 @@ const CorporateList = () => {
   const [page, setPage] = useState(1);
   const [pagePosition, setPagePosition] = useState(0);
   const [slicedPages, setSlicedPages] = useState(1);
-  const [openInfoCard, setOpenInfoCard] = useState(false);
 
   const corpListReducer = useSelector((state: any) => state.corpListReducer);
   const ListData = corpListReducer.result.data
@@ -30,6 +29,20 @@ const CorporateList = () => {
   const listValues = corpListReducer.result.data
     ? corpListReducer.result.data.listValues
     : undefined;
+
+  const searchQuery = useSelector(
+    (state: any) => state.searchQueryReducer.value
+  );
+
+  useEffect(() => {
+    console.log("hejsan")
+    setPage(1);
+    setPagePosition(0);
+    setSlicedPages(1);
+    dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: searchQuery }));
+    window.scrollTo(0, 0);
+
+  }, [searchQuery]);
 
   useEffect(() => {
     dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));
