@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 interface ISearchBarProps {
   setSearchWord: (value: string) => void;
   searchWord: string;
@@ -9,8 +11,13 @@ export const SearchBar = ({
   setSearchWord,
   searchWord,
   width,
-  placeholder,
+  placeholder
 }: ISearchBarProps) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    console.log(searchWord)
+  }, [searchWord])
   return (
     <div style={width ? { width: width } : { width: 'auto' }}>
       <img src='/magnifying-glass.svg' alt='Magnifying glass' />

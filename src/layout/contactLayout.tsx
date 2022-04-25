@@ -53,6 +53,7 @@ const contactLayout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [searchWord, setSearchWord] = useState('');
+
   const toggleRef = React.createRef<HTMLDivElement>();
 
   const [filterIsActive, setFilterIsActive] = useState<boolean>(false);
@@ -117,6 +118,8 @@ const contactLayout = ({ children }: LayoutProps) => {
 
   useEffect(() => {
     useLocalStorage("set", "session", "currentTab", router.pathname)
+    dispatch(setQuery(""));
+    setSearchWord("")
   }, [router.pathname])
 
   const setSearchPlaceholder = () => {

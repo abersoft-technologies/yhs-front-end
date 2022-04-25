@@ -35,7 +35,6 @@ const CorporateList = () => {
   );
 
   useEffect(() => {
-    console.log("hejsan")
     setPage(1);
     setPagePosition(0);
     setSlicedPages(1);
