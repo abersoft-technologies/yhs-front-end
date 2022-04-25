@@ -97,7 +97,7 @@ export const InfoCards = () => {
     const totalData = calcAllTotalValues();
     setTotalData(totalData);
     getData();
-  }, [lettersData]);
+  }, [lettersData, letters.length]);
 
   return (
     <Flex

@@ -15,12 +15,8 @@ export const getLetters = async (edu: string | string[] | undefined) => {
   };
 
   export const getAllLetters = async () => {
-    const userData = useLocalStorage('get', 'session', 'user');
-    const token = userData.data.token;
     try {
-      const result = await api.get("/letter", {
-        headers: { 'x-access-token': token },
-      });
+      const result = await api.get("/letter");
       return result;
     } catch (err) {
       console.error(err);
