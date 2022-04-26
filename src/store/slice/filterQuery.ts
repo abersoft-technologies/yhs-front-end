@@ -8,6 +8,10 @@ interface IFilterQueryState {
         status: string;
         town: string;
         edu: string;
+        branchEdu: string,
+        branchCorp: string,
+        type: string,
+        tags: string,
       }
     | {};
 }
@@ -16,6 +20,10 @@ const initialState: IFilterQueryState = {
     status: '',
     town: '',
     edu: '',
+    branchEdu: '',
+    branchCorp: '',
+    tags: '',
+    type: ''
   },
 };
 
@@ -27,8 +35,8 @@ export const filterQuerySlice = createSlice({
     removeFilterQuery: (state) => {
       state.filterObj = {};
     },
-    setFilterQuery: (state, action: PayloadAction<object>) => {
-      state.filterObj = action.payload;
+    setFilterQuery: (state, action: PayloadAction<IFilterQueryState>) => {
+      return action.payload;
     },
   },
 });

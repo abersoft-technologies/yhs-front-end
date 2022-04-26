@@ -8,6 +8,8 @@ interface ISelectProps {
   onChangeFunction: (label: string, value: string, id?: string) => void;
   clearFieldFunc?: (label: string) => void;
   label: string;
+  placeholder?: string;
+  absoluteLabel?: string;
   width?: string;
   options: { value: string; label: string; id?: string }[];
   clrAble?: boolean;
@@ -23,22 +25,28 @@ export const Select = ({
   width,
   clrAble,
   id,
+  absoluteLabel,
+  placeholder
 }: ISelectProps) => {
   const [selectClicked, setSelectClicked] = useState(false);
 
-  useEffect(() => {
-    const onClick = (event: any) => {
-      if (!event.target.closest('div')) return;
-      if (event.target.closest('div').id !== `select-container-${label}`)
-        setSelectClicked(false);
-    };
+  // const onClick = (event: any) => {
+  //   if (!event.target.closest('div')) return;
+  //   if (event.target.closest('div').id !== `select-container-${label}`) {
+  //     setSelectClicked(false);
+  //   } else {
+  //     setSelectClicked(true)
+  //     return;
+  //   }
+  // };
+  // useEffect(() => {
 
-    window.addEventListener('click', onClick);
+  //   window.addEventListener('click', (e) => onClick(e));
 
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('click', (e) => onClick(e));
+  //   };
+  // }, []);
   const handleClrSelect = () => {
     if (clearFieldFunc) {
       clearFieldFunc(label);
@@ -74,7 +82,7 @@ export const Select = ({
     >
       {label && (
         <label className={styles.label} htmlFor={`select-container-${label}`}>
-          {label}
+          {absoluteLabel ? absoluteLabel : label}
         </label>
       )}
 
@@ -83,7 +91,7 @@ export const Select = ({
         id={`select-container-${label}`}
         onClick={() => setSelectClicked(!selectClicked)}
       >
-        <span>{value ? value : `Välj ${label.toLocaleLowerCase()}...`}</span>
+        <span>{value ? value : `Välj ${placeholder ? placeholder.toLocaleLowerCase() : label.toLocaleLowerCase()}...`}</span>
         {value && clrAble && <ClearSelectField />}
 
         <button type='button' className={styles.drop_dowm_btn}>

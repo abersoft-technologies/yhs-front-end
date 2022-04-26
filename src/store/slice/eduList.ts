@@ -6,8 +6,9 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 export const getEduListRedux: any = createAsyncThunk(
     'redux/eduList',
     async (dispatch: any, getState) => {
-        const {limit, page, queryParams} = dispatch;
-        const response = await api.get(`/edu/getAll?limit=${limit}&page=${page}&queryParams=${queryParams}`);
+        const {limit, page, queryParams, filterQuery} = dispatch;
+        const filterParams = new URLSearchParams(filterQuery).toString();
+        const response = await api.get(`/edu/getAll?limit=${limit}&page=${page}&queryParams=${queryParams}&${filterParams}`);
         return response.data;
     }
 )

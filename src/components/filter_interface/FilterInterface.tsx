@@ -22,18 +22,25 @@ import {
 interface IFilterInterfaceProps {
   isActive: boolean;
 }
-interface ContactFilterState {
+
+interface IFilterState {
   utbildning: string;
   status: string;
   ort: string;
   taggar: string[];
-}
-interface CorpFilterState {
-  branch: string;
-}
-interface EduFilterState {
-  branch: string;
+  branchedu: string;
+  branchcorp: string;
   klassificering: string;
+}
+
+interface IFilterObject {
+    filterStatus: string;
+    filterTown: string;
+    filterEdu: string;
+    filterBranchEdu: string,
+    filterBranchCorp: string,
+    filterType: string,
+    filterTags: string[],
 }
 
 const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
@@ -50,69 +57,43 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
     (state: RootState) => state.filterOptionsReducer.result.tags.data
   );
 
+  const branchEduOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.branchEdu.data
+  );
+  const branchCorpOptions = useSelector(
+    (state: RootState) => state.filterOptionsReducer.result.branchCorp.data
+  );
+
   const height = isActive ? 'auto' : 0;
-  const [contactFilter, setContactFilter] = useState<ContactFilterState>({
-    utbildning: '',
-    status: '',
-    ort: '',
-    taggar: [],
-  });
-  const [corpFilter, setCorpFilter] = useState<CorpFilterState>({
-    branch: '',
-  });
-  const [eduFilter, setEduFilter] = useState<EduFilterState>({
-    branch: '',
-    klassificering: '',
-  });
+  const [filter, setFilter] = useState<IFilterState>({utbildning: '', status: '', ort: '', taggar: [''], branchedu: '', branchcorp: '', klassificering: ''})
 
   useEffect(() => {
-    const filterObj = {
-      filterStatus: contactFilter.status,
-      filterTown: contactFilter.ort,
-      filterEdu: contactFilter.utbildning,
+    const filterObj: IFilterObject = {
+        filterStatus: filter.status,
+        filterTown: filter.ort,
+        filterEdu: filter.utbildning,
+        filterBranchCorp: filter.branchcorp,
+        filterBranchEdu: filter.branchedu,
+        filterTags: filter.taggar,
+        filterType: filter.klassificering,
     };
-    dispatch(setFilterQuery(filterObj));
-  }, [contactFilter]);
+    console.log("FilterOBJC ---->", filterObj)
+    dispatch(setFilterQuery({filterObj: {...filterObj}}));
+  }, [filter]);
 
   useEffect(() => {
     dispatch(getFilterOptions());
   }, []);
 
   const onChangeFilter = (label: string, value: string) => {
-    if (router.pathname === '/kontakter/utbildningar') {
-      setEduFilter((eduFilter) => ({
-        ...eduFilter,
-        [label.toLocaleLowerCase()]: value,
-      }));
-    } else if (router.pathname === '/kontakter/foretag') {
-      setCorpFilter((corpFilter) => ({
-        ...corpFilter,
-        [label.toLocaleLowerCase()]: value,
-      }));
-    } else {
-      setContactFilter((conFilter) => ({
-        ...conFilter,
-        [label.toLocaleLowerCase()]: value,
-      }));
-    }
+    setFilter((filter) => ({
+      ...filter, [label.toLocaleLowerCase()]: value
+    }))
   };
   const handleClrField = (label: string) => {
-    if (router.pathname === '/kontakter/utbildningar') {
-      setEduFilter((eduFilter) => ({
-        ...eduFilter,
-        [label.toLocaleLowerCase()]: '',
-      }));
-    } else if (router.pathname === '/kontakter/foretag') {
-      setCorpFilter((corpFilter) => ({
-        ...corpFilter,
-        [label.toLocaleLowerCase()]: '',
-      }));
-    } else {
-      setContactFilter((conFilter) => ({
-        ...conFilter,
-        [label.toLocaleLowerCase()]: '',
-      }));
-    }
+    setFilter((filter) => ({
+      ...filter, [label.toLocaleLowerCase()]: ''
+    }))
   };
 
   const decideFilterInputs = () => {
@@ -123,7 +104,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             options={eduOptions}
             label='Utbildning'
             width='250px'
-            value={contactFilter.utbildning}
+            value={filter.utbildning}
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
@@ -132,7 +113,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             options={optionsStatus}
             label='Status'
             width='250px'
-            value={contactFilter.status}
+            value={filter.status}
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
@@ -141,7 +122,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             options={townsOptions}
             label='Ort'
             width='250px'
-            value={contactFilter.ort}
+            value={filter.ort}
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
@@ -156,9 +137,11 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
       case '/kontakter/foretag':
         return [
           <Select
-            options={optionsBranches}
-            value={corpFilter.branch}
-            label='Branch'
+            options={branchCorpOptions}
+            value={filter.branchcorp}
+            label='branchcorp'
+            absoluteLabel='Branch'
+            placeholder='branch'
             width='250px'
             onChangeFunction={onChangeFilter}
             clrAble={true}
@@ -174,9 +157,11 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
       case '/kontakter/utbildningar':
         return [
           <Select
-            options={optionsBranches}
-            value={eduFilter.branch}
-            label='Branch'
+            options={branchEduOptions}
+            value={filter.branchedu}
+            label='branchedu'
+            absoluteLabel='Branch'
+            placeholder='branch'
             width='250px'
             onChangeFunction={onChangeFilter}
             clrAble={true}
@@ -184,7 +169,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
           />,
           <Select
             options={optionsEduType}
-            value={eduFilter.klassificering}
+            value={filter.klassificering}
             label='Klassificering'
             width='250px'
             onChangeFunction={onChangeFilter}
@@ -206,7 +191,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
   };
 
   const handleSetTags = (tagArray: string[]) => {
-    setContactFilter((prev) => ({ ...prev, taggar: tagArray }));
+    setFilter((prev) => ({ ...prev, taggar: tagArray }));
   };
 
   let inputsArray = decideFilterInputs();

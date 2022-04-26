@@ -131,6 +131,7 @@ const Barchart = () => {
         ? allData.map((item, i) => {
             return (
               <Bar
+                key={i}
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
                 af_percent={calculatePrecent(item.totalDataEdu.totalLetters, item.education.goal?.letters)}
@@ -141,7 +142,6 @@ const Barchart = () => {
                 internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
                 employeeNumberLow={item.totalDataEdu.employment.low !== null ? item.totalDataEdu.employment.low : 0}
                 employeeNumberHigh={item.totalDataEdu.employment.high !== null ? item.totalDataEdu.employment.high : 0}
-
               />
             );
           })
