@@ -57,7 +57,7 @@ const ContactList = () => {
         filterQuery,
       })
     );
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [searchQuery, filterQuery]);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ const ContactList = () => {
         filterQuery,
       })
     );
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, [page]);
 
   return (

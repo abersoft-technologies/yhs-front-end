@@ -123,6 +123,7 @@ const Pagination = ({
     const direction = e.target.name;
     const pagesLeftEnd = lastPageNumber - page;
     const pagesLeftStart = page - 1;
+    if (totalPages < 2) return;
 
     if (direction === 'next' && page !== totalPages) {
       if (pagesLeftEnd > 4 && pagePosition === 4) {
@@ -284,6 +285,7 @@ const Pagination = ({
     return <>{setButtonContent()}</>;
   };
 
+  console.log(totalPages);
   return (
     <Flex
       direction='row'
@@ -319,7 +321,9 @@ const Pagination = ({
           name='next'
           onClick={handleNavigationClicked}
           className={
-            page === arrayPages[arrayPages.length - 1] ? styles.button_off : ''
+            page === arrayPages[arrayPages.length - 1] || totalPages < 2
+              ? styles.button_off
+              : ''
           }
         >
           <img src='/chevron-left.svg' alt='Chevron' />

@@ -22,6 +22,12 @@
     grid-auto-flow: column;
   }
 } */
+.not_found_container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 8rem;
+}
 .styles.status_box_container {
   position: relative;
 

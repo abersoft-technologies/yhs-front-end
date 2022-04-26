@@ -62,10 +62,11 @@ export const InfoCards = () => {
     await getAllLetters()
       .then((res) => {
         const data = res?.data;
-        console.log('JP data', data.data);
         setLetters(data.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        return err;
+      });
   };
 
   const calcAllTotalValues = () => {

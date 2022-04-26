@@ -33,6 +33,32 @@ const InfoLayout = ({
   shortName,
   contact,
 }: IInfoLayoutProps) => {
+  const formatPhoneNumber = () => {
+    if (contact && contact.phoneNumber) {
+      let number;
+      if (contact.phoneNumber[0] === '0') {
+        number = ('+46' + contact.phoneNumber.substring(1)).replace(/\s/g, '');
+      } else {
+        number = contact.phoneNumber.replace(/\s/g, '');
+      }
+      console.log(number);
+      const finalFormat =
+        number.substring(0, 3) +
+        '-' +
+        number.substring(3, 5) +
+        ' ' +
+        number.substring(5, 8) +
+        ' ' +
+        number.substring(8, 10) +
+        ' ' +
+        number.substring(10, 12);
+
+      return finalFormat;
+
+      // return contact.phoneNumber;
+    }
+    return 'Inget nummer angivet';
+  };
   return (
     <Flex direction='row' class={styles.container}>
       <Flex direction='column' class={styles.sideLayout} align='center'>
@@ -94,7 +120,7 @@ const InfoLayout = ({
             >
               {contact.email && <Text text={contact.email} color='grey' />}
               {contact.phoneNumber && (
-                <Text text={contact.phoneNumber} color='grey' />
+                <Text text={formatPhoneNumber()} color='grey' />
               )}
             </Flex>
           )}

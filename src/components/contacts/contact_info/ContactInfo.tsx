@@ -30,11 +30,23 @@ const ContactInfo = () => {
       contact?.lastName?.substring(0, 1).toLocaleUpperCase()
     }`;
   };
+  const getFormatedName = () => {
+    if (!contact?.firstName) return;
+    let firstName = contact?.firstName?.toLocaleLowerCase();
+    let lastName = contact?.lastName?.toLocaleLowerCase();
+    const fullName =
+      firstName[0].toLocaleUpperCase() +
+      firstName.substring(1) +
+      ' ' +
+      lastName[0].toLocaleUpperCase() +
+      lastName.substring(1);
+    return fullName;
+  };
 
   return (
     <InfoLayout
       title={getInitails()}
-      subTitle={contact.firstName + ' ' + contact.lastName}
+      subTitle={getFormatedName()}
       place={[contact.company + ' - ' + contact.role]}
       // tags={[contact.email ? contact.email : '']}
       contact={contact}

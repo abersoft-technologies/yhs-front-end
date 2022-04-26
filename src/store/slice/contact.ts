@@ -7,12 +7,7 @@ import { IContactSchema } from '../../types/global';
 export const getContactRedux: any = createAsyncThunk(
   'redux/contact',
   async (dispatch: any, getState) => {
-    const userData = useLocalStorage('get', 'session', 'user');
-    const token = userData.data.token;
-
-    const response = await api.get(`/contact/get?id=${dispatch}`, {
-      headers: { 'x-access-token': token },
-    });
+    const response = await api.get(`/contact/get?id=${dispatch}`);
     if (response.status === 200) {
       return response.data.data.contact;
     } else {

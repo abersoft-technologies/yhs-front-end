@@ -29,7 +29,7 @@ export const Select = ({
   useEffect(() => {
     const onClick = (event: any) => {
       if (!event.target.closest('div')) return;
-      if (event.target.closest('div').id !== 'select-container')
+      if (event.target.closest('div').id !== `select-container-${label}`)
         setSelectClicked(false);
     };
 
@@ -73,14 +73,14 @@ export const Select = ({
       style={width ? { width: width } : { width: 'auto' }}
     >
       {label && (
-        <label className={styles.label} htmlFor='select-container'>
+        <label className={styles.label} htmlFor={`select-container-${label}`}>
           {label}
         </label>
       )}
 
       <div
         className={styles.select_container}
-        id='select-container'
+        id={`select-container-${label}`}
         onClick={() => setSelectClicked(!selectClicked)}
       >
         <span>{value ? value : `Välj ${label.toLocaleLowerCase()}...`}</span>

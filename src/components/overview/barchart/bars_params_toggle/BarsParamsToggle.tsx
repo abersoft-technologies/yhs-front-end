@@ -71,7 +71,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.letter_of_intent
-              ? { background: '#7586ce' }
+              ? { background: '#22376f' }
               : { background: 'none' }
           }
         />
@@ -95,7 +95,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.employment
-              ? { background: '#7586ce' }
+              ? { background: '#22376f' }
               : { background: 'none' }
           }
         />
@@ -119,7 +119,7 @@ IParamsToggleProps) => {
           onChange={handleChangeCheckboxParams}
           style={
             checkedParams.internship
-              ? { background: '#7586ce' }
+              ? { background: '#22376f' }
               : { background: 'none' }
           }
         />

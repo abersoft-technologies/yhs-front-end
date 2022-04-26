@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { logOutUser } from '../globalFunctions/logout';
+import { Redirect } from '../globalFunctions/redirect';
 const API = 'https://yhs-back-end.herokuapp.com/';
 
 const api = axios.create({
@@ -27,12 +28,10 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => {
-    console.log(response);
     return response;
   },
-  function (error) {
+  async function (error) {
     const originalRequest = error.config;
-    console.log(originalRequest);
     if (
       error.response.status === 401 &&
       originalRequest.url === `${API}refresh`
@@ -53,7 +52,6 @@ api.interceptors.response.use(
       return axios
         .post(`${API}refresh`, { email, refreshToken })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             localStorage.setItem('accessToken', res.data.accessToken);
             axios.defaults.headers.common['x-access-token'] =
@@ -61,6 +59,12 @@ api.interceptors.response.use(
 
             return axios(originalRequest);
           }
+        })
+        .catch((err) => {
+          localStorage.clear();
+          sessionStorage.clear();
+          logOutUser();
+          console.log(err);
         });
     }
     return Promise.reject(error);

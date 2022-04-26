@@ -23,10 +23,10 @@ const Milestones = () => {
         </div>
         <div className={styles.month_description_container}>
           <div>Årsbeked och nytt år</div>
-          <div>Mörkret är ännu kvar</div>
+          <div>Placeholder , lägg till text</div>
           <div>Korta kurser lämnas in</div>
-          <div>Påsk är runt hörnet</div>
-          <div>Maj maj måne, kan lura dig till Skåne</div>
+          <div>Placeholder , lägg till text</div>
+          <div>Placeholder , lägg till text</div>
           <div>Inlämning av ansökan</div>
         </div>
       </div>
