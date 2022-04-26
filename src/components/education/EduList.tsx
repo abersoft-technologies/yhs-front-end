@@ -8,6 +8,7 @@ import styles from './EduList.module.scss';
 
 import { Flex } from '../ui/Flex';
 import { Text } from '../ui/text/Text';
+import { RootState } from '../../store/store';
 
 interface IListData {
   name: string;
@@ -37,16 +38,21 @@ const EduList = () => {
       (state: any) => state.searchQueryReducer.value
     );
 
+    const filterQuery = useSelector(
+      (state: RootState) => state.filterQueryReducer.filterObj
+    );
+
     useEffect(() => {
       setPage(1);
       setPagePosition(0);
       setSlicedPages(1);
-      dispatch(getEduListRedux({ limit: 10, page: page, queryParams: searchQuery }));
-    }, [searchQuery]);
-
-  useEffect(() => {
-    dispatch(getEduListRedux({ limit: 10, page: page, queryParams: '' }));
-  }, [page]);
+      dispatch(getEduListRedux(
+        { limit: 10,
+          page: page,
+          queryParams: searchQuery,
+          filterQuery: filterQuery
+        }));
+      }, [page, searchQuery, filterQuery]);
 
   return (
     <section className={styles.edu_list_container}>

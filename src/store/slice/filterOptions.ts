@@ -8,8 +8,10 @@ export const getFilterOptions: any = createAsyncThunk(
     const townsResult = await api.get(`/options/select/towns`);
     const educationsResult = await api.get(`/options/select/educations`);
     const tagsResult = await api.get(`/options/select/tags`);
+    const branchEduResult = await api.get(`/options/select/branchEdu`);
+    const branchCorpResult = await api.get(`/options/select/branchCorp`);
 
-    let towns, educations, tags;
+    let towns, educations, tags, branchEdu, branchCorp;
 
     if (townsResult.status === 200) {
       towns = townsResult.data;
@@ -20,8 +22,14 @@ export const getFilterOptions: any = createAsyncThunk(
     if (tagsResult.status === 200) {
       tags = tagsResult.data;
     }
+    if (branchEduResult.status === 200) {
+      branchEdu = branchEduResult.data;
+    }
+    if (branchCorpResult.status === 200) {
+      branchCorp = branchCorpResult.data;
+    }
 
-    return { towns, educations, tags };
+    return { towns, educations, tags, branchEdu, branchCorp };
   }
 );
 interface IfilterOptionsState {
@@ -37,6 +45,16 @@ interface IfilterOptionsState {
       message: string;
     };
     tags: {
+      data: [{ value: string; label: string }] | [];
+      status: number | null;
+      message: string;
+    };
+    branchEdu: {
+      data: [{ value: string; label: string }] | [];
+      status: number | null;
+      message: string;
+    };
+    branchCorp: {
       data: [{ value: string; label: string }] | [];
       status: number | null;
       message: string;
@@ -57,6 +75,16 @@ const initialState: IfilterOptionsState = {
       message: '',
     },
     tags: {
+      data: [],
+      status: null,
+      message: '',
+    },
+    branchEdu: {
+      data: [],
+      status: null,
+      message: '',
+    },
+    branchCorp: {
       data: [],
       status: null,
       message: '',
