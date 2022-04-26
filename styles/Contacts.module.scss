@@ -60,7 +60,11 @@
   }
 }
 .label_bar_container_edu {
-  grid-template-columns: 10fr 5fr 5fr 10fr 10fr;
+  grid-template-columns: 10fr 5fr 5fr 10fr 10fr 10fr;
+}
+
+.label_bar_container_corp {
+  grid-template-columns: 10fr 10fr 15fr 10fr;
 }
 
 .add_btn {

@@ -6,9 +6,7 @@ export const getContact = async (id: string | string[] | undefined) => {
     const userData = useLocalStorage('get', 'session', 'user');
     const token = userData.data.token;
     try {
-      const result = await api.get(`/contact/get?id=${id}`, {
-        headers: { 'x-access-token': token },
-      });
+      const result = await api.get(`/contact/get?id=${id}`);
       return result;
     } catch (err) {
       console.error(err);

@@ -17,6 +17,7 @@ import { MultipleSelect } from '../../ui/form/select/MultipleSelect';
 import { showInfoBox } from '../../../store/slice/infoBox';
 import { getCorporateListRedux } from '../../../store/slice/corpList';
 import { add } from '../../../store/slice/userSlice';
+import { Select } from '../../ui/form/select/Select';
 
 interface IModuleProps {
   active: boolean;
@@ -26,8 +27,16 @@ interface IModuleProps {
 interface IAddCorporateForm {
   name: string;
   tags: string[];
+  branch: string;
   info: string;
 }
+
+const selectOptions = [
+  {value: "Data/IT", label: "Data/IT" },
+  {value: "Ekonomi", label: "Ekonomi" },
+  {value: "Samhällsbyggnation", label: "Samhällsbyggnation" },
+  {value: "Teknik", label: "Teknik" },
+]
 
 const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   const dispatch = useDispatch();
@@ -42,6 +51,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
   const [formData, setFormData] = useState<IAddCorporateForm>({
     name: '',
     tags: [],
+    branch: "",
     info: '',
   });
   const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
@@ -68,18 +78,17 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     console.log("JP TempList",tempList)
     addCorp(formData).then(res => {
       console.log(res?.data);
-      tempList.push(res?.data)
-      // dispatch(add(tempList))
+      // tempList.push(res?.data)
     }).catch(err => console.log(err));
-    setFormData({ name: '', tags: [], info: '' });
+    setFormData({ name: '', tags: [], branch: '', info: '' });
     dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", time: 3000, type: "success"}))
     closeModule();
   };
 
   const validate = () => {
-    if(!formData.info
-      || !formData.name
+    if(!formData.name
       || !formData.tags.length
+      || !formData.branch
       ) return false;
       return true;
   }
@@ -122,6 +131,14 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
               label='Företag'
               value={formData.name}
               onChangeFunction={handleOnChange}
+            />
+            <Input
+              label='Branch'
+              name='branch'
+              placeholder='Branch'
+              value={formData.branch}
+              onChangeFunction={handleOnChange}
+              width="100%"
             />
             <Flex direction='column' width='full' gap='medium'>
               <MultipleSelect

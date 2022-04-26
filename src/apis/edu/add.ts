@@ -9,12 +9,8 @@ interface IAddCorpParams {
 }
 
 export const addEdu = async (data: IAddCorpParams) => {
-  const userData = useLocalStorage('get', 'session', 'user');
-  const token = userData.data.token;
   try {
-    const result = await api.post(`/edu/add`, data, {
-      headers: { 'x-access-token': token },
-    });
+    const result = await api.post(`/edu/add`, data);
     return result;
   } catch (err) {
     console.error(err);
