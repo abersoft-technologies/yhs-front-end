@@ -1,15 +1,12 @@
-import Link from 'next/link';
-import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
 import { Redirect } from '../../../globalFunctions/redirect';
 import { useLocalStorage } from '../../../hooks/useLocalStorage';
 import { RootState } from '../../../store/store';
-import { IUserModelRedux } from '../../../types/global';
 import { Flex } from '../../ui/Flex';
-import SelectCurrentUser from '../../../store/slice/userSlice';
 
 import styles from './Usermenu.module.scss';
 import { useAppSelector } from '../../../hooks/useStore';
+import { DropdownMenu } from '../../ui/dropdown/DropdownMenu';
 
 interface IUserMenu {
   firstName?: string;
@@ -29,6 +26,13 @@ interface UserObject {
   };
   message: string;
 }
+interface DropdownMenuItem {
+  text: string;
+  img?: { url: string; alt: string };
+  onClick: (() => void) | string;
+  id: string;
+  type?: 'normal' | 'warning';
+}
 
 const UserMenu = (props: IUserMenu) => {
   const [openDropdown, setOpenDropdown] = React.useState<boolean>(false);
@@ -36,25 +40,6 @@ const UserMenu = (props: IUserMenu) => {
   const user: UserObject = useAppSelector(
     (state: RootState) => state.userReducer
   );
-  useEffect(() => {
-    const onClick = (event: any) => {
-      if (
-        event.target.closest('button') &&
-        event.target.closest('button').id === 'dropdown-usermenu'
-      ) {
-        return;
-      } else {
-        setOpenDropdown(false);
-      }
-    };
-
-    window.addEventListener('click', onClick);
-    console.log('USER --->', user);
-
-    return () => {
-      window.removeEventListener('click', onClick);
-    };
-  }, [user]);
 
   const logout = () => {
     useLocalStorage('remove', 'session', 'user');
@@ -63,26 +48,48 @@ const UserMenu = (props: IUserMenu) => {
     Redirect('/inloggning');
   };
 
+  const dropdownListItems: DropdownMenuItem[] = [
+    {
+      text: 'Dina mål',
+      onClick: '/dinamal',
+      id: 'dina-mal',
+      img: { url: '/svgs/top_bar/badge.svg', alt: 'Badge' },
+    },
+    {
+      text: 'Inställningar',
+      onClick: '/',
+      id: 'settings',
+      img: { url: '/svgs/top_bar/settings.svg', alt: 'Settings' },
+    },
+    {
+      text: 'Logga ut',
+      onClick: logout,
+      id: 'logout',
+      img: { url: '/svgs/top_bar/signout.svg', alt: 'Turn off' },
+      type: 'warning',
+    },
+  ];
+
   return (
     <div className={styles.usermenu_container}>
       <Flex direction='row'>
         <img src='/placeholder-avatar.svg' alt='Profile Picutre' />
         <button
-          id='dropdown-usermenu'
+          id='drop-down-profile-menu'
           onClick={() => setOpenDropdown(!openDropdown)}
         >
           <span>{user ? user.data.user.firstName : 'Inget'}</span>
           <span>{user ? user.data.user.lastName : 'Namn'}</span>
-          <img src='/chevron-down.svg' alt='Chevron down' />
+          <img src='/svgs/top_bar/chevron-down.svg' alt='Chevron down' />
         </button>
       </Flex>
-      {openDropdown ? (
-        <div className={styles.usermenu_dropdown}>
-          <button><Link href={"/dinamal"}>Dina mål</Link></button>
-          <button>Inställningar</button>
-          <button onClick={logout}>Logga ut</button>
-        </div>
-      ) : null}
+      <DropdownMenu
+        listItems={dropdownListItems}
+        id='drop-down-profile-menu'
+        width='medium'
+        open={openDropdown}
+        setOpen={setOpenDropdown}
+      />
     </div>
   );
 };
