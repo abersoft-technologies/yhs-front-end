@@ -37,6 +37,7 @@ interface IAddEduForm {
   name: string;
   place: string;
   shortName: string;
+  branch: string;
   type: string;
   managementList: Array<string>;
   goal: {
@@ -66,6 +67,7 @@ const AddEduModule = ({
     place: '',
     shortName: '',
     type: '',
+    branch: '',
     managementList: [],
     goal: {
       employements: 0,
@@ -116,6 +118,7 @@ const AddEduModule = ({
       place: '',
       shortName: '',
       type: '',
+      branch: '',
       managementList: [],
       goal: {
         employements: 0,
@@ -138,6 +141,7 @@ const AddEduModule = ({
       place: '',
       shortName: '',
       type: '',
+      branch: '',
       managementList: [],
       goal: {
         employements: 0,
@@ -152,6 +156,7 @@ const AddEduModule = ({
 
   const validate = () => {
     if(!formData.name
+      || !formData.branch
       || !formData.place
       || !formData.shortName
       ) return false;
@@ -224,6 +229,14 @@ const AddEduModule = ({
               />
               <Text color='#c4c4c4' text='Max 6 tecken' />
             </Flex>
+            <Input
+                width='100%'
+                name='branch'
+                placeholder='Branch'
+                label='Branch'
+                value={formData.branch}
+                onChangeFunction={handleOnChange}
+              />
             <Select
               options={types}
               onChangeFunction={(label: string, value: string) =>
