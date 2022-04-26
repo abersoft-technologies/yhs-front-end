@@ -14,16 +14,13 @@ import styles from '../../styles/Contacts.module.scss';
 
 import AddContactModule from '../components/modules/add_data/AddContactModule';
 import AddCorporateModule from '../components/modules/add_data/AddCorporateModule';
-import { OutlinedButton } from '../components/ui/buttons/Buttons';
 import { Flex } from '../components/ui/Flex';
-import { Dropdown } from '../components/shared/dropdown/Dropdown';
 import AddEduModule from '../components/modules/add_data/AddEduModule';
 import { SearchBar } from '../components/shared/searchbar/Searchbar';
 import FilterInterface from '../components/filter_interface/FilterInterface';
 import { getAll } from '../apis/contact/getAll';
-import { InfoBox } from '../components/ui/info/InfoBox';
-import { route } from 'next/dist/server/router';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { DropdownMenu } from '../components/ui/dropdown/DropdownMenu';
 
 interface LayoutProps {
   children: ReactNode;
@@ -42,19 +39,11 @@ interface IContactData {
   _id: string;
 }
 
-interface IInfoBoxProps {
-  infoText: string;
-  type: 'warning' | 'info' | 'tip' | 'success';
-  showBox: boolean;
-  time: number;
-}
-
 const contactLayout = ({ children }: LayoutProps) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const [searchWord, setSearchWord] = useState('');
-
-  const toggleRef = React.createRef<HTMLDivElement>();
+  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
 
   const [filterIsActive, setFilterIsActive] = useState<boolean>(false);
   const [contactModuleToggle, setContactModuleToggle] =
@@ -62,16 +51,36 @@ const contactLayout = ({ children }: LayoutProps) => {
   const [corpModuleToggle, setCorpModuleToggle] = useState<boolean>(false);
   const [eduModuleToggle, setEduModuleToggle] = useState<boolean>(false);
 
-  const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
-
   const [managementList, setManagementList] = useState<
     Array<{ value: string; label: string }>
   >([]);
   const [ListData, setListData] = useState<Array<IContactData>>([]);
 
-  const closeContactModule = () => setContactModuleToggle(false);
-  const closeCorpModule = () => setCorpModuleToggle(false);
-  const closeEduModule = () => setEduModuleToggle(false);
+  const toggleContactModule = () => {
+    setContactModuleToggle(!contactModuleToggle);
+  };
+  const toggleCorpModule = () => setCorpModuleToggle(!corpModuleToggle);
+  const toggleEduModule = () => setEduModuleToggle(!eduModuleToggle);
+  const dropdownListItems = [
+    {
+      text: 'Lägg till kontakt',
+      onClick: toggleContactModule,
+      id: 'contact-module',
+      img: { url: '/svgs/contacts/add_dropdown/add_con.svg', alt: 'Badge' },
+    },
+    {
+      text: 'Lägg till företag',
+      onClick: toggleCorpModule,
+      id: 'edu-module',
+      img: { url: '/svgs/contacts/add_dropdown/add_comp.svg', alt: 'Settings' },
+    },
+    {
+      text: 'Lägg till utbildning',
+      onClick: toggleEduModule,
+      id: 'company-module',
+      img: { url: '/svgs/contacts/add_dropdown/add_edu.svg', alt: 'Turn off' },
+    },
+  ];
 
   const openDropdown = () => {
     setToggleDropdown(!toggleDropdown);
@@ -103,8 +112,8 @@ const contactLayout = ({ children }: LayoutProps) => {
   }, [searchWord]);
 
   useEffect(() => {
-    const currentTab = useLocalStorage("get", "session", "currentTab")
-    if(currentTab) router.push(currentTab)
+    const currentTab = useLocalStorage('get', 'session', 'currentTab');
+    if (currentTab) router.push(currentTab);
     getAll()
       .then((res) => {
         console.log('RES --->', res?.data);
@@ -117,10 +126,10 @@ const contactLayout = ({ children }: LayoutProps) => {
   }, []);
 
   useEffect(() => {
-    useLocalStorage("set", "session", "currentTab", router.pathname)
-    dispatch(setQuery(""));
-    setSearchWord("")
-  }, [router.pathname])
+    useLocalStorage('set', 'session', 'currentTab', router.pathname);
+    dispatch(setQuery(''));
+    setSearchWord('');
+  }, [router.pathname]);
 
   const setSearchPlaceholder = () => {
     switch (router.pathname) {
@@ -186,28 +195,23 @@ const contactLayout = ({ children }: LayoutProps) => {
               align='center'
               justify='center'
             >
-              <div ref={toggleRef}>
+              <div className={styles.add_btn_dropdown_container}>
                 <button
                   className={styles.add_btn}
                   onClick={() => openDropdown()}
+                  id='drop-down-add-menu'
                 >
                   Lägg till
                   <img src='/arrow-down.svg' alt='Arrow down' />
                 </button>
-              </div>
-              {toggleDropdown ? (
-                <Dropdown
-                  toggleDropdown={openDropdown}
-                  toggleRef={toggleRef}
-                  onContactClick={() =>
-                    setContactModuleToggle(!contactModuleToggle)
-                  }
-                  onCorpClick={() => setCorpModuleToggle(!corpModuleToggle)}
-                  onEduClick={() => setEduModuleToggle(!corpModuleToggle)}
+                <DropdownMenu
+                  listItems={dropdownListItems}
+                  open={toggleDropdown}
+                  setOpen={setToggleDropdown}
+                  id='drop-down-add-menu'
+                  width='large'
                 />
-              ) : (
-                <></>
-              )}
+              </div>
             </Flex>
           </Flex>
           <FilterInterface isActive={filterIsActive} />
@@ -254,15 +258,15 @@ const contactLayout = ({ children }: LayoutProps) => {
       <div className={styles.children_container}>{children}</div>
       <AddContactModule
         active={contactModuleToggle}
-        closeModule={closeContactModule}
+        closeModule={toggleContactModule}
       />
       <AddCorporateModule
         active={corpModuleToggle}
-        closeModule={closeCorpModule}
+        closeModule={toggleCorpModule}
       />
       <AddEduModule
         active={eduModuleToggle}
-        closeModule={closeEduModule}
+        closeModule={toggleEduModule}
         contactList={managementList}
         listDataContacts={ListData}
       />

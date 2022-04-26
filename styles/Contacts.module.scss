@@ -93,50 +93,8 @@
     box-shadow: 0 0 0 2px rgba(117, 134, 206, 0.2);
   }
 }
-
-.dropdown_container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var.$spacing-x-small 0;
-  position: absolute;
-  background-color: white;
-  box-shadow: var.$intense-black-shadow;
-  -moz-osx-font-smoothing: grayscale;
-  border-radius: var.$spacing-x-small;
-  width: 200px;
-  z-index: 99;
-
-  .list {
-    width: 100%;
-    .list_container:not(:last-child) {
-      border-bottom: 1px solid var.$light-grey;
-    }
-    .list_container {
-      cursor: pointer;
-      color: var.$txt-color;
-      padding: var.$spacing-small;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap: var.$spacing-small;
-      height: 37px;
-      img {
-        width: 20px;
-        margin: 0 var.$spacing-x-small;
-      }
-      p {
-        font-size: var.$spacing-medium;
-        font-size: 0.9rem;
-      }
-      &:hover {
-        transition: background-color 0.15s ease-in-out;
-        background-color: var.$primary-color-light-transparent;
-        width: 100%;
-      }
-    }
-  }
+.add_btn_dropdown_container {
+  position: relative;
 }
 
 .header_bar_container {
