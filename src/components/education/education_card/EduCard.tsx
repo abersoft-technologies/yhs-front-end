@@ -6,6 +6,7 @@ interface ICorporateCardProps {
     shortName: string;
     type: string;
     managementList?: string[];
+    branch?: string;
     place: string;
     _id: string;
 }
@@ -16,6 +17,7 @@ const EduCard = ({
     shortName,
     type,
     managementList,
+    branch,
     _id
   }: ICorporateCardProps) => {
     const router = useRouter();
@@ -26,6 +28,7 @@ const EduCard = ({
       <div>{shortName}</div>
       <div>{type}</div>
       <div>{managementList && managementList.length ? managementList.length + " personer" : "Ingen ledningsgrupp"}</div>
+      <div>{branch ? branch : "Ingen branch"}</div>
       <div>{place ? place : "Ingen ort"}</div>
     </article>
     </>)

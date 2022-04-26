@@ -245,6 +245,7 @@ const contactLayout = ({ children }: LayoutProps) => {
               <div>Förkortning</div>
               <div>typ</div>
               <div>Ledningsgrupp</div>
+              <div>Branch</div>
               <div>Ort</div>
             </>
           )}

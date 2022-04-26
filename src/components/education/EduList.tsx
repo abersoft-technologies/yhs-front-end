@@ -14,6 +14,7 @@ interface IListData {
   shortName: string;
   type: string;
   managementList: string[];
+  branch?: string;
   place: string;
   _id: string;
 }
@@ -60,6 +61,7 @@ const EduList = () => {
               managementList={item.managementList}
               name={item.name}
               place={item.place}
+              branch={item.branch}
               _id={item._id}
             />
           );
