@@ -39,19 +39,21 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
     const [contacts, setContacts] = useState<Array<IContactData>>([])
     useEffect(() => {
         createContactsList()
-        console.log("Contacts", contacts)
-    }, [data, contactList, contacts.length])
+    }, [data, data && data.managementList.length, contactList, contacts.length])
 
     const createContactsList = () => {
         const list: Array<IContactData> = [];
+        console.log("Data management list", data?.managementList)
         if(data?.managementList && data.managementList.length) {
             data.managementList.forEach(item => {
                 const obj = contactList?.find(contact => contact._id === item);
                 if(obj) {
                     list.push(obj)
                 }
+                console.log(obj)
             })
         }
+        console.log("List", list)
         setContacts(list)
         console.log("list", list)
     }
