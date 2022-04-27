@@ -95,7 +95,7 @@ const Signup: NextPage = () => {
         setTimeout(() => {
           Redirect('/');
         }, 1000);
-        useLocalStorage('set', 'session', 'user', JSON.stringify(data));
+        sessionStorage.setItem("user", JSON.stringify(data))
       })
       .catch((err) => {
         setShowErrorMessage(true);

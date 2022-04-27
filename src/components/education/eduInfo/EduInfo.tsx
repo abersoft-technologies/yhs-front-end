@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getEdu } from "../../../apis/edu/get";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 import { Flex } from "../../ui/Flex"
@@ -40,7 +40,7 @@ const EduInfo = () => {
     const [list, setList] = useState<Array<string>>();
 
 
-    const createContactsList = () => {
+    const createContactsList = useCallback(() => {
       const list: Array<string> = [];
       if(dataEdu?.managementList && dataEdu.managementList.length) {
         dataEdu.managementList.forEach(item => {
@@ -51,15 +51,15 @@ const EduInfo = () => {
           })
       }
       setList(list)
-  }
+  }, [ListData, dataEdu?.managementList])
 
-    const getData = async () => {
+    const getData = useCallback( async () => {
         await getEdu(id).then(res => {
           setDataEdu(res?.data.data.edu)
         }).catch(err => {
           console.log(err)
         })
-  }
+  }, [id])
 
   const getAllContacts = async () => {
     await getAll().then(res => {
@@ -74,7 +74,7 @@ const EduInfo = () => {
         getData();
         getAllContacts();
         createContactsList();
-      }, [name, id, list && list.length, ListData?.length])
+      }, [name, id, list?.length, ListData?.length, createContactsList, getData])
 
     return (
       <InfoLayout title={dataEdu && dataEdu.shortName} subTitle={dataEdu && dataEdu.name} place={dataEdu && [dataEdu.place]} tags={list} >

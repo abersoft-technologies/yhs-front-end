@@ -79,11 +79,11 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
     };
     console.log("FilterOBJC ---->", filterObj)
     dispatch(setFilterQuery({filterObj: {...filterObj}}));
-  }, [filter]);
+  }, [filter, dispatch]);
 
   useEffect(() => {
     dispatch(getFilterOptions());
-  }, []);
+  }, [dispatch]);
 
   const onChangeFilter = (label: string, value: string) => {
     setFilter((filter) => ({

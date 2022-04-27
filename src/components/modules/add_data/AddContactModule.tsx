@@ -23,6 +23,8 @@ import { Checkbox } from '@nextui-org/react';
 import { updateContact } from '../../../apis/contact/update';
 import {showInfoBox} from "../../../store/slice/infoBox"
 
+import Image from "next/image"
+
 interface IModuleProps {
   active: boolean;
   closeModule: () => void;
@@ -224,7 +226,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           <Flex direction='row' align='center' justify='center'>
             <h3>Ny kontakt</h3>
             <button onClick={closeModule}>
-              <img src='/close-module-icon.svg' alt='Cross' />
+              <Image src='/close-module-icon.svg' alt='Cross' layout='fill' />
             </button>
           </Flex>
         </header>

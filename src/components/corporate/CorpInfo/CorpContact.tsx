@@ -73,7 +73,14 @@ export const CorporateContact = ({corpData, contactData, listValues}: ICorporate
     }
 
     useEffect(() => {
-        createSelectArray();
+        // createSelectArray();
+        if(contactData && contactData.contacts.length) {
+            let list: Array<IContactData> = [];
+            contactData.contacts.forEach((item: IContactData) => {
+                list.push(item);
+            })
+            setlistContacts(list)
+        }
     }, [contactData])
 
     return (

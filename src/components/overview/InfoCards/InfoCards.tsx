@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from 'react';
+import react, { useCallback, useEffect, useState } from 'react';
 import { Flex } from '../../ui/Flex';
 import { Text } from '../../ui/text/Text';
 import { getAllLetters } from '../../../apis/letter/get';
@@ -69,7 +69,7 @@ export const InfoCards = () => {
       });
   };
 
-  const calcAllTotalValues = () => {
+  const calcAllTotalValues = useCallback(() => {
     let res = {
       employment: {
         low: 0,
@@ -92,13 +92,13 @@ export const InfoCards = () => {
     }
     console.log(res);
     return res;
-  };
+  }, [lettersData]);
 
   useEffect(() => {
     const totalData = calcAllTotalValues();
     setTotalData(totalData);
     getData();
-  }, [lettersData, letters.length]);
+  }, [lettersData, letters.length, calcAllTotalValues]);
 
   return (
     <Flex

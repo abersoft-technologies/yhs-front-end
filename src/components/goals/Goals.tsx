@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import { OutlinedButton } from "../ui/buttons/Buttons";
 import { Flex } from "../ui/Flex";
 import {Input} from "../ui/form/input/Input";
@@ -49,7 +49,7 @@ const Goals = () => {
         }).catch(err => console.log(err))
     }
 
-    const createOptionList = () => {
+    const createOptionList = useCallback( () => {
         const list: Array<{value: string, label: string, id: string}> = [];
 
         educations && educations.forEach((item) => {
@@ -57,7 +57,7 @@ const Goals = () => {
             list.push(obj)
         })
         setOptionList(list)
-    }
+    }, [educations])
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let name = e.target.name;
@@ -77,11 +77,14 @@ const Goals = () => {
         setId(_id!)
       };
 
+      const educationLength = educations && educations.length
+      const optionLength = optionList && optionList.length;
+
 
       useEffect(() => {
         getAllEdus();
         createOptionList()
-      }, [educations && educations.length, optionList && optionList.length])
+      }, [educationLength, optionLength, createOptionList])
 
     return (
         <Flex direction="column" width="full" align="center" justify="center">

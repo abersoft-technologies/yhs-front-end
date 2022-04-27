@@ -18,7 +18,7 @@ const ContactCard = ({
   email,
   id
 }: IContactCardProps) => {
-  return (<Link href={`/kontakter/${id}`}><article className={styles.contact_card}>
+  return (<Link passHref={true} href={`/kontakter/${id}`}><article className={styles.contact_card}>
     <div>{firstName ? firstName + ' ' + lastName : 'Namn kan inte hittas'}</div>
     <div>{role ? role : 'Ej angivet'}</div>
     <div>{district ? district : 'Ej angivet'}</div>

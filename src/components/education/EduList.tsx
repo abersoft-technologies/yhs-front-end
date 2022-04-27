@@ -52,7 +52,7 @@ const EduList = () => {
           queryParams: searchQuery,
           filterQuery: filterQuery
         }));
-      }, [page, searchQuery, filterQuery]);
+      }, [page, searchQuery, filterQuery, dispatch]);
 
   return (
     <section className={styles.edu_list_container}>

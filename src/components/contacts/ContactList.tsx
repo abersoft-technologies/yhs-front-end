@@ -58,19 +58,19 @@ const ContactList = () => {
       })
     );
     // window.scrollTo(0, 0);
-  }, [searchQuery, filterQuery]);
+  }, [searchQuery, filterQuery, dispatch, page]);
 
-  useEffect(() => {
-    dispatch(
-      getContactListRedux({
-        limit: 10,
-        page: page,
-        queryParams: searchQuery,
-        filterQuery,
-      })
-    );
-    // window.scrollTo(0, 0);
-  }, [page]);
+  // useEffect(() => {
+  //   dispatch(
+  //     getContactListRedux({
+  //       limit: 10,
+  //       page: page,
+  //       queryParams: searchQuery,
+  //       filterQuery,
+  //     })
+  //   );
+  //   // window.scrollTo(0, 0);
+  // }, [page, dispatch]);
 
   return (
     <>

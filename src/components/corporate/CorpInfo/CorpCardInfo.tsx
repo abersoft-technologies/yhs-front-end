@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { Flex } from "../../ui/Flex";
 import { CorporateContact } from "./CorpContact";
 
@@ -56,7 +56,7 @@ export const CorpCardInfo = () => {
     ? contactListReducer.result.data.listValues
     : undefined;
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
           await getCorp(id).then(res => {
             setDataCorp(res?.data.data.corp)
           }).catch(err => {
@@ -71,7 +71,7 @@ export const CorpCardInfo = () => {
 
           // dispatch(getCorporateRedux({id: id}));
           // dispatch(getContactListRedux({ limit: 10, page: 1, queryParams: 'KYH' }));
-    }
+    }, [id, name])
 
     const createPlaceArray = () => {
       const list: string[] = [];
@@ -88,8 +88,18 @@ export const CorpCardInfo = () => {
 
         useEffect(() => {
           getData();
-          createPlaceArray();
-        }, [name, id, dataContacts?.contacts.length])
+          // createPlaceArray();
+          const list: string[] = [];
+          if(dataContacts && dataContacts.contacts.length) {
+            dataContacts.contacts.forEach((item) => {
+              list.push(item.town)
+            })
+          }
+          let uniqueList = list.filter((c, index) => {
+            return list.indexOf(c) === index;
+          });
+          setPlaceList(uniqueList)
+        }, [name, id, dataContacts?.contacts.length, dataContacts, getData])
 
 
     return (

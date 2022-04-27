@@ -38,10 +38,15 @@ export const MultipleSelect = ({
   useEffect(() => {
     if (value && value.length > 0 && !valAlreadySet) {
       // setSelectedArr(value);
-      setSelArrAndChangeFunc(value, true);
+      // setSelArrAndChangeFunc(value, true);
       setValAlreadySet(true);
+
+      setSelectedArr(value);
+      if (onChangeFunction) {
+      onChangeFunction(value, true);
     }
-  }, [value]);
+    }
+  }, [value, valAlreadySet, onChangeFunction]);
 
   useEffect(() => {
     const onClick = (event: any) => {
