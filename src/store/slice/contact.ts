@@ -30,6 +30,8 @@ const initialState: IContactState = {
     role: '',
     town: '',
     status: '',
+    _id: '',
+    letters: undefined,
     letterOfIntent: {
       edu: [],
       employment: '',
