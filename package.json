@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "npm run build && cd build/ && cp index.html 200.html && surge ."
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.2-beta.4",
@@ -24,7 +25,8 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.1",
     "sass": "^1.49.9",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "surge": "^0.23.1"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
