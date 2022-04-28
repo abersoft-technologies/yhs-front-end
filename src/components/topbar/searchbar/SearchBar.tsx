@@ -6,7 +6,7 @@ const SearchBar = () => {
   return (
     <div className={styles.searchbar_container}>
       <img src='/magnifying-glass.svg' alt='Magnifying glass' />
-      <input type='search' placeholder='Testa att sköka!' />
+      <input type='search' placeholder='Testa att söka!' />
     </div>
   );
 };

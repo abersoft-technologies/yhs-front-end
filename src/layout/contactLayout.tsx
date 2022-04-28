@@ -154,7 +154,7 @@ const contactLayout = ({ children }: LayoutProps) => {
                 router.pathname === '/kontakter' ? styles.active_link : ''
               }
             >
-              <Link href='/kontakter'>Kontaker</Link>
+              <Link href='/kontakter'>Kontakter</Link>
             </li>
             <li
               className={
