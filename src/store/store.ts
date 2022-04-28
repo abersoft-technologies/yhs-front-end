@@ -20,7 +20,7 @@ import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
 const persistConfig = {
   key: 'root',
-  storage: createWebStorage('local'),
+  storage,
 };
 
 const reducers = combineReducers({
@@ -46,10 +46,10 @@ const rootReducer = (state: any, action: any) => {
 
   return reducers(state, action);
 };
-const persist = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: persist,
+  reducer: persistedReducer,
   devTools: process.env.NODE_ENV !== 'production',
   middleware: [thunk],
 });

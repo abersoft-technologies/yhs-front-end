@@ -11,7 +11,8 @@ interface IFlexProps {
   class?: string;
   height?: 'screen' | 'full' | 'none';
   width?: 'screen' | 'full' | 'auto';
-  wrap?: "wrap" | "nowrap" | "wrap-reverse"
+  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+  onClickFunc?: () => void;
 }
 
 export const Flex = (props: IFlexProps) => {
@@ -33,5 +34,5 @@ export const Flex = (props: IFlexProps) => {
     [`flex--wrap-${props.wrap}`]: props.wrap
   });
 
-  return <div className={classes}>{props.children}</div>;
+  return <div onClick={props.onClickFunc} className={classes}>{props.children}</div>;
 };

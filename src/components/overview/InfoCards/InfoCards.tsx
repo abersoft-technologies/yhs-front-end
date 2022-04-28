@@ -2,16 +2,21 @@ import react, { useCallback, useEffect, useState } from 'react';
 import { Flex } from '../../ui/Flex';
 import { Text } from '../../ui/text/Text';
 import { getAllLetters } from '../../../apis/letter/get';
+import { getNewContacts } from '../../../apis/contact/get';
+import { useRouter } from 'next/router';
 
 import styles from './InfoCards.module.scss';
-import { ILetterSchema } from '../../../types/global';
-import { useSelector } from 'react-redux';
+import { ILetterSchema, IContactSchema } from '../../../types/global';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../store/store';
+import { setFilterQuery } from '../../../store/slice/filterQuery';
+import Link from 'next/link';
 
 interface ICardProps {
   text: string;
   number: string;
   svg: string;
+  onClickFunc?: () => void;
 }
 interface ItotalData {
   employment: {
@@ -22,8 +27,30 @@ interface ItotalData {
   other: number;
 }
 
+interface INewContacts {
+  data: {
+    data: Array<IContactSchema>
+    count: number;
+  }
+
+}
+
+interface IFilterObject {
+  filterStatus: string;
+  filterTown: string;
+  filterEdu: string;
+  filterBranchEdu: string,
+  filterBranchCorp: string,
+  filterType: string,
+  filterTags: string[],
+}
+
 export const InfoCards = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [letters, setLetters] = useState<Array<ILetterSchema>>([]);
+  const [newContacts, setNewContacts] = useState<INewContacts>({data: {count: 0, data: [{_id: "",company: "", firstName: "",lastName: "",letterOfIntent: undefined, letters: undefined, status: ""}]}});
+
   const [totalData, setTotalData] = useState<ItotalData>({
     employment: {
       low: 0,
@@ -35,6 +62,20 @@ export const InfoCards = () => {
   const lettersData = useSelector(
     (state: RootState) => state.lettersDataReducer.result
   );
+  const onClickNewContacts = () => {
+    const filterObj: IFilterObject = {
+      filterStatus: "Ny kontakt",
+      filterTown: "",
+      filterEdu: "",
+      filterBranchCorp: "",
+      filterBranchEdu: "",
+      filterTags: [""],
+      filterType: "",
+  };
+    dispatch(setFilterQuery({filterObj: {...filterObj}}));
+    localStorage.setItem("filterObjc", JSON.stringify(filterObj))
+    router.push("/kontakter")
+  }
   const lettersLength = letters ? letters.length : 0;
   const list = [
     {
@@ -53,6 +94,13 @@ export const InfoCards = () => {
       svg: '/svgs/overview/cards/student.svg',
     },
     {
+      text: 'Nya kontakter',
+      value: newContacts?.data.count.toString(),
+      svg: '/svgs/overview/cards/student.svg',
+      urlPath: "/kontakter",
+      onClickFunc: onClickNewContacts,
+    },
+    {
       text: 'Övrig medverkan',
       value: totalData.other.toString(),
       svg: '/svgs/overview/cards/dots.svg',
@@ -68,6 +116,17 @@ export const InfoCards = () => {
         return err;
       });
   };
+
+  const getNewContactsData = useCallback( async () => {
+    await getNewContacts().then(res => {
+      const data = res?.data;
+      setNewContacts(data)
+    }).catch((err) => {
+      return err;
+    });
+  }, [])
+
+
 
   const calcAllTotalValues = useCallback(() => {
     let res = {
@@ -98,7 +157,8 @@ export const InfoCards = () => {
     const totalData = calcAllTotalValues();
     setTotalData(totalData);
     getData();
-  }, [lettersData, letters.length, calcAllTotalValues]);
+    getNewContactsData();
+  }, [lettersData, letters.length, calcAllTotalValues, getNewContactsData]);
 
   return (
     <Flex
@@ -106,17 +166,19 @@ export const InfoCards = () => {
       width='full'
       justify='space-between'
       class={styles.container}
+      wrap={"wrap"}
+      gap={"medium"}
     >
       {list.map((item, i) => {
         return (
-          <Card key={i} text={item.text} number={item.value} svg={item.svg} />
+          <Card key={i} text={item.text} number={item.value} svg={item.svg} onClickFunc={item.onClickFunc} />
         );
       })}
     </Flex>
   );
 };
 
-const Card = ({ text, number, svg }: ICardProps) => {
+const Card = ({ text, number, svg, onClickFunc }: ICardProps) => {
   return (
     <Flex
       direction='row'
@@ -124,6 +186,7 @@ const Card = ({ text, number, svg }: ICardProps) => {
       justify='flex-start'
       gap='medium'
       class={styles.card}
+      onClickFunc={onClickFunc}
     >
       <span>
         <img src={svg} alt='' />
