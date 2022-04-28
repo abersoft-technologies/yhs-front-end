@@ -96,7 +96,7 @@ export const InfoCards = () => {
     {
       text: 'Nya kontakter',
       value: newContacts?.data.count.toString(),
-      svg: '/svgs/overview/cards/student.svg',
+      svg: '/svgs/overview/cards/newContacts.svg',
       urlPath: "/kontakter",
       onClickFunc: onClickNewContacts,
     },
