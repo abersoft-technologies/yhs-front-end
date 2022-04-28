@@ -207,7 +207,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       || !formData.status
       || !formData.town
       ) return false;
-      if(checkActiveStatus() && !edu.length || !employment || !internship) return false;
+      if(checkActiveStatus() && (!edu.length || !employment || !internship)) return false;
       return true;
   }
 

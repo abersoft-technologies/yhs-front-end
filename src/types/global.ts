@@ -50,7 +50,7 @@ export interface IContactSchema {
   role?: string;
   town?: string;
   status: string;
-  letterOfIntent: {
+  letterOfIntent?: {
     edu: string[];
     employment: string;
     internship: string;

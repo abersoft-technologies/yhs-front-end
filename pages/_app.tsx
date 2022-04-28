@@ -8,6 +8,8 @@ import { useLocalStorage } from '../src/hooks/useLocalStorage';
 // REDUX STUFF
 import { store } from '../src/store/store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from 'redux-persist';
 
 /* Styles imports */
 import '../styles/globals.scss';
@@ -42,16 +44,20 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     }
   }, [router.pathname, user]);
 
+  let persistor = persistStore(store);
+
   router.pathname !== '/inloggning' && router.pathname !== '/registrering';
   return (
     <Provider store={store}>
-      {loadingUser &&
-      router.pathname !== '/inloggning' &&
-      router.pathname !== '/registrering' ? (
-        <LoadingPage />
-      ) : (
-        getLayout(<Component {...pageProps} />)
-      )}
+      <PersistGate loading={null} persistor={persistor}>
+        {loadingUser &&
+        router.pathname !== '/inloggning' &&
+        router.pathname !== '/registrering' ? (
+          <LoadingPage />
+        ) : (
+          getLayout(<Component {...pageProps} />)
+        )}
+      </PersistGate>
     </Provider>
   );
 }

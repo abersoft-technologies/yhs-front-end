@@ -77,24 +77,32 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
         filterTags: filter.taggar,
         filterType: filter.klassificering,
     };
-    console.log("FilterOBJC ---->", filterObj)
     dispatch(setFilterQuery({filterObj: {...filterObj}}));
+    dispatch(getFilterOptions());
+
+    return () => {
+      localStorage.removeItem("filterObjc")
+    }
   }, [filter, dispatch]);
 
-  useEffect(() => {
-    dispatch(getFilterOptions());
-  }, [dispatch]);
-
   const onChangeFilter = (label: string, value: string) => {
+    localStorage.removeItem("filterObjc")
     setFilter((filter) => ({
       ...filter, [label.toLocaleLowerCase()]: value
     }))
   };
   const handleClrField = (label: string) => {
+    localStorage.removeItem("filterObjc")
     setFilter((filter) => ({
       ...filter, [label.toLocaleLowerCase()]: ''
     }))
   };
+
+  const getFilterStatusText = () => {
+    const hasObjcInLocalStorage = localStorage.getItem("filterObjc");
+    if(hasObjcInLocalStorage) return "Ny kontakt";
+    else return filter.status;
+  }
 
   const decideFilterInputs = () => {
     switch (router.pathname) {
@@ -113,7 +121,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             options={optionsStatus}
             label='Status'
             width='250px'
-            value={filter.status}
+            value={getFilterStatusText()}
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
