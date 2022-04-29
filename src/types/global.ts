@@ -9,6 +9,7 @@ export interface IUserModelRedux {
         email: string;
         date: string;
         id: string;
+        orgId?: number;
       };
     };
     message: string;

@@ -6,6 +6,7 @@ import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
 import { add } from '../src/store/slice/userSlice';
+import { useRouter } from 'next/router';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -16,6 +17,7 @@ import { Input } from '../src/components/ui/form/input/Input';
 import { useAppDispatch } from '../src/hooks/useStore';
 
 const Signup: NextPage = () => {
+    const router = useRouter();
   const windowSize = useWindowSize();
   const dispatch = useAppDispatch();
 
@@ -88,25 +90,28 @@ const Signup: NextPage = () => {
       password: password,
     };
     setIsLoading(true);
-    axios
-      .post(reqUrl, data)
-      .then((res) => {
-        dispatch(add(res.data))
-        setTimeout(() => {
-          Redirect('/');
-        }, 1000);
-        sessionStorage.setItem("user", JSON.stringify(data))
-      })
-      .catch((err) => {
-        setShowErrorMessage(true);
-        setErrorMessage('Något gick fel');
-        setTimeout(() => {
-          setShowErrorMessage(false);
-          setErrorMessage('');
-          setIsLoading(false);
-        }, 3000);
-        console.error(err);
-      });
+    localStorage.setItem("regData", JSON.stringify(data));
+    router.push("/organisation")
+    // axios
+    //   .post(reqUrl, data)
+    //   .then((res) => {
+    //     const data = res.data;
+    //     dispatch(add(res.data))
+    //     sessionStorage.setItem("user", JSON.stringify(data))
+    //     // localStorage.setItem('accessToken', data.data.accessToken);
+    //     // localStorage.setItem('refreshToken', data.data.refreshToken);
+    //     router.push("/organisation")
+    //   })
+    //   .catch((err) => {
+    //     setShowErrorMessage(true);
+    //     setErrorMessage('Något gick fel');
+    //     setTimeout(() => {
+    //       setShowErrorMessage(false);
+    //       setErrorMessage('');
+    //       setIsLoading(false);
+    //     }, 3000);
+    //     console.error(err);
+    //   });
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,7 +216,7 @@ const Signup: NextPage = () => {
               placeholder='Upprepa ditt lösenord'
               onChangeFunction={(e) => onTextChange(e)}
             />
-            <button>Registrera</button>
+            <button>Nästa sida</button>
             <Flex direction='column' justify='center' align='center'>
               {showErrorMessage ? <p>{errorMessage}</p> : null}
               <Loading
