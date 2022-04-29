@@ -77,24 +77,32 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
         filterTags: filter.taggar,
         filterType: filter.klassificering,
     };
-    console.log("FilterOBJC ---->", filterObj)
     dispatch(setFilterQuery({filterObj: {...filterObj}}));
-  }, [filter]);
-
-  useEffect(() => {
     dispatch(getFilterOptions());
-  }, []);
+
+    return () => {
+      localStorage.removeItem("filterObjc")
+    }
+  }, [filter, dispatch]);
 
   const onChangeFilter = (label: string, value: string) => {
+    localStorage.removeItem("filterObjc")
     setFilter((filter) => ({
       ...filter, [label.toLocaleLowerCase()]: value
     }))
   };
   const handleClrField = (label: string) => {
+    localStorage.removeItem("filterObjc")
     setFilter((filter) => ({
       ...filter, [label.toLocaleLowerCase()]: ''
     }))
   };
+
+  const getFilterStatusText = () => {
+    const hasObjcInLocalStorage = localStorage.getItem("filterObjc");
+    if(hasObjcInLocalStorage) return "Ny kontakt";
+    else return filter.status;
+  }
 
   const decideFilterInputs = () => {
     switch (router.pathname) {
@@ -108,15 +116,18 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
           />,
           <Select
             options={optionsStatus}
             label='Status'
             width='250px'
-            value={filter.status}
+            value={getFilterStatusText()}
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <Select
             options={townsOptions}
@@ -126,12 +137,16 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <MultipleSelect
             label='Taggar'
             onChangeFunction={handleSetTags}
             options={tagOptions}
             width='320px'
+            key={0}
+
           />,
         ];
       case '/kontakter/foretag':
@@ -146,12 +161,16 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <MultipleSelect
             options={tagOptions}
             onChangeFunction={handleSetTags}
             label='Taggar'
             width='320px'
+            key={0}
+
           />,
         ];
       case '/kontakter/utbildningar':
@@ -166,6 +185,8 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <Select
             options={optionsEduType}
@@ -175,6 +196,8 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           /*     <Input
             placeholder='Sök bland taggar...'

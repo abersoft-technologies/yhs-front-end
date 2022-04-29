@@ -52,7 +52,7 @@ export const DropdownMenu = ({
     return () => {
       window.removeEventListener('click', onClick);
     };
-  }, []);
+  }, [id, setOpen]);
   return (
     <Flex
       direction='column'
@@ -62,7 +62,7 @@ export const DropdownMenu = ({
         return (
           <>
             {typeof item.onClick === 'string' ? (
-              <Link href={item.onClick}>
+              <Link href={item.onClick} passHref={true}>
                 <li
                   className={`${styles.list_item} ${
                     item.type === 'warning' && styles.warning_item

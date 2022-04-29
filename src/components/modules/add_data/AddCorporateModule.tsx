@@ -95,7 +95,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
 
   useEffect(() => {
     dispatch(getCorporateListRedux({limit: 0, queryParams: ''}))
-  }, [])
+  }, [dispatch])
 
   return (
     <>

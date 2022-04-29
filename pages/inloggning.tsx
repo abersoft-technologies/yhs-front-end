@@ -51,7 +51,7 @@ const Login: NextPage = () => {
         const data = res.data;
         console.log('JP userData', data);
         dispatch(add(data));
-        useLocalStorage('set', 'session', 'user', JSON.stringify(data));
+        sessionStorage.setItem("user", JSON.stringify(data))
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
         setTimeout(() => {
@@ -73,10 +73,6 @@ const Login: NextPage = () => {
     if (e.target.id === 'email') setEmail(e.target.value);
     if (e.target.id === 'password') setPassword(e.target.value);
   };
-
-  useEffect(() => {
-    useLocalStorage('remove', 'session', 'user');
-  }, []);
 
   return (
     <div className={styles.registration_loggin_container}>

@@ -22,7 +22,7 @@ export const InfoBox = () => {
         setTimeout(() => {
             dispatch(showInfoBox({infoText: "", time: 0}))
         }, infoBoxRedux.time);
-    }, [infoBoxRedux.infoText])
+    }, [infoBoxRedux.infoText, infoBoxRedux.time, infoBoxRedux.infoText, dispatch])
 
     const renderContent = () => {
         let content = <></>
