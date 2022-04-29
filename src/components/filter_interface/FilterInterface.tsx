@@ -116,6 +116,7 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
           />,
           <Select
             options={optionsStatus}
@@ -125,6 +126,8 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <Select
             options={townsOptions}
@@ -134,12 +137,16 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <MultipleSelect
             label='Taggar'
             onChangeFunction={handleSetTags}
             options={tagOptions}
             width='320px'
+            key={0}
+
           />,
         ];
       case '/kontakter/foretag':
@@ -154,12 +161,16 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <MultipleSelect
             options={tagOptions}
             onChangeFunction={handleSetTags}
             label='Taggar'
             width='320px'
+            key={0}
+
           />,
         ];
       case '/kontakter/utbildningar':
@@ -174,6 +185,8 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           <Select
             options={optionsEduType}
@@ -183,6 +196,8 @@ const FilterInterface = ({ isActive }: IFilterInterfaceProps) => {
             onChangeFunction={onChangeFilter}
             clrAble={true}
             clearFieldFunc={handleClrField}
+            key={0}
+
           />,
           /*     <Input
             placeholder='Sök bland taggar...'
