@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from '../src/globalFunctions/redirect';
 import { add } from '../src/store/slice/userSlice';
+import { addOrg } from '../src/apis/org/add';
 import { useAppDispatch } from '../src/hooks/useStore';
 import { useLocalStorage } from '../src/hooks/useLocalStorage';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
 import { useDispatch } from 'react-redux';
 import { IUserModelRedux } from '../src/types/global';
+import uniqid from 'uniqid';
+
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -17,11 +20,19 @@ import styles from '../styles/loginSignup.module.scss';
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
 
-const Login: NextPage = () => {
+interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  date: string;
+  id: string;
+  orgId?: number;
+}
+
+const Organisation: NextPage = () => {
   const windowSize = useWindowSize();
   const dispatch = useDispatch();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [org, setOrg] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -29,34 +40,38 @@ const Login: NextPage = () => {
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     submitToDB();
-    setEmail('');
-    setPassword('');
+    setOrg('');
   };
 
   /*   const reqUrl =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:8080/auth/login'
       : 'https://yhs-back-end.herokuapp.com/auth/login'; */
-  const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/login';
+  const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/signup';
 
-  const submitToDB = () => {
-    const data = {
-      email: email,
-      password: password,
-    };
-    setIsLoading(true);
-    axios
+  const submitToDB = async () => {
+    const id = uniqid();
+    const userData = localStorage.getItem("regData");
+    if(userData) {
+      const data: IUser = {
+        ...JSON.parse(userData),
+        orgId: id,
+      };
+      const userList: Array<IUser> = [data]
+      const orgData = {
+        name: org,
+        orgId: id,
+        users: userList
+      }
+      setIsLoading(true);
+      axios
       .post(reqUrl, data)
       .then((res) => {
         const data = res.data;
-        console.log('JP userData', data);
-        dispatch(add(data));
+        dispatch(add(res.data))
         sessionStorage.setItem("user", JSON.stringify(data))
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
-        setTimeout(() => {
-          Redirect('/');
-        }, 1000);
       })
       .catch((err) => {
         setShowErrorMessage(true);
@@ -64,14 +79,24 @@ const Login: NextPage = () => {
         setTimeout(() => {
           setShowErrorMessage(false);
           setErrorMessage('');
+          setIsLoading(false);
         }, 3000);
         console.error(err);
       });
+      await addOrg(orgData)
+      .then(res => {
+        console.log(res?.data)
+        setTimeout(() => {
+          setIsLoading(false);
+          Redirect("/")
+        }, 3000);
+      })
+      .catch(err => console.log(err))
+    }
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === 'email') setEmail(e.target.value);
-    if (e.target.id === 'password') setPassword(e.target.value);
+    setOrg(e.currentTarget.value)
   };
 
   return (
@@ -127,28 +152,18 @@ const Login: NextPage = () => {
           className={styles.container_form}
         >
           <Flex direction='column' gap='medium' justify='center' width='auto'>
-            <h2>Logga in</h2>
+            <h2>Skapa konto</h2>
 
             <Input
-              type='email'
-              name='email'
-              value={email}
-              label='Email'
-              placeholder='Email'
+              type='text'
+              name='org'
+              value={org}
+              label='Organisationsnamn'
+              placeholder='Organisationsnamn'
               onChangeFunction={(e) => onTextChange(e)}
               width='300px'
             />
-            <Input
-              type='password'
-              name='password'
-              value={password}
-              label='Lösenord'
-              placeholder='Lösenord'
-              onChangeFunction={(e) => onTextChange(e)}
-              width='300px'
-            />
-
-            <button>Logga in</button>
+            <button>Skapa konto</button>
             <Flex direction='row' justify='center'>
               {showErrorMessage ? <p>{errorMessage}</p> : null}
               <Loading isLoading={isLoading} size='small' />
@@ -160,4 +175,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default Organisation;

@@ -42,7 +42,6 @@ const UserMenu = (props: IUserMenu) => {
   );
 
   const logout = () => {
-    useLocalStorage('remove', 'session', 'user');
     sessionStorage.clear();
     localStorage.clear();
     Redirect('/inloggning');

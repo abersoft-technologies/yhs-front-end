@@ -19,7 +19,7 @@ const Overview = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getLettersDataRedux());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

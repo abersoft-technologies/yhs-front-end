@@ -74,7 +74,7 @@ const LetterOfIntent = () => {
     if (contact?.letters[0]) {
       handleGetLetter(contact?.letters[0]);
     }
-  }, [contact]);
+  }, [contact, router.query]);
 
   const handleUpdateLetOfIntent = async () => {
     if (!contact.letters || contact.letters.length < 1) {

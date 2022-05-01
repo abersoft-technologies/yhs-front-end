@@ -73,9 +73,11 @@ const Barchart = () => {
     return (current / goal) * 100;
   };
 
+  const allDataLength = allData && allData.length
+
   useEffect(() => {
     getAllData();
-  }, [allData && allData.length]);
+  }, [allDataLength]);
 
   const LabelWithColors = ({ labelName, labelColor }: ILabelColorsProps) => (
     <Flex

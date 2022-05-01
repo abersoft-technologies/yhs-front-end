@@ -9,6 +9,7 @@ import Pagination from '../pagination/Pagination';
 import ContactCard from './contact_card/ContactCard';
 import { Text } from '../ui/text/Text';
 import { Flex } from '../ui/Flex';
+import { useAppSelector } from '../../hooks/useStore';
 
 interface IListDataMap {
   firstName: string;
@@ -46,31 +47,39 @@ const ContactList = () => {
     : undefined;
 
   useEffect(() => {
+    const filterObjc = localStorage.getItem("filterObjc");
     setPage(1);
     setPagePosition(0);
     setSlicedPages(1);
-    dispatch(
-      getContactListRedux({
-        limit: 10,
-        page: page,
-        queryParams: searchQuery,
-        filterQuery,
-      })
-    );
-    // window.scrollTo(0, 0);
-  }, [searchQuery, filterQuery]);
 
-  useEffect(() => {
-    dispatch(
-      getContactListRedux({
-        limit: 10,
-        page: page,
-        queryParams: searchQuery,
-        filterQuery,
-      })
-    );
+    console.log("filterQuery",filterQuery)
+    console.log("filterObjc",JSON.parse(filterObjc!))
+
+      dispatch(
+        getContactListRedux({
+          limit: 10,
+          page: page,
+          queryParams: searchQuery,
+          filterQuery: filterObjc ? {...JSON.parse(filterObjc)} : filterQuery
+        })
+      );
+      // setTimeout(() => {
+      //   localStorage.removeItem("filterObjc")
+      // }, 500);
     // window.scrollTo(0, 0);
-  }, [page]);
+  }, [searchQuery, filterQuery, dispatch, page]);
+
+  // useEffect(() => {
+  //   dispatch(
+  //     getContactListRedux({
+  //       limit: 10,
+  //       page: page,
+  //       queryParams: searchQuery,
+  //       filterQuery,
+  //     })
+  //   );
+  //   // window.scrollTo(0, 0);
+  // }, [page, dispatch]);
 
   return (
     <>

@@ -16,7 +16,7 @@ const ManagementListCard = ({
     place,
     _id
   }: IEduCardProps) => {
-    return (<Link href={`/kontakter/${_id}`}>
+    return (<Link href={`/kontakter/${_id}`} passHref={true}>
     <article className={styles.edu_contact_card} >
       <div>{name}</div>
       <div>{place}</div>

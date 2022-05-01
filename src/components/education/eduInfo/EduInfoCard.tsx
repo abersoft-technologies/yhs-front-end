@@ -37,10 +37,19 @@ interface IEduData {
 
 export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
     const [contacts, setContacts] = useState<Array<IContactData>>([])
+    const managementLength = data && data.managementList.length;
     useEffect(() => {
-        createContactsList()
-        console.log("Contacts", contacts)
-    }, [data, contactList, contacts.length])
+        const list: Array<IContactData> = [];
+        if(data?.managementList && data.managementList.length) {
+            data.managementList.forEach(item => {
+                const obj = contactList?.find(contact => contact._id === item);
+                if(obj) {
+                    list.push(obj)
+                }
+            })
+        }
+        setContacts(list)
+    }, [data, managementLength, contactList, contacts.length])
 
     const createContactsList = () => {
         const list: Array<IContactData> = [];
@@ -53,7 +62,6 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
             })
         }
         setContacts(list)
-        console.log("list", list)
     }
 
     return (

@@ -21,7 +21,7 @@ const ContactInfo = () => {
   useEffect(() => {
     if (!id) return;
     dispatch(getContactRedux(id));
-  }, [id, dispatch, getContactRedux]);
+  }, [id, dispatch]);
 
   const getInitails = () => {
     return `${

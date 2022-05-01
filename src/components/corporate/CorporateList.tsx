@@ -48,11 +48,11 @@ const CorporateList = () => {
     dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: searchQuery, filterQuery: filterQuery }));
     window.scrollTo(0, 0);
 
-  }, [searchQuery, filterQuery]);
+  }, [searchQuery, filterQuery, dispatch, page]);
 
-  useEffect(() => {
-    dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));
-  }, [page]);
+  // useEffect(() => {
+  //   dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));
+  // }, [page, dispatch]);
 
   return (
     <>

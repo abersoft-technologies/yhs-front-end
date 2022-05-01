@@ -9,6 +9,7 @@ export interface IUserModelRedux {
         email: string;
         date: string;
         id: string;
+        orgId?: number;
       };
     };
     message: string;
@@ -50,7 +51,7 @@ export interface IContactSchema {
   role?: string;
   town?: string;
   status: string;
-  letterOfIntent: {
+  letterOfIntent?: {
     edu: string[];
     employment: string;
     internship: string;
