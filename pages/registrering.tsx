@@ -7,6 +7,7 @@ import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
 import { add } from '../src/store/slice/userSlice';
 import { useRouter } from 'next/router';
+import uniqid from 'uniqid';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -15,6 +16,15 @@ import styles from '../styles/loginSignup.module.scss';
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
 import { useAppDispatch } from '../src/hooks/useStore';
+import { addOrg } from '../src/apis/org/add';
+
+interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  orgId?: string;
+}
 
 const Signup: NextPage = () => {
     const router = useRouter();
@@ -29,6 +39,9 @@ const Signup: NextPage = () => {
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showOrgForm, setShowOrgForm] = useState<boolean>(false);
+  const [org, setOrg] = useState<string>('');
+
 
   // const reqUrl =
   //   process.env.NODE_ENV === 'development'
@@ -45,7 +58,7 @@ const Signup: NextPage = () => {
       setShowErrorMessage(true);
       return;
     }
-    submitToDB();
+    submitToDB(e);
 
     setFirstName('');
     setLastName('');
@@ -82,36 +95,56 @@ const Signup: NextPage = () => {
     return true;
   };
 
-  const submitToDB = () => {
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-    };
-    setIsLoading(true);
-    localStorage.setItem("regData", JSON.stringify(data));
-    router.push("/organisation")
-    // axios
-    //   .post(reqUrl, data)
-    //   .then((res) => {
-    //     const data = res.data;
-    //     dispatch(add(res.data))
-    //     sessionStorage.setItem("user", JSON.stringify(data))
-    //     // localStorage.setItem('accessToken', data.data.accessToken);
-    //     // localStorage.setItem('refreshToken', data.data.refreshToken);
-    //     router.push("/organisation")
-    //   })
-    //   .catch((err) => {
-    //     setShowErrorMessage(true);
-    //     setErrorMessage('Något gick fel');
-    //     setTimeout(() => {
-    //       setShowErrorMessage(false);
-    //       setErrorMessage('');
-    //       setIsLoading(false);
-    //     }, 3000);
-    //     console.error(err);
-    //   });
+  const onUserFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setShowOrgForm(true)
+  }
+
+  const submitToDB = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const id = uniqid();
+      const data: IUser = {
+        firstName,
+        email,
+        lastName,
+        password,
+        orgId: id,
+      };
+      // const userList: Array<IUser> =
+      const orgData = {
+        name: org,
+        orgId: id,
+        users: [data]
+      }
+      setIsLoading(true);
+      axios
+      .post(reqUrl, data)
+      .then((res) => {
+        const data = res.data;
+        dispatch(add(res.data))
+        sessionStorage.setItem("user", JSON.stringify(data))
+        localStorage.setItem('accessToken', data.data.accessToken);
+        localStorage.setItem('refreshToken', data.data.refreshToken);
+      })
+      .catch((err) => {
+        setShowErrorMessage(true);
+        setErrorMessage('Något gick fel');
+        setTimeout(() => {
+          setShowErrorMessage(false);
+          setErrorMessage('');
+          setIsLoading(false);
+        }, 3000);
+        console.error(err);
+      });
+      await addOrg(orgData)
+      .then(res => {
+        console.log(res?.data)
+        setTimeout(() => {
+          setIsLoading(false);
+          Redirect("/")
+        }, 3000);
+      })
+      .catch(err => console.log(err))
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,7 +153,96 @@ const Signup: NextPage = () => {
     if (e.target.id === 'password') setPassword(e.target.value);
     if (e.target.id === 'password-repeat') setPasswordTwo(e.target.value);
     if (e.target.id === 'email') setEmail(e.target.value);
+    if (e.target.id === 'org') setOrg(e.target.value);
+
   };
+
+  const userForm = (
+    <form
+    action='get'
+    onSubmit={(e) => onUserFormSubmit(e)}
+    className={styles.container_form}
+  >
+    <Flex direction='column' gap='medium' justify='center' width='auto'>
+      <h2>Skapa konto</h2>
+      <Input
+        type='text'
+        name='first-name'
+        value={firstName}
+        label='Förnamn'
+        placeholder='Förnamn'
+        onChangeFunction={(e) => onTextChange(e)}
+      />
+      <Input
+        type='text'
+        name='last-name'
+        value={lastName}
+        label='Efternamn'
+        placeholder='Efternamn'
+        onChangeFunction={(e) => onTextChange(e)}
+      />
+      <Input
+        type='email'
+        name='email'
+        value={email}
+        label='Email'
+        placeholder='Ex. exempel@exempel.se'
+        onChangeFunction={(e) => onTextChange(e)}
+      />
+      <Input
+        type='password'
+        name='password'
+        value={password}
+        label='Lösenord'
+        placeholder='Lösenord'
+        onChangeFunction={(e) => onTextChange(e)}
+      />
+      <Input
+        type='password'
+        name='password-repeat'
+        value={passwordTwo}
+        label='Upprepa lösenord'
+        placeholder='Upprepa ditt lösenord'
+        onChangeFunction={(e) => onTextChange(e)}
+      />
+      <button>Nästa sida</button>
+      <Flex direction='column' justify='center' align='center'>
+        {showErrorMessage ? <p>{errorMessage}</p> : null}
+        <Loading
+          isLoading={isLoading && !showErrorMessage}
+          size='small'
+        />
+      </Flex>
+    </Flex>
+  </form>
+  )
+
+  const orgForm = (
+    <form
+          action='get'
+          onSubmit={(e) => submitToDB(e)}
+          className={styles.container_form}
+        >
+          <Flex direction='column' gap='medium' justify='center' width='auto'>
+            <h2>Skapa konto</h2>
+
+            <Input
+              type='text'
+              name='org'
+              value={org}
+              label='Organisationsnamn'
+              placeholder='Organisationsnamn'
+              onChangeFunction={(e) => onTextChange(e)}
+              width='300px'
+            />
+            <button>Skapa konto</button>
+            <Flex direction='row' justify='center'>
+              {showErrorMessage ? <p>{errorMessage}</p> : null}
+              <Loading isLoading={isLoading} size='small' />
+            </Flex>
+          </Flex>
+        </form>
+  )
 
   return (
     <div className={styles.registration_loggin_container}>
@@ -169,63 +291,7 @@ const Signup: NextPage = () => {
       </div>
       <div>
         <img src='/svgs/login_register/logo_loggin.svg' alt='Logo' />
-        <form
-          action='get'
-          onSubmit={(e) => onFormSubmit(e)}
-          className={styles.container_form}
-        >
-          <Flex direction='column' gap='medium' justify='center' width='auto'>
-            <h2>Skapa konto</h2>
-            <Input
-              type='text'
-              name='first-name'
-              value={firstName}
-              label='Förnamn'
-              placeholder='Förnamn'
-              onChangeFunction={(e) => onTextChange(e)}
-            />
-            <Input
-              type='text'
-              name='last-name'
-              value={lastName}
-              label='Efternamn'
-              placeholder='Efternamn'
-              onChangeFunction={(e) => onTextChange(e)}
-            />
-            <Input
-              type='email'
-              name='email'
-              value={email}
-              label='Email'
-              placeholder='Ex. exempel@exempel.se'
-              onChangeFunction={(e) => onTextChange(e)}
-            />
-            <Input
-              type='password'
-              name='password'
-              value={password}
-              label='Lösenord'
-              placeholder='Lösenord'
-              onChangeFunction={(e) => onTextChange(e)}
-            />
-            <Input
-              type='password'
-              name='password-repeat'
-              value={passwordTwo}
-              label='Upprepa lösenord'
-              placeholder='Upprepa ditt lösenord'
-              onChangeFunction={(e) => onTextChange(e)}
-            />
-            <button>Nästa sida</button>
-            <Flex direction='column' justify='center' align='center'>
-              {showErrorMessage ? <p>{errorMessage}</p> : null}
-              <Loading
-                isLoading={isLoading && !showErrorMessage}
-                size='small'
-              />
-            </Flex>
-          </Flex>
-        </form>
+        {showOrgForm ? orgForm : userForm}
       </div>
     </div>
   );

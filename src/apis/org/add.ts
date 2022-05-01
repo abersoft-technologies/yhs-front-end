@@ -1,13 +1,11 @@
 import api from '../api';
 
 interface IUser {
-    firstName: string;
-    lastName: string;
-    email: string;
-    date: string;
-    id: string;
-    orgId?: number;
-  }
+  firstName: string;
+  lastName: string;
+  email: string;
+  orgId?: string;
+}
 
 interface IAddOrgParams {
     name: string;
