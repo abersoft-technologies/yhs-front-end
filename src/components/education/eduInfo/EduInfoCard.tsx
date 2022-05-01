@@ -32,6 +32,7 @@ interface IEduData {
     place: string;
     shortName: string;
     type: string;
+    person?: string;
     _id: string;
 }
 
@@ -73,6 +74,7 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
                 <div className={listStyles.label_bar_container}>
                 <div>Förkortning</div>
                 <div>typ</div>
+                <div>Ansvar</div>
                 <div>Ort</div>
                 </div>
                 <div></div>
@@ -81,6 +83,7 @@ export const EduInfoCard = ({data, contactList}: IEduInfoCardProps) => {
                     shortName={data && data.shortName}
                     type={data && data.type}
                     place={data && data.place}
+                    person={data && data.person}
                     _id={data && data._id}
                 />
             </div>
