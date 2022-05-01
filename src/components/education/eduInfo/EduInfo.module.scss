@@ -19,14 +19,16 @@
   margin-left: 1.5rem;
   padding: var.$spacing-large;
   // max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .card {
     background: #fff;
     padding: var.$spacing-xx-large;
     box-shadow: var.$subtile-box-shadow;
     margin: var.$spacing-x-large;
+    margin-top: var.$spacing-large + 10rem;
     border-radius: var.$spacing-x-small;
-    overflow: auto;
     height: 100%;
     .managementContainer {
       border-bottom: 1px solid grey;

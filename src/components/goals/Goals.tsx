@@ -45,7 +45,7 @@ const Goals = ({id, currentGoals}: IGoalProps) => {
     const [educations, setEducations] = useState<Array<IEduObject>>([]);
     const [optionList, setOptionList] = useState<Array<{value: string, label: string, id: string}>>([]);
     const [education, setEducation] = useState<IEducation>({label: "", value: ""});
-    // const [id, setId] = useState<string>("");
+    const [show, setShow] = useState<boolean>(true);
 
     const getAllEdus = async () => {
         await getAll().then(res => {
@@ -98,7 +98,7 @@ const Goals = ({id, currentGoals}: IGoalProps) => {
     return (
         <Flex direction="column" align="flex-start" justify="center" class={styles.goalCard}>
             <h1>
-                Sätt dina Mål
+                Sätt mål
             </h1>
                 <form className={styles.selectContainer}>
                     {/* <Select

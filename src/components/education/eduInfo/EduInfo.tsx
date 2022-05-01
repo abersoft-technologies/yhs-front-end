@@ -89,7 +89,7 @@ const EduInfo = () => {
 
     return (
       <InfoLayout title={dataEdu && dataEdu.shortName} subTitle={dataEdu && dataEdu.name} place={dataEdu && [dataEdu.place]} tags={list} >
-        <Flex direction="column" class={styles.cardContainer} align={"center"} justify={"space-around"} width="full" height="full">
+        <Flex direction="column" class={styles.cardContainer} align={"flex-start"} justify={"space-around"} width="full" height="full">
             <EduInfoCard data={dataEdu} contactList={ListData} />
             <Goals id={id as string} currentGoals={dataEdu?.goal} />
         </Flex>
