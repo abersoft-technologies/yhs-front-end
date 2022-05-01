@@ -74,6 +74,8 @@ export const InfoCards = () => {
   };
     dispatch(setFilterQuery({filterObj: {...filterObj}}));
     localStorage.setItem("filterObjc", JSON.stringify(filterObj))
+    sessionStorage.setItem("currentTab", "/kontakter")
+
     router.push("/kontakter")
   }
   const lettersLength = letters ? letters.length : 0;

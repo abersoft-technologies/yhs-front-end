@@ -8,6 +8,13 @@ import { EduInfoCard } from "./EduInfoCard";
 import styles from "./EduInfo.module.scss";
 import InfoLayout from "../../../layout/infoLayout";
 import { getAll } from "../../../apis/contact/getAll";
+import Goals from "../../goals/Goals";
+
+interface IGoalData {
+  letters: number;
+  employements: number;
+  internships: number;
+}
 
 interface IEduData {
   managementList: Array<string>;
@@ -15,6 +22,7 @@ interface IEduData {
   place: string;
   shortName: string;
   type: string;
+  goal?: IGoalData;
   _id: string;
 }
 
@@ -39,6 +47,7 @@ const EduInfo = () => {
     const [ListData, setListData] = useState<Array<IContactData>>();
     const [list, setList] = useState<Array<string>>();
 
+    const listDataLength = ListData && ListData?.length;
 
     const createContactsList = useCallback(() => {
       const list: Array<string> = [];
@@ -61,25 +70,28 @@ const EduInfo = () => {
         })
   }, [id])
 
-  const getAllContacts = async () => {
+  const getAllContacts = useCallback( async () => {
     await getAll().then(res => {
-      console.log("RES --->", res?.data)
+      console.log("RES CONTACTS --->", res?.data)
       setListData(res?.data.data.contactList)
     }).catch(err => {
       console.log(err)
     })
-  }
+  }, [])
 
-      useEffect(() => {
-        getData();
-        getAllContacts();
-        createContactsList();
-      }, [name, id, list?.length, ListData?.length, createContactsList, getData])
+  useEffect(() => {
+    getData();
+    getAllContacts();
+    createContactsList();
+  }, [])
+
+  //name, id, list?.length, ListData?.length, createContactsList, getData
 
     return (
       <InfoLayout title={dataEdu && dataEdu.shortName} subTitle={dataEdu && dataEdu.name} place={dataEdu && [dataEdu.place]} tags={list} >
-        <Flex direction="row" class={styles.cardContainer} align={"center"} justify={"center"} width="full" height="full">
+        <Flex direction="column" class={styles.cardContainer} align={"center"} justify={"space-around"} width="full" height="full">
             <EduInfoCard data={dataEdu} contactList={ListData} />
+            <Goals id={id as string} currentGoals={dataEdu?.goal} />
         </Flex>
         </InfoLayout>
     )
