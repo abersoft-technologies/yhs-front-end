@@ -89,12 +89,34 @@
   }
 }
 
+.logo_reg_small_screen {
+  position: absolute;
+  width: 26px;
+  left: 1rem;
+  top: 1rem;
+}
+.error_msg_container {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+  border-radius: $spacing-x-small;
+  padding: 0 $spacing-medium;
+  text-align: center;
+  p {
+    margin: 0.65rem 0;
+  }
+}
 .container_form {
   border-radius: $spacing-medium;
   box-shadow: $subtile-box-shadow;
   padding: $spacing-large $spacing-5x $spacing-4x $spacing-5x;
   width: 100%;
   max-width: 426px;
+
+  a {
+    color: #0a58ca;
+    text-decoration: none;
+  }
 
   h2 {
     color: $very-dark-grey;
@@ -112,7 +134,7 @@
     outline: none;
     border: none;
     cursor: pointer;
-    margin-top: $spacing-x-large;
+    margin-top: $spacing-small;
     transition: all 150ms ease-in-out;
 
     &:hover {

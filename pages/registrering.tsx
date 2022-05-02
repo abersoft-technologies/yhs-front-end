@@ -1,13 +1,12 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
-import axios from 'axios';
-import { Redirect } from '../src/globalFunctions/redirect';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
-import { add } from '../src/store/slice/userSlice';
-import { useRouter } from 'next/router';
 import uniqid from 'uniqid';
+import { useWindowSize } from '../src/hooks/useWindowSize';
+import { add } from '../src/store/slice/userSlice';
+import { useDispatch } from 'react-redux';
+// import Link from 'next/link';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -15,7 +14,6 @@ import styles from '../styles/loginSignup.module.scss';
 /* Components import */
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
-import { useAppDispatch } from '../src/hooks/useStore';
 import { addOrg } from '../src/apis/org/add';
 
 interface IUser {
@@ -25,71 +23,51 @@ interface IUser {
   password: string;
   orgId?: string;
 }
+import { Redirect } from '../src/globalFunctions/redirect';
 
 const Signup: NextPage = () => {
-    const router = useRouter();
+  const dispatch = useDispatch();
   const windowSize = useWindowSize();
-  const dispatch = useAppDispatch();
 
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordTwo, setPasswordTwo] = useState<string>('');
-  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showOrgForm, setShowOrgForm] = useState<boolean>(false);
   const [org, setOrg] = useState<string>('');
 
-
-  // const reqUrl =
-  //   process.env.NODE_ENV === 'development'
-  //     ? 'http://localhost:8080/auth/signup'
-  //     : 'https://yhs-back-end.herokuapp.com/auth/signup';
   const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/signup';
-      //Minimum eight characters, at least one letter and one number
+
+  //Minimum eight characters, at least one letter and one number
   const passwordRegex = /\d/;
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const isValid = validate();
-    if (!isValid) {
-      setShowErrorMessage(true);
-      return;
-    }
-    submitToDB(e);
-
-    setFirstName('');
-    setLastName('');
-    setPassword('');
-    setPasswordTwo('');
-    setEmail('');
-  };
+  const resetErrorMsg = () =>
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 5000);
 
   const validate = (): boolean => {
     const hasNumber = passwordRegex.test(password);
+    resetErrorMsg();
+
+    if (!firstName || !lastName || !password || !passwordTwo || !email) {
+      setErrorMessage('Fyll i alla fält');
+      return false;
+    }
+
     if (password !== passwordTwo) {
       setErrorMessage('Lösenorden matchar inte');
       setPassword('');
       setPasswordTwo('');
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
       return false;
     } else if (password.length < 8) {
-      setErrorMessage(
-        `Lösenordet är för kort, det är ${password.length} tecken och ska vara minst åtta tecken`
-      );
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
+      setErrorMessage(`Lösenordet måste vara minst åtta tecken`);
       return false;
     } else if (!hasNumber) {
       setErrorMessage('Lösenordet måste innehålla minst ett nummer');
-      setTimeout(() => {
-        setErrorMessage('');
-      }, 3000);
       return false;
     }
     return true;
@@ -97,54 +75,57 @@ const Signup: NextPage = () => {
 
   const onUserFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowOrgForm(true)
-  }
+    const isValid = validate();
+    if (!isValid) {
+      return;
+    }
+    setShowOrgForm(true);
+  };
 
   const submitToDB = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const id = uniqid();
-      const data: IUser = {
-        firstName,
-        email,
-        lastName,
-        password,
-        orgId: id,
-      };
-      // const userList: Array<IUser> =
-      const orgData = {
-        name: org,
-        orgId: id,
-        users: [data]
-      }
-      setIsLoading(true);
-      axios
+    const data: IUser = {
+      firstName,
+      email,
+      lastName,
+      password,
+      orgId: id,
+    };
+    // const userList: Array<IUser> =
+    const orgData = {
+      name: org,
+      orgId: id,
+      users: [data],
+    };
+    console.log(orgData);
+    setIsLoading(true);
+    axios
       .post(reqUrl, data)
-      .then((res) => {
+      .then((res: any) => {
         const data = res.data;
-        dispatch(add(res.data))
-        sessionStorage.setItem("user", JSON.stringify(data))
+        dispatch(add(res.data));
+        sessionStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
       })
-      .catch((err) => {
-        setShowErrorMessage(true);
+      .catch((err: any) => {
         setErrorMessage('Något gick fel');
         setTimeout(() => {
-          setShowErrorMessage(false);
           setErrorMessage('');
           setIsLoading(false);
         }, 3000);
         console.error(err);
       });
-      await addOrg(orgData)
-      .then(res => {
-        console.log(res?.data)
+    await addOrg(orgData)
+      .then((res) => {
+        console.log(res?.data);
         setTimeout(() => {
           setIsLoading(false);
-          Redirect("/")
+          Redirect('/');
         }, 3000);
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err));
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -154,95 +135,109 @@ const Signup: NextPage = () => {
     if (e.target.id === 'password-repeat') setPasswordTwo(e.target.value);
     if (e.target.id === 'email') setEmail(e.target.value);
     if (e.target.id === 'org') setOrg(e.target.value);
-
   };
 
   const userForm = (
     <form
-    action='get'
-    onSubmit={(e) => onUserFormSubmit(e)}
-    className={styles.container_form}
-  >
-    <Flex direction='column' gap='medium' justify='center' width='auto'>
-      <h2>Skapa konto</h2>
-      <Input
-        type='text'
-        name='first-name'
-        value={firstName}
-        label='Förnamn'
-        placeholder='Förnamn'
-        onChangeFunction={(e) => onTextChange(e)}
-      />
-      <Input
-        type='text'
-        name='last-name'
-        value={lastName}
-        label='Efternamn'
-        placeholder='Efternamn'
-        onChangeFunction={(e) => onTextChange(e)}
-      />
-      <Input
-        type='email'
-        name='email'
-        value={email}
-        label='Email'
-        placeholder='Ex. exempel@exempel.se'
-        onChangeFunction={(e) => onTextChange(e)}
-      />
-      <Input
-        type='password'
-        name='password'
-        value={password}
-        label='Lösenord'
-        placeholder='Lösenord'
-        onChangeFunction={(e) => onTextChange(e)}
-      />
-      <Input
-        type='password'
-        name='password-repeat'
-        value={passwordTwo}
-        label='Upprepa lösenord'
-        placeholder='Upprepa ditt lösenord'
-        onChangeFunction={(e) => onTextChange(e)}
-      />
-      <button>Nästa sida</button>
-      <Flex direction='column' justify='center' align='center'>
-        {showErrorMessage ? <p>{errorMessage}</p> : null}
-        <Loading
-          isLoading={isLoading && !showErrorMessage}
-          size='small'
+      action='get'
+      onSubmit={(e) => onUserFormSubmit(e)}
+      className={styles.container_form}
+    >
+      <Flex direction='column' gap='medium' justify='center' width='auto'>
+        <h2>Skapa konto</h2>
+        <Input
+          type='text'
+          name='first-name'
+          value={firstName}
+          label='Förnamn'
+          placeholder='Förnamn'
+          onChangeFunction={(e) => onTextChange(e)}
         />
+        <Input
+          type='text'
+          name='last-name'
+          value={lastName}
+          label='Efternamn'
+          placeholder='Efternamn'
+          onChangeFunction={(e) => onTextChange(e)}
+        />
+        <Input
+          type='email'
+          name='email'
+          value={email}
+          label='Email'
+          placeholder='Ex. exempel@exempel.se'
+          onChangeFunction={(e) => onTextChange(e)}
+        />
+        <Input
+          type='password'
+          name='password'
+          value={password}
+          label='Lösenord'
+          placeholder='Lösenord'
+          onChangeFunction={(e) => onTextChange(e)}
+        />
+        <Input
+          type='password'
+          name='password-repeat'
+          value={passwordTwo}
+          label='Upprepa lösenord'
+          placeholder='Upprepa ditt lösenord'
+          onChangeFunction={(e) => onTextChange(e)}
+        />
+        <button>Nästa sida</button>
+
+        {errorMessage && (
+          <Flex
+            direction='row'
+            justify='center'
+            class={styles.error_msg_container}
+          >
+            <p>{errorMessage}</p>
+          </Flex>
+        )}
+        <Flex direction='row' justify='center'>
+          <Loading isLoading={isLoading} size='small' />
+        </Flex>
       </Flex>
-    </Flex>
-  </form>
-  )
+    </form>
+  );
 
   const orgForm = (
     <form
-          action='get'
-          onSubmit={(e) => submitToDB(e)}
-          className={styles.container_form}
-        >
-          <Flex direction='column' gap='medium' justify='center' width='auto'>
-            <h2>Skapa konto</h2>
+      action='get'
+      onSubmit={(e) => submitToDB(e)}
+      className={styles.container_form}
+    >
+      <Flex direction='column' gap='medium' justify='center' width='auto'>
+        <h2>Skapa konto</h2>
 
-            <Input
-              type='text'
-              name='org'
-              value={org}
-              label='Organisationsnamn'
-              placeholder='Organisationsnamn'
-              onChangeFunction={(e) => onTextChange(e)}
-              width='300px'
-            />
-            <button>Skapa konto</button>
-            <Flex direction='row' justify='center'>
-              {showErrorMessage ? <p>{errorMessage}</p> : null}
-              <Loading isLoading={isLoading} size='small' />
-            </Flex>
+        <Input
+          type='text'
+          name='org'
+          value={org}
+          label='Organisationsnamn'
+          placeholder='Organisationsnamn'
+          onChangeFunction={(e) => onTextChange(e)}
+          width='300px'
+        />
+        <button>Skapa konto</button>
+
+        {errorMessage && (
+          <Flex
+            direction='row'
+            justify='center'
+            class={styles.error_msg_container}
+          >
+            <p>{errorMessage}</p>
           </Flex>
-        </form>
-  )
+        )}
+        <Flex direction='row' justify='center'>
+          <Loading isLoading={isLoading} size='small' />
+        </Flex>
+      </Flex>
+    </form>
+  );
 
   return (
     <div className={styles.registration_loggin_container}>
@@ -290,7 +285,16 @@ const Signup: NextPage = () => {
         </div>
       </div>
       <div>
-        <img src='/svgs/login_register/logo_loggin.svg' alt='Logo' />
+        {windowSize.height && windowSize.height > 800 && (
+          <img src='/svgs/login_register/logo_loggin.svg' alt='Logo' />
+        )}
+        {windowSize.height && windowSize.height < 800 && (
+          <img
+            src='/svgs/logos/logo_no_txt.svg'
+            alt='Logo'
+            className={styles.logo_reg_small_screen}
+          />
+        )}
         {showOrgForm ? orgForm : userForm}
       </div>
     </div>

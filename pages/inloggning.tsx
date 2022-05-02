@@ -1,14 +1,10 @@
 import type { NextPage } from 'next';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Redirect } from '../src/globalFunctions/redirect';
 import { add } from '../src/store/slice/userSlice';
-import { useAppDispatch } from '../src/hooks/useStore';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
-import { useWindowSize } from '../src/hooks/useWindowSize';
 import { Loading } from '../src/components/ui/loading/Loading';
 import { useDispatch } from 'react-redux';
-import { IUserModelRedux } from '../src/types/global';
+import { handleLogin } from '../src/apis/auth/auth';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -16,9 +12,10 @@ import styles from '../styles/loginSignup.module.scss';
 /* Components import */
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
+import Link from 'next/link';
+import { Text } from '../src/components/ui/text/Text';
 
 const Login: NextPage = () => {
-  const windowSize = useWindowSize();
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -26,47 +23,33 @@ const Login: NextPage = () => {
   const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    submitToDB();
-    setEmail('');
-    setPassword('');
-  };
-
-  /*   const reqUrl =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:8080/auth/login'
-      : 'https://yhs-back-end.herokuapp.com/auth/login'; */
-  const reqUrl = 'https://yhs-back-end.herokuapp.com/auth/login';
-
-  const submitToDB = () => {
-    const data = {
-      email: email,
-      password: password,
-    };
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
-    axios
-      .post(reqUrl, data)
-      .then((res) => {
-        const data = res.data;
-        console.log('JP userData', data);
-        dispatch(add(data));
-        sessionStorage.setItem("user", JSON.stringify(data))
-        localStorage.setItem('accessToken', data.data.accessToken);
-        localStorage.setItem('refreshToken', data.data.refreshToken);
-        setTimeout(() => {
-          Redirect('/');
-        }, 1000);
-      })
-      .catch((err) => {
-        setShowErrorMessage(true);
-        setErrorMessage('Något gick fel');
-        setTimeout(() => {
-          setShowErrorMessage(false);
-          setErrorMessage('');
-        }, 3000);
-        console.error(err);
-      });
+    e.preventDefault();
+    const result: any = await handleLogin({ email, password });
+
+    if (result.status === 200) {
+      setPassword('');
+      setEmail('');
+      const userData = result.data.data;
+      localStorage.setItem('accessToken', userData.accessToken);
+      localStorage.setItem('refreshToken', userData.refreshToken);
+      sessionStorage.setItem('user', JSON.stringify(userData));
+      dispatch(add(userData));
+
+      setTimeout(() => {
+        Redirect('/');
+      }, 1500);
+    } else {
+      setIsLoading(false);
+      setErrorMessage('Ogiltiga uppgifter');
+      setShowErrorMessage(true);
+      setPassword('');
+      setTimeout(() => {
+        setErrorMessage('');
+        setShowErrorMessage(false);
+      }, 5000);
+    }
   };
 
   const onTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,7 +111,6 @@ const Login: NextPage = () => {
         >
           <Flex direction='column' gap='medium' justify='center' width='auto'>
             <h2>Logga in</h2>
-
             <Input
               type='email'
               name='email'
@@ -149,8 +131,21 @@ const Login: NextPage = () => {
             />
 
             <button>Logga in</button>
+            <Flex direction='row' gap='small'>
+              <Text text='Har du inget konto?' color='#363636' />
+
+              <Link href='/registrering'>Registrera dig</Link>
+            </Flex>
+            {showErrorMessage && (
+              <Flex
+                direction='row'
+                justify='center'
+                class={styles.error_msg_container}
+              >
+                <p>{errorMessage}</p>
+              </Flex>
+            )}
             <Flex direction='row' justify='center'>
-              {showErrorMessage ? <p>{errorMessage}</p> : null}
               <Loading isLoading={isLoading} size='small' />
             </Flex>
           </Flex>
