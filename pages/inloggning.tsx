@@ -32,8 +32,10 @@ const Login: NextPage = () => {
       setPassword('');
       setEmail('');
       const userData = result.data.data;
+      // console.log(userData.user.orgId);
       localStorage.setItem('accessToken', userData.accessToken);
       localStorage.setItem('refreshToken', userData.refreshToken);
+      localStorage.setItem('orgId', userData.user.orgId);
       sessionStorage.setItem('user', JSON.stringify(userData));
       dispatch(add(userData));
 

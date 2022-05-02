@@ -10,6 +10,7 @@ interface IAddContactParams {
   role?: string;
   town?: string;
   status: string;
+  orgId: string;
 }
 
 export const addContact = async (data: IAddContactParams) => {

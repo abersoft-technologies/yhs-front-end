@@ -4,19 +4,22 @@ import { Redirect } from '../globalFunctions/redirect';
 const API = 'https://yhs-back-end.herokuapp.com/';
 
 const api = axios.create({
-  baseURL: 'https://yhs-back-end.herokuapp.com',
+  baseURL: 'https://yhs-back-end.herokuapp.com/',
   timeout: 20000,
 });
 
 api.interceptors.request.use(
   (config: any) => {
-    let token;
+    let token, orgId;
     token = localStorage.getItem('accessToken');
     localStorage.getItem('accessToken');
+    orgId = localStorage.getItem('orgId');
 
     if (token) {
       config.headers['x-access-token'] = token;
+      config.headers['org-id'] = orgId;
       config.headers['Content-Type'] = 'application/json';
+
       return config;
     }
     return config;
