@@ -18,15 +18,17 @@
   width: calc(100% + 48px);
   margin-left: 1.5rem;
   padding: var.$spacing-large;
-  max-height: 90%;
+  // max-height: 90%;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .card {
     background: #fff;
     padding: var.$spacing-xx-large;
     box-shadow: var.$subtile-box-shadow;
     margin: var.$spacing-x-large;
+    margin-top: var.$spacing-large + 10rem;
     border-radius: var.$spacing-x-small;
-    overflow: auto;
     height: 100%;
     .managementContainer {
       border-bottom: 1px solid grey;
@@ -58,7 +60,7 @@
     color: var.$txt-color;
     font-weight: bold;
     display: grid;
-    grid-template-columns: 10fr 10fr 5fr;
+    grid-template-columns: 10fr 10fr 10fr 5fr;
     padding-bottom: var.$spacing-small;
     border-bottom: 1px solid var.$dark-grey;
 
@@ -105,7 +107,7 @@
 
   .edu_card {
     display: grid;
-    grid-template-columns: 10fr 10fr 5fr;
+    grid-template-columns: 10fr 10fr 10fr 5fr;
     color: var.$txt-color;
     border-bottom: 1px solid var.$light-grey;
     padding: 0.9rem 0 0.9rem 0;

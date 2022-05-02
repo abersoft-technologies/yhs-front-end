@@ -44,7 +44,8 @@ interface IAddEduForm {
     letters: Number,
     internships: Number,
     employements: Number,
-}
+  },
+  person: string;
 }
 
 interface IManagementObject {
@@ -73,7 +74,8 @@ const AddEduModule = ({
       employements: 0,
       internships: 0,
       letters: 0
-    }
+    },
+    person: ""
   });
   const [selectValue, setSelectValue] = useState<string>('');
   const [id, setId] = useState<string>('');
@@ -124,7 +126,8 @@ const AddEduModule = ({
         employements: 0,
         internships: 0,
         letters: 0
-      }
+      },
+      person: ""
     });
     setSelectValue('');
     closeModule();
@@ -147,7 +150,8 @@ const AddEduModule = ({
         employements: 0,
         internships: 0,
         letters: 0
-      }
+      },
+      person: ""
     });
     setSelectValue('');
     dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", time: 3000, type: "success"}))
@@ -159,6 +163,7 @@ const AddEduModule = ({
       || !formData.branch
       || !formData.place
       || !formData.shortName
+      || !formData.person
       ) return false;
       if(formData.type === "Omsök" && !formData.managementList.length) return false;
       return true;
@@ -245,6 +250,15 @@ const AddEduModule = ({
               width='100%'
               label='Typ av ansökan'
               value={formData.type}
+            />
+            <Select
+              options={contactList}
+              onChangeFunction={(label: string, value: string) =>
+                setFormData((prev) => ({ ...prev, person: value }))
+              }
+              width='100%'
+              label='Ansvar'
+              value={formData.person}
             />
             {formData.type === 'Omsök' ? (
               <>

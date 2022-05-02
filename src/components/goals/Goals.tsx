@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, {useState, useEffect, useCallback} from "react";
 import { OutlinedButton } from "../ui/buttons/Buttons";
 import { Flex } from "../ui/Flex";
@@ -34,13 +36,18 @@ interface IEducation {
     label: string;
 }
 
-const Goals = () => {
+interface IGoalProps {
+    id: string;
+    currentGoals?: IGoalData;
+}
+
+const Goals = ({id, currentGoals}: IGoalProps) => {
     const dispatch = useAppDispatch();
     const [goalData, setGoalData] = useState<IGoalData>({letters: 0, employements: 0, internships: 0});
     const [educations, setEducations] = useState<Array<IEduObject>>([]);
     const [optionList, setOptionList] = useState<Array<{value: string, label: string, id: string}>>([]);
     const [education, setEducation] = useState<IEducation>({label: "", value: ""});
-    const [id, setId] = useState<string>("");
+    const [show, setShow] = useState<boolean>(true);
 
     const getAllEdus = async () => {
         await getAll().then(res => {
@@ -57,7 +64,7 @@ const Goals = () => {
             list.push(obj)
         })
         setOptionList(list)
-    }, [educations])
+    }, [])
 
     const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let name = e.target.name;
@@ -74,12 +81,16 @@ const Goals = () => {
 
       const handleOnChangeSelect = (label: string, value: string, _id?: string) => {
         setEducation({label: label, value: value})
-        setId(_id!)
+        // setId(_id!)
       };
 
       const educationLength = educations && educations.length
       const optionLength = optionList && optionList.length;
 
+      useEffect(() => {
+          console.log(currentGoals)
+          if(currentGoals) setGoalData(currentGoals);
+      }, [currentGoals])
 
       useEffect(() => {
         getAllEdus();
@@ -87,12 +98,12 @@ const Goals = () => {
       }, [educationLength, optionLength, createOptionList])
 
     return (
-        <Flex direction="column" width="full" align="center" justify="center">
+        <Flex direction="column" align="flex-start" justify="center" class={styles.goalCard}>
             <h1>
-                Sätt dina Mål
+                Sätt mål
             </h1>
-                <form style={{width: "100%"}} className={styles.selectContainer}>
-                    <Select
+                <form className={styles.selectContainer}>
+                    {/* <Select
                         options={optionList}
                         label="utbildning"
                         value={education.value}
@@ -102,12 +113,12 @@ const Goals = () => {
                             id?: string
                         ) => handleOnChangeSelect(label, value, id)}
                         width="25%"
-                    />
-                    <Input type="number" name="letters" label="Avsiktsförklaringar" placeholder="Skriv här..." value={goalData.letters} onChangeFunction={handleOnChange}  width="25%"/>
-                    <Input type="number" name="employements" label="Anställningar" placeholder="Skriv här..." value={goalData.employements} onChangeFunction={handleOnChange}  width="25%"/>
-                    <Input type="number" name="internships" label="LIA" placeholder="Skriv här..." value={goalData.internships} onChangeFunction={handleOnChange} width="25%"/>
+                    /> */}
+                    <Input type="number" name="letters" label="Avsiktsförklaringar" placeholder="Skriv här..." value={goalData.letters} onChangeFunction={handleOnChange}  width="90%"/>
+                    <Input type="number" name="employements" label="Anställningar" placeholder="Skriv här..." value={goalData.employements} onChangeFunction={handleOnChange}  width="90%"/>
+                    <Input type="number" name="internships" label="LIA" placeholder="Skriv här..." value={goalData.internships} onChangeFunction={handleOnChange} width="90%"/>
                     <Flex direction="row" align="flex-start" class={styles.buttonContainer}>
-                        <OutlinedButton text="Lägg till dina mål" onClick={(e: any) => onSubmit(e)} />
+                        <OutlinedButton text="Uppdatera dina mål" onClick={(e: any) => onSubmit(e)} />
                     </Flex>
                 </form>
         </Flex>

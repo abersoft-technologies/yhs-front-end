@@ -15,7 +15,7 @@ import BarsParamsToggle from './bars_params_toggle/BarsParamsToggle';
 import { getData } from '../../../apis/contact/letter_of_intent/get';
 
 /* Interfaces */
-import { ILetterSchema, IEducationSchema } from "../../../types/global"
+import { ILetterSchema, IEducationSchema } from '../../../types/global';
 
 interface ILabelColorsProps {
   labelName: string;
@@ -31,7 +31,7 @@ export interface ICheckedParams {
 interface ITotalDataEdu {
   contributeEdu: number;
   eduBoard: number;
-  employment: {low: number, high: number}
+  employment: { low: number; high: number };
   internship: number;
   lecture: number;
   readEdu: number;
@@ -58,17 +58,20 @@ const Barchart = () => {
 
   const getAllData = async () => {
     const result = await getData();
-    setAllData(result?.data.data)
-  }
+    setAllData(result?.data.data);
+  };
 
-  const calculatePrecent = (current: number, goal: number | undefined): number => {
-    if(!current) return 0;
-    if(!goal) return (current / 100) * 100;
-    if(current >= goal) {
+  const calculatePrecent = (
+    current: number,
+    goal: number | undefined
+  ): number => {
+    if (!current) return 0;
+    if (!goal) return (current / 100) * 100;
+    if (current >= goal) {
       return 100;
     }
     return (current / goal) * 100;
-  }
+  };
 
   const allDataLength = allData && allData.length
 
@@ -103,7 +106,7 @@ const Barchart = () => {
       <div>
         <button className={styles.button_filter_charts}>
           Mina utbildningar
-          <img src='/chevron-down.svg' alt='Chevron down' />
+          <img src='/svgs/top_bar/chevron-down.svg' alt='Chevron down' />
         </button>
       </div>
       <Flex direction='column' class={styles.colored_labels_and_button_group}>
@@ -136,14 +139,35 @@ const Barchart = () => {
                 key={i}
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
-                af_percent={calculatePrecent(item.totalDataEdu.totalLetters, item.education.goal?.letters)}
-                lia_percent={calculatePrecent(item.totalDataEdu.internship, item.education.goal?.internships)}
-                employment_percent={calculatePrecent(item.totalDataEdu.employment.low, item.education.goal?.employements)}
+                af_percent={calculatePrecent(
+                  item.totalDataEdu.totalLetters,
+                  item.education.goal?.letters
+                )}
+                lia_percent={calculatePrecent(
+                  item.totalDataEdu.internship,
+                  item.education.goal?.internships
+                )}
+                employment_percent={calculatePrecent(
+                  item.totalDataEdu.employment.low,
+                  item.education.goal?.employements
+                )}
                 checkedParams={checkedParams}
                 afNumber={item.totalDataEdu.totalLetters}
-                internNumber={item.totalDataEdu.internship ? item.totalDataEdu.internship : 0 }
-                employeeNumberLow={item.totalDataEdu.employment.low !== null ? item.totalDataEdu.employment.low : 0}
-                employeeNumberHigh={item.totalDataEdu.employment.high !== null ? item.totalDataEdu.employment.high : 0}
+                internNumber={
+                  item.totalDataEdu.internship
+                    ? item.totalDataEdu.internship
+                    : 0
+                }
+                employeeNumberLow={
+                  item.totalDataEdu.employment.low !== null
+                    ? item.totalDataEdu.employment.low
+                    : 0
+                }
+                employeeNumberHigh={
+                  item.totalDataEdu.employment.high !== null
+                    ? item.totalDataEdu.employment.high
+                    : 0
+                }
               />
             );
           })
