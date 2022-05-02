@@ -136,6 +136,7 @@ const Barchart = () => {
         ? allData.map((item, i) => {
             return (
               <Bar
+                key={i}
                 numbersForBar={numbersForBar}
                 labelName={item.education.name}
                 af_percent={calculatePrecent(
