@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { addContact } from '../../../apis/contact/add';
-import { addLetter }from '../../../apis/letter/add';
+import { addLetter } from '../../../apis/letter/add';
 
 /* Imports global interfaces */
 import { ILetterSchema } from '../../../types/global';
@@ -21,9 +21,9 @@ import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
 import { Checkbox } from '@nextui-org/react';
 import { updateContact } from '../../../apis/contact/update';
-import {showInfoBox} from "../../../store/slice/infoBox"
+import { showInfoBox } from '../../../store/slice/infoBox';
 
-import Image from "next/image"
+import Image from 'next/image';
 
 interface IModuleProps {
   active: boolean;
@@ -65,7 +65,7 @@ const optionsLia = [
 ];
 
 const AddContactModule = ({ active, closeModule }: IModuleProps) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const eduOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.educations.data
   );
@@ -78,7 +78,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     role: '',
     town: '',
     status: optionsSelect[0].value,
-    info: ''
+    info: '',
   });
   const [letterOfIntent, setLetterOfIntent] = useState<ILetterSchema>({
     edu: [],
@@ -143,15 +143,22 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData(prev => ({...prev, info: e.target.value}))
-  }
+    setFormData((prev) => ({ ...prev, info: e.target.value }));
+  };
 
   const addContactFunc = async () => {
     const validation = validate();
-    if(!validation) {
-      return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
+    if (!validation) {
+      return dispatch(
+        showInfoBox({
+          infoText: 'Du har inte fyllt i alla fält',
+          time: 3000,
+          type: 'warning',
+        })
+      );
     }
-    const contact = await addContact(formData);
+    const orgId = localStorage.getItem('orgId');
+    const contact = await addContact({ ...formData, orgId: orgId! });
     let dataLetter;
     if (contact?.status === 200) {
       dataLetter = {
@@ -168,7 +175,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       role: '',
       town: '',
       status: optionsSelect[0].value,
-      info: ''
+      info: '',
     });
     setLetterOfIntent({
       edu: [],
@@ -179,7 +186,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       lecture: false,
       studyVisit: false,
       eduBoard: false,
-    })
+    });
     const letterData = { ...letterOfIntent, dataLetter };
     const letter = await addLetter(letterData);
     let dataContact;
@@ -192,24 +199,33 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         ],
       };
     }
-    dispatch(showInfoBox({infoText: "Du har lagt till en ny kontakt", time: 3000, type: "success"}))
+    dispatch(
+      showInfoBox({
+        infoText: 'Du har lagt till en ny kontakt',
+        time: 3000,
+        type: 'success',
+      })
+    );
     updateContact(contact?.data.data._id, dataContact);
     closeModule();
   };
 
   const validate = () => {
-    if(!formData.firstName
-      || !formData.lastName
-      || !formData.company
-      || !formData.email
-      || !formData.phoneNumber
-      || !formData.role
-      || !formData.status
-      || !formData.town
-      ) return false;
-      if(checkActiveStatus() && (!edu.length || !employment || !internship)) return false;
-      return true;
-  }
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.company ||
+      !formData.email ||
+      !formData.phoneNumber ||
+      !formData.role ||
+      !formData.status ||
+      !formData.town
+    )
+      return false;
+    if (checkActiveStatus() && (!edu.length || !employment || !internship))
+      return false;
+    return true;
+  };
 
   return (
     <>

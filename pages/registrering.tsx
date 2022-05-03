@@ -108,6 +108,7 @@ const Signup: NextPage = () => {
         sessionStorage.setItem('user', JSON.stringify(data));
         localStorage.setItem('accessToken', data.data.accessToken);
         localStorage.setItem('refreshToken', data.data.refreshToken);
+        localStorage.setItem('orgId', id);
       })
       .catch((err: any) => {
         setErrorMessage('Något gick fel');
