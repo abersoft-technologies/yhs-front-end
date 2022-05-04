@@ -89,6 +89,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     lecture: false,
     studyVisit: false,
     eduBoard: false,
+    orgId: ""
   });
   const {
     firstName,
@@ -188,8 +189,9 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         lecture: false,
         studyVisit: false,
         eduBoard: false,
+        orgId: "",
       });
-      const letterData = { ...letterOfIntent, dataLetter };
+      const letterData = { ...letterOfIntent, dataLetter, orgId: orgId };
       const letter = await addLetter(letterData);
       let dataContact;
       if (letter?.status === 200) {
