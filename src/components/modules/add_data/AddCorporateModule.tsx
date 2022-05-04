@@ -74,12 +74,13 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     if(!validation) {
       return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
     }
+    const orgId = localStorage.getItem('orgId');
     const tempList = ListData;
-    console.log("JP TempList",tempList)
-    addCorp(formData).then(res => {
-      console.log(res?.data);
-      // tempList.push(res?.data)
-    }).catch(err => console.log(err));
+    if(orgId) {
+      addCorp({...formData, orgId: orgId})
+    } else {
+      return dispatch(showInfoBox({infoText: "Något gick fel", time: 3000, type: "warning"}))
+    }
     setFormData({ name: '', tags: [], branch: '', info: '' });
     dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", time: 3000, type: "success"}))
     closeModule();

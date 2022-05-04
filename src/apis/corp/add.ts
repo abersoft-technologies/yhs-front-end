@@ -2,9 +2,10 @@ import api from '../api';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 interface IAddCorpParams {
-    name: string,
-    tags: string[],
-    info?: string,
+    name: string;
+    tags: string[];
+    info?: string;
+    orgId: string;
 }
 
 export const addCorp = async (data: IAddCorpParams) => {
