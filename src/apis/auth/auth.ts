@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-export const handleLogin = async (data) => {
+interface dataLogin {
+  email: string;
+  password: string;
+}
+
+export const handleLogin = async (data: dataLogin) => {
   try {
     const user = await axios.post(
       `https://yhs-back-end.herokuapp.com/auth/login`,

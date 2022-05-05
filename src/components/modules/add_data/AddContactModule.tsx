@@ -89,7 +89,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     lecture: false,
     studyVisit: false,
     eduBoard: false,
-    orgId: ""
+    orgId: '',
   });
   const {
     firstName,
@@ -159,8 +159,9 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       );
     }
     const orgId = localStorage.getItem('orgId');
-    if(orgId) {
-      console.log("Kontakt hej")
+    console.log(orgId);
+    if (orgId) {
+      console.log('Kontakt hej');
       const contact = await addContact({ ...formData, orgId: orgId });
       let dataLetter;
       if (contact?.status === 200) {
@@ -189,7 +190,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         lecture: false,
         studyVisit: false,
         eduBoard: false,
-        orgId: "",
+        orgId: '',
       });
       const letterData = { ...letterOfIntent, dataLetter, orgId: orgId };
       const letter = await addLetter(letterData);
@@ -209,16 +210,16 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
           time: 3000,
           type: 'success',
         })
-        );
-        updateContact(contact?.data.data._id, dataContact);
-        closeModule();
-      } else {
-       return showInfoBox({
-          infoText: 'Något gick fel',
-          time: 3000,
-          type: 'success',
-        })
-      }
+      );
+      updateContact(contact?.data.data._id, dataContact);
+      closeModule();
+    } else {
+      return showInfoBox({
+        infoText: 'Något gick fel',
+        time: 3000,
+        type: 'warning',
+      });
+    }
   };
 
   const validate = () => {
