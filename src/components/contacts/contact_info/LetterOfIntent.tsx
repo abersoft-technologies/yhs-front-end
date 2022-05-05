@@ -57,6 +57,7 @@ const LetterOfIntent = () => {
     lecture: false,
     studyVisit: false,
     eduBoard: false,
+    orgId: '',
   });
 
   const handleGetLetter = async (id: any) => {
