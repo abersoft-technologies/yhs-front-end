@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { logOutUser } from '../globalFunctions/logout';
-import { Redirect } from '../globalFunctions/redirect';
-const API = 'https://yhs-back-end.herokuapp.com/';
+// import { Redirect } from '../globalFunctions/redirect';
+// const API = 'https://yhs-back-end.herokuapp.com/';
 
 const api = axios.create({
   baseURL: 'https://yhs-back-end.herokuapp.com/',
@@ -34,7 +34,16 @@ api.interceptors.response.use(
     return response;
   },
   async function (error) {
-    const originalRequest = error.config;
+    if (error.response.status === 401) {
+      localStorage.clear();
+      sessionStorage.clear();
+      logOutUser();
+      return Promise.reject(error);
+    }
+
+    /* OLD code, attempt to create a token refresh flow - revisit in the future */
+
+    /*   const originalRequest = error.config;
     if (
       error.response.status === 401 &&
       originalRequest.url === `${API}refresh`
@@ -43,9 +52,9 @@ api.interceptors.response.use(
       sessionStorage.clear();
       logOutUser();
       return Promise.reject(error);
-    }
+    } */
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+    /*     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refreshToken');
       const user: any = sessionStorage.getItem('user');
@@ -69,7 +78,7 @@ api.interceptors.response.use(
           logOutUser();
           console.log(err);
         });
-    }
+    } */
     return Promise.reject(error);
   }
 );
