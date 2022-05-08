@@ -9,6 +9,7 @@ interface ILetterOfIntent {
     lecture: boolean;
     studyVisit: boolean;
     eduBoard: boolean;
+    orgId: string;
   }
 
 export const addLetter = async (data: ILetterOfIntent) => {

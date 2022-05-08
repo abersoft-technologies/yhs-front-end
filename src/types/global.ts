@@ -39,6 +39,7 @@ export interface ILetterSchema {
   lecture: boolean;
   studyVisit: boolean;
   eduBoard: boolean;
+  orgId: string;
 }
 
 export interface IContactSchema {

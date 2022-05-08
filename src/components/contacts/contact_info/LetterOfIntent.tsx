@@ -57,6 +57,7 @@ const LetterOfIntent = () => {
     lecture: false,
     studyVisit: false,
     eduBoard: false,
+    orgId: ''
   });
 
   const handleGetLetter = async (id: any) => {
@@ -77,22 +78,24 @@ const LetterOfIntent = () => {
   }, [contact, router.query]);
 
   const handleUpdateLetOfIntent = async () => {
+    const orgId = localStorage.getItem('orgId');
     if (!contact.letters || contact.letters.length < 1) {
-      const res = await addLetter(formData);
-      if (res?.status === 200) {
-        let _id = res.data.data._id;
-        await updateContact(contact._id, { letters: [{ _id }] });
-        handleGetLetter(contact._id);
-        dispatch(
-          showInfoBox({
-            infoText: 'Uppdatering genomförd',
-            time: 3000,
-            type: 'success',
-          })
-        );
-        setEdited(false);
-      }
-
+      if(orgId) {
+        const res = await addLetter({...formData, orgId: orgId});
+        if (res?.status === 200) {
+          let _id = res.data.data._id;
+          await updateContact(contact._id, { letters: [{ _id }] });
+          handleGetLetter(contact._id);
+          dispatch(
+            showInfoBox({
+              infoText: 'Uppdatering genomförd',
+              time: 3000,
+              type: 'success',
+            })
+            );
+            setEdited(false);
+          }
+        }
       return;
     }
 

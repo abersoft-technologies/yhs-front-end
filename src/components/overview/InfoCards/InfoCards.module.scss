@@ -13,6 +13,10 @@
     padding-left: var.$spacing-large;
     cursor: pointer;
 
+    &:hover {
+      box-shadow: var.$intense-black-shadow;
+    }
+
     span {
       display: flex;
       justify-content: center;

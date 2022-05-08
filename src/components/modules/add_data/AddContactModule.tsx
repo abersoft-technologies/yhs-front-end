@@ -89,6 +89,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     lecture: false,
     studyVisit: false,
     eduBoard: false,
+    orgId: '',
   });
   const {
     firstName,
@@ -158,56 +159,67 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       );
     }
     const orgId = localStorage.getItem('orgId');
-    const contact = await addContact({ ...formData, orgId: orgId! });
-    let dataLetter;
-    if (contact?.status === 200) {
-      dataLetter = {
-        name: contact.data.data.firstname,
-        _id: contact.data.data._id,
-      };
-    }
-    setFormData({
-      company: '',
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      role: '',
-      town: '',
-      status: optionsSelect[0].value,
-      info: '',
-    });
-    setLetterOfIntent({
-      edu: [],
-      employment: '',
-      internship: '',
-      readEdu: false,
-      contributeEdu: false,
-      lecture: false,
-      studyVisit: false,
-      eduBoard: false,
-    });
-    const letterData = { ...letterOfIntent, dataLetter };
-    const letter = await addLetter(letterData);
-    let dataContact;
-    if (letter?.status === 200) {
-      dataContact = {
-        letters: [
-          {
-            _id: letter.data.data._id,
-          },
-        ],
-      };
-    }
-    dispatch(
-      showInfoBox({
-        infoText: 'Du har lagt till en ny kontakt',
+    console.log(orgId);
+    if (orgId) {
+      console.log('Kontakt hej');
+      const contact = await addContact({ ...formData, orgId: orgId });
+      let dataLetter;
+      if (contact?.status === 200) {
+        dataLetter = {
+          name: contact.data.data.firstname,
+          _id: contact.data.data._id,
+        };
+      }
+      setFormData({
+        company: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        phoneNumber: '',
+        role: '',
+        town: '',
+        status: optionsSelect[0].value,
+        info: '',
+      });
+      setLetterOfIntent({
+        edu: [],
+        employment: '',
+        internship: '',
+        readEdu: false,
+        contributeEdu: false,
+        lecture: false,
+        studyVisit: false,
+        eduBoard: false,
+        orgId: '',
+      });
+      const letterData = { ...letterOfIntent, dataLetter, orgId: orgId };
+      const letter = await addLetter(letterData);
+      let dataContact;
+      if (letter?.status === 200) {
+        dataContact = {
+          letters: [
+            {
+              _id: letter.data.data._id,
+            },
+          ],
+        };
+      }
+      dispatch(
+        showInfoBox({
+          infoText: 'Du har lagt till en ny kontakt',
+          time: 3000,
+          type: 'success',
+        })
+      );
+      updateContact(contact?.data.data._id, dataContact);
+      closeModule();
+    } else {
+      return showInfoBox({
+        infoText: 'Något gick fel',
         time: 3000,
-        type: 'success',
-      })
-    );
-    updateContact(contact?.data.data._id, dataContact);
-    closeModule();
+        type: 'warning',
+      });
+    }
   };
 
   const validate = () => {

@@ -138,7 +138,12 @@ const AddEduModule = ({
     if(!validation) {
       return dispatch(showInfoBox({infoText: "Du har inte fyllt i alla fält", time: 3000, type: "warning"}))
     }
-    addEdu(formData);
+    const orgId = localStorage.getItem('orgId');
+    if(orgId) {
+      addEdu({ ...formData, orgId: orgId });
+    } else {
+      return dispatch(showInfoBox({infoText: "Något gick fel", time: 3000, type: "warning"}))
+    }
     setFormData({
       name: '',
       place: '',
