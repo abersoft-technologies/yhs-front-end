@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getContactListRedux } from '../../store/slice/contactList';
@@ -9,7 +9,7 @@ import Pagination from '../pagination/Pagination';
 import ContactCard from './contact_card/ContactCard';
 import { Text } from '../ui/text/Text';
 import { Flex } from '../ui/Flex';
-import { useAppSelector } from '../../hooks/useStore';
+import useForceUpdate from '../../hooks/useForceUpdate';
 
 interface IListDataMap {
   firstName: string;
@@ -46,40 +46,25 @@ const ContactList = () => {
     ? contactListReducer.result.data.listValues
     : undefined;
 
+  const dispatchData = useCallback((filterObjc) => {
+    dispatch(
+      getContactListRedux({
+        limit: 10,
+        page: page,
+        queryParams: searchQuery,
+        filterQuery: filterObjc ? {...JSON.parse(filterObjc)} : filterQuery
+      })
+    );
+  }, [filterQuery, page, dispatch, searchQuery])
+
   useEffect(() => {
     const filterObjc = localStorage.getItem("filterObjc");
     setPage(1);
     setPagePosition(0);
     setSlicedPages(1);
+    dispatchData(filterObjc)
 
-    console.log("filterQuery",filterQuery)
-    console.log("filterObjc",JSON.parse(filterObjc!))
-
-      dispatch(
-        getContactListRedux({
-          limit: 10,
-          page: page,
-          queryParams: searchQuery,
-          filterQuery: filterObjc ? {...JSON.parse(filterObjc)} : filterQuery
-        })
-      );
-      // setTimeout(() => {
-      //   localStorage.removeItem("filterObjc")
-      // }, 500);
-    // window.scrollTo(0, 0);
-  }, [searchQuery, filterQuery, dispatch, page]);
-
-  // useEffect(() => {
-  //   dispatch(
-  //     getContactListRedux({
-  //       limit: 10,
-  //       page: page,
-  //       queryParams: searchQuery,
-  //       filterQuery,
-  //     })
-  //   );
-  //   // window.scrollTo(0, 0);
-  // }, [page, dispatch]);
+  }, [searchQuery, filterQuery, dispatch, page, contactListReducer, dispatchData]);
 
   return (
     <>

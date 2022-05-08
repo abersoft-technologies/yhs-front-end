@@ -34,7 +34,6 @@ export const DropdownMenu = ({
     menu: true,
     [`dropdown-menu--width-${width}`]: width,
   });
-  console.log(setOpen, open);
   useEffect(() => {
     const onClick = (event: any) => {
       if (
