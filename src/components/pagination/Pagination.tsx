@@ -285,7 +285,6 @@ const Pagination = ({
     return <>{setButtonContent()}</>;
   };
 
-  console.log(totalPages);
   return (
     <Flex
       direction='row'

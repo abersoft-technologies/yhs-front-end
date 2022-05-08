@@ -103,8 +103,6 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   } = formData;
   const { readEdu, edu, employment, internship } = letterOfIntent;
 
-  const [doShowInfoBox, setDoShowInfoBox] = useState<boolean>(false);
-
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let name = e.target.name;
     setFormData({ ...formData, [name]: e.target.value });
@@ -159,9 +157,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       );
     }
     const orgId = localStorage.getItem('orgId');
-    console.log(orgId);
     if (orgId) {
-      console.log('Kontakt hej');
       const contact = await addContact({ ...formData, orgId: orgId });
       let dataLetter;
       if (contact?.status === 200) {

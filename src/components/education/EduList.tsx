@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Pagination from '../pagination/Pagination';
 import EduCard from './education_card/EduCard';
 import { getEduListRedux } from '../../store/slice/eduList';
@@ -42,17 +42,21 @@ const EduList = () => {
       (state: RootState) => state.filterQueryReducer.filterObj
     );
 
-    useEffect(() => {
-      setPage(1);
-      setPagePosition(0);
-      setSlicedPages(1);
+    const dispatchData = useCallback(() => {
       dispatch(getEduListRedux(
         { limit: 10,
           page: page,
           queryParams: searchQuery,
           filterQuery: filterQuery
         }));
-      }, [page, searchQuery, filterQuery, dispatch]);
+    }, [dispatch, filterQuery, page, searchQuery])
+
+    useEffect(() => {
+      setPage(1);
+      setPagePosition(0);
+      setSlicedPages(1);
+      dispatchData()
+      }, [page, searchQuery, filterQuery, dispatch, eduListReducer, dispatchData]);
 
   return (
     <section className={styles.edu_list_container}>

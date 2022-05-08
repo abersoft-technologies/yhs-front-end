@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Pagination from '../pagination/Pagination';
 import CorporateCard from './corporate_card/CorporateCard';
 import { getCorporateListRedux } from '../../store/slice/corpList';
@@ -41,14 +41,18 @@ const CorporateList = () => {
     (state: RootState) => state.filterQueryReducer.filterObj
   );
 
+  const dispatchData = useCallback(() => {
+    dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: searchQuery, filterQuery: filterQuery }));
+  }, [dispatch, filterQuery, page, searchQuery])
+
   useEffect(() => {
     setPage(1);
     setPagePosition(0);
     setSlicedPages(1);
-    dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: searchQuery, filterQuery: filterQuery }));
+    dispatchData();
     window.scrollTo(0, 0);
 
-  }, [searchQuery, filterQuery, dispatch, page]);
+  }, [searchQuery, filterQuery, dispatch, page, corpListReducer, dispatchData]);
 
   // useEffect(() => {
   //   dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));
