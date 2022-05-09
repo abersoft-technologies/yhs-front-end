@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import styles from './Sidebar.module.scss';
 import { Flex } from '../ui/Flex';
+import { Text } from '../ui/text/Text';
 
 interface ISidbarProps {
   narrow: boolean;
@@ -162,6 +163,7 @@ const Sidebar = ({ narrow, showBarItems, late }: ISidbarProps) => {
           </Link>
         </li>
       </ul>
+      <p className={styles.version_text}>Version 0.1</p>
     </nav>
   );
 };
