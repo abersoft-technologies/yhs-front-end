@@ -15,6 +15,8 @@ import { persistStore } from 'redux-persist';
 import '../styles/globals.scss';
 import '../styles/ui/flex.scss';
 import LoadingPage from '../src/components/ui/loading/LoadingPage';
+import { useWindowSize } from '../src/hooks/useWindowSize';
+import { Mobile } from "../src/components/error/mobile"
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -26,37 +28,46 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
+  const windowSize = useWindowSize();
   const user = useLocalStorage('get', 'session', 'user');
   const [loadingUser, setLoadingUser] = useState(true);
   const getLayout = Component.getLayout ?? ((page) => page);
-
   useEffect(() => {
     if (
       router.pathname !== '/inloggning' &&
       router.pathname !== '/registrering' &&
       !user
-    ) {
-      setTimeout(() => {
-        Redirect('/inloggning');
-      }, 800);
-    } else if (user) {
-      setLoadingUser(false);
-    }
-  }, [router.pathname, user]);
+      ) {
+        setTimeout(() => {
+          Redirect('/inloggning');
+        }, 800);
+      } else if (user) {
+        setLoadingUser(false);
+      }
+    }, [router.pathname, user]);
 
-  let persistor = persistStore(store);
+    let persistor = persistStore(store);
+
+    const renderContent = (): JSX.Element | ReactNode => {
+      if(windowSize.width && windowSize.width < 1000) {
+      return <Mobile />
+    }
+    if(loadingUser && router.pathname !== '/inloggning' && router.pathname !== '/registrering') {
+      return <LoadingPage />
+    }
+    return getLayout(<Component {...pageProps} />)
+  }
+  let content = renderContent();
+
+  useEffect(() => {
+    content = renderContent();
+  }, [windowSize])
 
   router.pathname !== '/inloggning' && router.pathname !== '/registrering';
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {loadingUser &&
-        router.pathname !== '/inloggning' &&
-        router.pathname !== '/registrering' ? (
-          <LoadingPage />
-        ) : (
-          getLayout(<Component {...pageProps} />)
-        )}
+        {content}
       </PersistGate>
     </Provider>
   );
