@@ -1,0 +1,11 @@
+@use '../../../styles/variables' as var;
+
+
+.container {
+    height: 100vh;
+
+    div {
+        width: 70%;
+        box-shadow: var.$subtile-box-shadow;
+    }
+}

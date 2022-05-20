@@ -44,6 +44,7 @@ const contactLayout = ({ children }: LayoutProps) => {
   const dispatch = useDispatch();
   const [searchWord, setSearchWord] = useState('');
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
+  const [updateCounter, setUpdateCounter] = useState(0);
 
   const [filterIsActive, setFilterIsActive] = useState<boolean>(false);
   const [contactModuleToggle, setContactModuleToggle] =

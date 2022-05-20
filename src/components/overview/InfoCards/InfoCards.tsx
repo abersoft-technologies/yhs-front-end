@@ -78,7 +78,7 @@ export const InfoCards = () => {
 
     router.push("/kontakter")
   }
-  const lettersLength = letters ? letters.length : 0;
+  const lettersLength = lettersData[0].letters.length;
   const list = [
     {
       text: 'Avsiktsförklaringar',
@@ -113,6 +113,7 @@ export const InfoCards = () => {
       .then((res) => {
         const data = res?.data;
         setLetters(data.data);
+        console.log("JP DATA", data.data)
       })
       .catch((err) => {
         return err;
@@ -150,6 +151,7 @@ export const InfoCards = () => {
           item.totalDataEdu.studyVisit +
           item.totalDataEdu.eduBoard;
       });
+      setLetters
     }
     console.log(res);
     return res;

@@ -31,12 +31,6 @@ const UserMenu = () => {
 
   const dropdownListItems: DropdownMenuItem[] = [
     {
-      text: 'Dina mål',
-      onClick: '/dinamal',
-      id: 'dina-mal',
-      img: { url: '/svgs/top_bar/badge.svg', alt: 'Badge' },
-    },
-    {
       text: 'Inställningar',
       onClick: '/',
       id: 'settings',
