@@ -3,14 +3,18 @@
 .info_canvas {
   background: $bg-grey;
   margin-right: -48px;
-  width: calc(100% + 48px);
+  width: calc(100%);
+  overflow-y: auto;
+  padding: $spacing-x-large;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .letter_of_intent_container {
   background: #fff;
   padding: $spacing-xx-large;
   box-shadow: $subtile-box-shadow;
-  margin: $spacing-x-large;
   border-radius: $spacing-x-small;
   .af_update_btn {
     display: flex;

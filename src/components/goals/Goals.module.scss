@@ -1,23 +1,41 @@
-@use '../../../styles/variables' as var;
+@import '../../../styles/variables';
 
 .goalCard {
-    background: #fff;
-    padding: var.$spacing-xx-large;
-    box-shadow: var.$subtile-box-shadow;
-    margin: var.$spacing-x-large;
-    border-radius: var.$spacing-x-small;
-    width: 50%;
+  background: #fff;
+  padding: $spacing-xx-large;
+  box-shadow: $subtile-box-shadow;
+  border-radius: $spacing-x-small;
+  width: 65%;
+
+  > div:first-child {
+    border-bottom: 1px solid $light-grey;
+    padding-bottom: $spacing-small;
+    // padding-right: $spacing-xxx-large;
+    width: 100%;
+    max-width: 324px;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: $spacing-large;
+    color: $txt-color;
+    margin: 0;
+  }
+}
+
+.input_container_modal {
+  flex-wrap: wrap;
 }
 
 .selectContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    gap: var.$spacing-medium;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: $spacing-medium;
 
-    .buttonContainer {
-        width: 50%;
-    }
+  .buttonContainer {
+    width: 50%;
+  }
 }

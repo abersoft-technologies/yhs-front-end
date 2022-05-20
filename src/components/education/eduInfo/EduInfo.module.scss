@@ -1,125 +1,124 @@
 @use '../../../../styles/variables' as var;
 
 .edu_list_container {
-    // margin-top: var.$spacing-5x;
+  // margin-top: var.$spacing-5x;
 }
 
 .managementList {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 
-    li {
-        margin: 4px 0px;
-    }
+  li {
+    margin: 4px 0px;
+  }
 }
 
 .cardContainer {
-  width: calc(100% + 48px);
-  margin-left: 1.5rem;
-  padding: var.$spacing-large;
-  // max-height: 90%;
+  background: var.$bg-grey;
+  margin-right: -48px;
+  width: calc(100%);
   overflow-y: auto;
-  overflow-x: hidden;
+  padding: var.$spacing-x-large;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 
   .card {
     background: #fff;
     padding: var.$spacing-xx-large;
     box-shadow: var.$subtile-box-shadow;
-    margin: var.$spacing-x-large;
-    margin-top: var.$spacing-large + 10rem;
     border-radius: var.$spacing-x-small;
     height: 100%;
     .managementContainer {
       border-bottom: 1px solid grey;
     }
   }
-
 }
 
 .label_contact_bar_container {
-    color: var.$txt-color;
-    font-weight: bold;
+  color: var.$txt-color;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 10fr 10fr 10fr 5fr;
+  padding-bottom: var.$spacing-small;
+  border-bottom: 1px solid var.$dark-grey;
+
+  > div:first-child {
+    margin-left: 0.75rem;
+  }
+
+  > div:nth-child(2) {
     display: grid;
-    grid-template-columns: 10fr 10fr 10fr 5fr;
-    padding-bottom: var.$spacing-small;
-    border-bottom: 1px solid var.$dark-grey;
-
-    > div:first-child {
-      margin-left: 0.75rem;
-    }
-
-    > div:nth-child(2) {
-      display: grid;
-      grid-template-columns: 10fr 10fr;
-      grid-auto-flow: column;
-    }
+    grid-template-columns: 10fr 10fr;
+    grid-auto-flow: column;
+  }
 }
 
 .label_bar_container {
-    color: var.$txt-color;
-    font-weight: bold;
+  color: var.$txt-color;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 10fr 10fr 10fr 5fr;
+  padding-bottom: var.$spacing-small;
+  border-bottom: 1px solid var.$dark-grey;
+
+  > div:first-child {
+    margin-left: 0.75rem;
+  }
+
+  > div:nth-child(2) {
     display: grid;
-    grid-template-columns: 10fr 10fr 10fr 5fr;
-    padding-bottom: var.$spacing-small;
-    border-bottom: 1px solid var.$dark-grey;
-
-    > div:first-child {
-      margin-left: 0.75rem;
-    }
-
-    > div:nth-child(2) {
-      display: grid;
-      grid-template-columns: 10fr 10fr;
-      grid-auto-flow: column;
-    }
+    grid-template-columns: 10fr 10fr;
+    grid-auto-flow: column;
   }
-  .styles.status_box_container {
-    position: relative;
+}
+.styles.status_box_container {
+  position: relative;
 
-    width: 100%;
+  width: 100%;
+}
+
+.edu_contact_card {
+  display: grid;
+  grid-template-columns: 10fr 10fr 10fr 5fr;
+  color: var.$txt-color;
+  border-bottom: 1px solid var.$light-grey;
+  padding: 0.9rem 0 0.9rem 0;
+  > div:first-child {
+    margin-left: 0.75rem;
   }
 
-  .edu_contact_card {
+  font-size: 1rem;
+
+  > div:nth-child(2) {
     display: grid;
-    grid-template-columns: 10fr 10fr 10fr 5fr;
-    color: var.$txt-color;
-    border-bottom: 1px solid var.$light-grey;
-    padding: 0.9rem 0 0.9rem 0;
-    > div:first-child {
-      margin-left: 0.75rem;
-    }
-
-    font-size: 1rem;
-
-    > div:nth-child(2) {
-      display: grid;
-      grid-template-columns: 10fr 10fr;
-      grid-auto-flow: column;
-    }
-
-    &:hover {
-      cursor: pointer;
-      background: #7586ce10;
-      // border-radius: 4px;
-    }
+    grid-template-columns: 10fr 10fr;
+    grid-auto-flow: column;
   }
 
-  .edu_card {
+  &:hover {
+    cursor: pointer;
+    background: #7586ce10;
+    // border-radius: 4px;
+  }
+}
+
+.edu_card {
+  display: grid;
+  grid-template-columns: 10fr 10fr 10fr 5fr;
+  color: var.$txt-color;
+  border-bottom: 1px solid var.$light-grey;
+  padding: 0.9rem 0 0.9rem 0;
+  > div:first-child {
+    margin-left: 0.75rem;
+  }
+
+  font-size: 1rem;
+
+  > div:nth-child(2) {
     display: grid;
-    grid-template-columns: 10fr 10fr 10fr 5fr;
-    color: var.$txt-color;
-    border-bottom: 1px solid var.$light-grey;
-    padding: 0.9rem 0 0.9rem 0;
-    > div:first-child {
-      margin-left: 0.75rem;
-    }
-
-    font-size: 1rem;
-
-    > div:nth-child(2) {
-      display: grid;
-      grid-template-columns: 10fr 10fr;
-      grid-auto-flow: column;
-    }
+    grid-template-columns: 10fr 10fr;
+    grid-auto-flow: column;
   }
+}
