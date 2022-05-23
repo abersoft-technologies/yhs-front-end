@@ -5,6 +5,23 @@
   border-radius: $spacing-x-small;
   background: #fff;
   width: 100%;
-  // max-width: 500px;
+  // max-width: 200px;
   padding: 1rem;
+}
+
+.linechart_analytics_small {
+  box-shadow: $subtile-box-shadow;
+  border-radius: $spacing-x-small;
+  position: relative;
+  display: flex;
+  width: 450px;
+  height: 220px;
+
+  > div {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    width: 250px;
+    height: 140px;
+  }
 }

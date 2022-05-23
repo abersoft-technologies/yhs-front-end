@@ -53,14 +53,14 @@ const options = {
   plugins: {
     legend: {
       position: 'top',
-      align: 'start',
+      align: 'center',
       labels: {
         boxWidth: 7,
         usePointStyle: true,
         pointStyle: 'circle',
       },
       title: {
-        text: 'Anst. & LIA',
+        text: 'Anst. & LIA per månad',
         display: true,
         color: '#363636',
         font: {

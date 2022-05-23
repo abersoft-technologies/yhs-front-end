@@ -44,7 +44,7 @@ const LineChart = () => {
 
   return (
     <div className={styles.linechart_analytics_medium}>
-      <Line data={data} height={300} />
+      <Line data={data} height={140} />
     </div>
   );
 };
