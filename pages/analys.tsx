@@ -1,20 +1,23 @@
-import { ReactElement } from 'react';
 import React from 'react';
+import { ReactElement } from 'react';
+
+import styles from '../styles/Analytics.module.scss';
+
 import Layout from '../src/layout/layout';
-import { Flex } from '../src/components/ui/Flex';
+
+import LineChart from '../src/components/analytics/linechart/Linechart';
+import Barchart from '../src/components/analytics/barchart/Barchart';
 
 const Analys = () => {
   return (
-    <Flex
-      direction='column'
-      width='full'
-      height='full'
-      justify='center'
-      align='center'
-    >
-      <h1>Under konstruktion </h1>
-      <span style={{ fontSize: '6rem' }}>🚧</span>
-    </Flex>
+    <div className={styles.analytics}>
+      <div>
+        <Barchart />
+      </div>
+      <div>
+        <LineChart />
+      </div>
+    </div>
   );
 };
 
