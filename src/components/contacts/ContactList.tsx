@@ -46,7 +46,7 @@ const ContactList = () => {
     ? contactListReducer.result.data.listValues
     : undefined;
 
-  const dispatchData = useCallback((filterObjc) => {
+  const dispatchData = (filterObjc: string | null) => {
     dispatch(
       getContactListRedux({
         limit: 10,
@@ -55,7 +55,12 @@ const ContactList = () => {
         filterQuery: filterObjc ? {...JSON.parse(filterObjc)} : filterQuery
       })
     );
-  }, [filterQuery, page, dispatch, searchQuery])
+  }
+
+  useEffect(() => {
+    const filterObjc = localStorage.getItem("filterObjc");
+    dispatchData(filterObjc)
+  }, [page])
 
   useEffect(() => {
     const filterObjc = localStorage.getItem("filterObjc");
@@ -64,7 +69,7 @@ const ContactList = () => {
     setSlicedPages(1);
     dispatchData(filterObjc)
 
-  }, [searchQuery, filterQuery, dispatch, page, contactListReducer, dispatchData]);
+  }, [searchQuery, filterQuery]);
 
   return (
     <>
