@@ -49,14 +49,14 @@ const EduList = () => {
           queryParams: searchQuery,
           filterQuery: filterQuery
         }));
-    }, [dispatch, filterQuery, page, searchQuery])
+    }, [filterQuery, page, searchQuery])
 
     useEffect(() => {
       setPage(1);
       setPagePosition(0);
       setSlicedPages(1);
       dispatchData()
-      }, [page, searchQuery, filterQuery, dispatch, eduListReducer, dispatchData]);
+    }, [page, searchQuery, filterQuery]);
 
   return (
     <section className={styles.edu_list_container}>

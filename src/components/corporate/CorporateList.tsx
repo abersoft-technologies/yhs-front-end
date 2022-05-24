@@ -52,7 +52,7 @@ const CorporateList = () => {
     dispatchData();
     window.scrollTo(0, 0);
 
-  }, [searchQuery, filterQuery, dispatch, page, corpListReducer, dispatchData]);
+  }, [searchQuery, filterQuery, dispatch, page, dispatchData]);
 
   // useEffect(() => {
   //   dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));

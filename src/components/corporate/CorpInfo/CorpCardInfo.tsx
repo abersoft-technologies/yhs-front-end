@@ -99,7 +99,7 @@ export const CorpCardInfo = () => {
             return list.indexOf(c) === index;
           });
           setPlaceList(uniqueList)
-        }, [name, id, dataContacts?.contacts.length, dataContacts, getData])
+        }, [])
 
 
     return (

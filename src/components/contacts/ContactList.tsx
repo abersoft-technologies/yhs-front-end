@@ -68,7 +68,6 @@ const ContactList = () => {
     setPagePosition(0);
     setSlicedPages(1);
     dispatchData(filterObjc)
-
   }, [searchQuery, filterQuery]);
 
   return (
