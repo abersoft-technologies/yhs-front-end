@@ -22,6 +22,7 @@ import { Text } from '../../ui/text/Text';
 import { Checkbox } from '@nextui-org/react';
 import { updateContact } from '../../../apis/contact/update';
 import { showInfoBox } from '../../../store/slice/infoBox';
+import { update } from '../../../store/slice/databaseUpdate';
 
 import Image from 'next/image';
 
@@ -208,6 +209,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         })
       );
       updateContact(contact?.data.data._id, dataContact);
+      dispatch(update())
       closeModule();
     } else {
       return showInfoBox({

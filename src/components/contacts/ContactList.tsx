@@ -10,6 +10,7 @@ import ContactCard from './contact_card/ContactCard';
 import { Text } from '../ui/text/Text';
 import { Flex } from '../ui/Flex';
 import useForceUpdate from '../../hooks/useForceUpdate';
+import api from '../../apis/api';
 
 interface IListDataMap {
   firstName: string;
@@ -27,11 +28,16 @@ const ContactList = () => {
   const [page, setPage] = useState(1);
   const [pagePosition, setPagePosition] = useState(0);
   const [slicedPages, setSlicedPages] = useState(1);
+
   const dispatch = useDispatch();
+
+  const updateNumber = useSelector(
+    (state: any) => state.databaseUpdateReducer.number
+  )
 
   const contactListReducer = useSelector(
     (state: any) => state.contactListReducer
-  );
+    );
   const searchQuery = useSelector(
     (state: any) => state.searchQueryReducer.value
   );
@@ -68,7 +74,7 @@ const ContactList = () => {
     setPagePosition(0);
     setSlicedPages(1);
     dispatchData(filterObjc)
-  }, [searchQuery, filterQuery]);
+  }, [searchQuery, filterQuery, updateNumber]);
 
   return (
     <>

@@ -18,6 +18,7 @@ import { showInfoBox } from '../../../store/slice/infoBox';
 import { getCorporateListRedux } from '../../../store/slice/corpList';
 import { add } from '../../../store/slice/userSlice';
 import { Select } from '../../ui/form/select/Select';
+import { update } from '../../../store/slice/databaseUpdate';
 
 interface IModuleProps {
   active: boolean;
@@ -83,6 +84,7 @@ const AddCorporateModule = ({ active, closeModule }: IModuleProps) => {
     }
     setFormData({ name: '', tags: [], branch: '', info: '' });
     dispatch(showInfoBox({infoText: "Du har lagt till ett nytt företag", time: 3000, type: "success"}))
+    dispatch(update())
     closeModule();
   };
 

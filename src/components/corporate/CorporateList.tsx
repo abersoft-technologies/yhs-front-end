@@ -24,6 +24,10 @@ const CorporateList = () => {
   const [pagePosition, setPagePosition] = useState(0);
   const [slicedPages, setSlicedPages] = useState(1);
 
+  const updateNumber = useSelector(
+    (state: any) => state.databaseUpdateReducer.number
+  )
+
   const corpListReducer = useSelector((state: any) => state.corpListReducer);
   const ListData = corpListReducer.result.data
     ? corpListReducer.result.data.corpList
@@ -41,9 +45,9 @@ const CorporateList = () => {
     (state: RootState) => state.filterQueryReducer.filterObj
   );
 
-  const dispatchData = useCallback(() => {
+  const dispatchData = () => {
     dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: searchQuery, filterQuery: filterQuery }));
-  }, [dispatch, filterQuery, page, searchQuery])
+  }
 
   useEffect(() => {
     setPage(1);
@@ -51,8 +55,7 @@ const CorporateList = () => {
     setSlicedPages(1);
     dispatchData();
     window.scrollTo(0, 0);
-
-  }, [searchQuery, filterQuery, dispatch, page, dispatchData]);
+  }, [searchQuery, filterQuery, updateNumber]);
 
   // useEffect(() => {
   //   dispatch(getCorporateListRedux({ limit: 10, page: page, queryParams: '' }));

@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { InfoBox } from '../../ui/info/InfoBox';
 import { Text } from '../../ui/text/Text';
 import { showInfoBox } from '../../../store/slice/infoBox';
+import { update } from '../../../store/slice/databaseUpdate';
 
 interface IModuleProps {
   active: boolean;
@@ -160,6 +161,7 @@ const AddEduModule = ({
     });
     setSelectValue('');
     dispatch(showInfoBox({infoText: "Du har lagt till en ny utbildning", time: 3000, type: "success"}))
+    dispatch(update())
     onClose();
   };
 

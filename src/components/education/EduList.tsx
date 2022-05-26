@@ -26,6 +26,10 @@ const EduList = () => {
   const [pagePosition, setPagePosition] = useState(0);
   const [slicedPages, setSlicedPages] = useState(1);
 
+  const updateNumber = useSelector(
+    (state: any) => state.databaseUpdateReducer.number
+  )
+
   const eduListReducer = useSelector((state: any) => state.eduListReducer);
   const ListData = eduListReducer.result.data
     ? eduListReducer.result.data.eduList
@@ -56,7 +60,7 @@ const EduList = () => {
       setPagePosition(0);
       setSlicedPages(1);
       dispatchData()
-    }, [page, searchQuery, filterQuery]);
+    }, [page, searchQuery, filterQuery, updateNumber]);
 
   return (
     <section className={styles.edu_list_container}>

@@ -9,12 +9,12 @@ import corporateReducer from './slice/corporate';
 import contactReducer from './slice/contact';
 import letterReducer from './slice/letter';
 import infoBoxReducer from './slice/infoBox';
-
 import eduListReducer from './slice/eduList';
 import searchQueryReducer from './slice/searchQuery';
 import filterQueryReducer from './slice/filterQuery';
 import filterOptionsReducer from './slice/filterOptions';
 import lettersDataReducer from './slice/lettersData';
+import databaseUpdateReducer from './slice/databaseUpdate'
 
 import { persistReducer } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -36,6 +36,7 @@ const reducers = combineReducers({
   letterReducer,
   infoBoxReducer,
   lettersDataReducer,
+  databaseUpdateReducer
 });
 
 const rootReducer = (state: any, action: any) => {
