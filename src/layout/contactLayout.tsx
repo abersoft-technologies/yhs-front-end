@@ -117,7 +117,6 @@ const contactLayout = ({ children }: LayoutProps) => {
     if (currentTab) router.push(currentTab);
     getAll()
       .then((res) => {
-        console.log('RES --->', res?.data);
         setListData(res?.data.data.contactList);
         createContactList(res?.data.data.contactList);
       })

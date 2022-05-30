@@ -1,12 +1,11 @@
+import uniqid from 'uniqid';
 import axios from 'axios';
 import React, { useState } from 'react';
 import type { NextPage } from 'next';
 import { Loading } from '../src/components/ui/loading/Loading';
-import uniqid from 'uniqid';
 import { useWindowSize } from '../src/hooks/useWindowSize';
 import { add } from '../src/store/slice/userSlice';
 import { useDispatch } from 'react-redux';
-// import Link from 'next/link';
 
 /* Styles import */
 import styles from '../styles/loginSignup.module.scss';
@@ -98,7 +97,6 @@ const Signup: NextPage = () => {
       orgId: id,
       users: [data],
     };
-    console.log(orgData);
     setIsLoading(true);
     axios
       .post(reqUrl, data)
@@ -120,7 +118,6 @@ const Signup: NextPage = () => {
       });
     await addOrg(orgData)
       .then((res) => {
-        console.log(res?.data);
         setTimeout(() => {
           setIsLoading(false);
           Redirect('/');

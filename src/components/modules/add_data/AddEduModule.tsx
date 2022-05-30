@@ -185,13 +185,11 @@ const AddEduModule = ({
       setDoShowManagementInfoBox(false);
       setManagementValue('');
     }, 1500);
-    console.log(formData);
   };
 
   const onChangeManagement = (label: string, value: string, id?: string) => {
     setManagementValue(value);
     setId(id!);
-    console.log(formData);
   };
 
   return (

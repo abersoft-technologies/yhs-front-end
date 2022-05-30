@@ -59,8 +59,6 @@ const Barchart = () => {
   const getAllData = async () => {
     const result = await getData();
     setAllData(result?.data.data);
-    console.log("All data", result?.data.data)
-
   };
 
   const calculatePrecent = (

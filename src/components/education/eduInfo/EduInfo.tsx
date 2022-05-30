@@ -77,7 +77,6 @@ const EduInfo = () => {
   const getAllContacts = useCallback(async () => {
     await getAll()
       .then((res) => {
-        console.log('RES CONTACTS --->', res?.data);
         setListData(res?.data.data.contactList);
       })
       .catch((err) => {
@@ -90,8 +89,6 @@ const EduInfo = () => {
     getAllContacts();
     createContactsList();
   }, []);
-
-  //name, id, list?.length, ListData?.length, createContactsList, getData
 
   return (
     <InfoLayout

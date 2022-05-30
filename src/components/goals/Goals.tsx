@@ -62,7 +62,6 @@ const Goals = ({ id, currentGoals }: IGoalProps) => {
   const getAllEdus = async () => {
     await getAll()
       .then((res) => {
-        console.log('Edus ->', res?.data.data.eduList);
         setEducations(res?.data.data.eduList);
       })
       .catch((err) => console.log(err));
@@ -110,7 +109,6 @@ const Goals = ({ id, currentGoals }: IGoalProps) => {
   const optionLength = optionList && optionList.length;
 
   useEffect(() => {
-    console.log(currentGoals);
     if (currentGoals) setGoalData(currentGoals);
   }, [currentGoals]);
 

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { NextPage } from 'next';
 import React, { useState } from 'react';
 import { Redirect } from '../src/globalFunctions/redirect';
@@ -12,7 +13,6 @@ import styles from '../styles/loginSignup.module.scss';
 /* Components import */
 import { Flex } from '../src/components/ui/Flex';
 import { Input } from '../src/components/ui/form/input/Input';
-import Link from 'next/link';
 import { Text } from '../src/components/ui/text/Text';
 
 const Login: NextPage = () => {
@@ -32,7 +32,6 @@ const Login: NextPage = () => {
       setPassword('');
       setEmail('');
       const userData = result.data.data;
-      // console.log(userData.user.orgId);
       localStorage.setItem('accessToken', userData.accessToken);
       localStorage.setItem('refreshToken', userData.refreshToken);
       localStorage.setItem('orgId', userData.user.orgId);

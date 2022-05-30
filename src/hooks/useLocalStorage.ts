@@ -6,7 +6,7 @@ export const useLocalStorage = (option: "get" | "set" | "remove", storageType: "
         if(option === "get") {
             const returnedItem = localStorage.getItem(key)
             if(!returnedItem) {
-                return console.log("No Item in localStorage")
+                return console.error("No Item in localStorage")
             }
             const parsedReturnedItem = JSON.parse(returnedItem)
             return parsedReturnedItem;
@@ -18,7 +18,7 @@ export const useLocalStorage = (option: "get" | "set" | "remove", storageType: "
         if(option === "get" && typeof window !== 'undefined') {
             const returnedItem = sessionStorage.getItem(key)
             if(!returnedItem) {
-                return console.log("No Item in sessionStorage")
+                return console.error("No Item in sessionStorage")
             }
             if(typeof returnedItem !== "string") {
                 return JSON.parse(returnedItem)

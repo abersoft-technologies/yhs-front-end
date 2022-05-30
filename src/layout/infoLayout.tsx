@@ -1,10 +1,10 @@
 import React, { ReactNode } from 'react';
 import { Flex } from '../components/ui/Flex';
-
-import styles from '../../styles/infoLayout.module.scss';
 import { Text } from '../components/ui/text/Text';
 import { IContactSchema } from '../types/global';
 import { is } from 'immer/dist/internal';
+
+import styles from '../../styles/infoLayout.module.scss';
 
 interface IInfoLayoutProps extends ICorpProps, IEduProps {
   children: ReactNode;
@@ -41,7 +41,6 @@ const InfoLayout = ({
       } else {
         number = contact.phoneNumber.replace(/\s/g, '');
       }
-      console.log(number);
       const finalFormat =
         number.substring(0, 3) +
         '-' +

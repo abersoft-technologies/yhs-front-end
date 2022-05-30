@@ -113,7 +113,6 @@ export const InfoCards = () => {
       .then((res) => {
         const data = res?.data;
         setLetters(data.data);
-        console.log("JP DATA", data.data)
       })
       .catch((err) => {
         return err;
@@ -153,7 +152,6 @@ export const InfoCards = () => {
       });
       setLetters
     }
-    console.log(res);
     return res;
   }, [lettersData]);
 
