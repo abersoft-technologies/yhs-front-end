@@ -90,3 +90,12 @@ export interface eduLettersData {
   };
   letters: ILetterSchema[];
 }
+
+export interface ICorpSchema {
+  branch: string,
+  date: string,
+  info: string,
+  name: string,
+  orgId: string,
+  tags: string[],
+}
