@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { addContact } from '../../../apis/contact/add';
 import { addLetter } from '../../../apis/letter/add';
+import { getContactListRedux } from '../../../store/slice/contactList';
+import { ICorpSchema } from '../../../types/global';
 
 /* Imports global interfaces */
 import { ILetterSchema } from '../../../types/global';
@@ -70,6 +72,12 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
   const eduOptions = useSelector(
     (state: RootState) => state.filterOptionsReducer.result.educations.data
   );
+
+  const corpListReducer = useSelector((state: any) => state.corpListReducer);
+  const ListData: ICorpSchema[] = corpListReducer.result.data
+    ? corpListReducer.result.data.corpList
+    : undefined;
+
   const [formData, setFormData] = useState<IFormData>({
     firstName: '',
     lastName: '',
@@ -92,6 +100,7 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     eduBoard: false,
     orgId: '',
   });
+  const [companySelectList, setCompanySelectList] = useState<{value: string, label: string}[]>([{value: "", label: ""}])
   const {
     firstName,
     lastName,
@@ -131,6 +140,8 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
         return setLetterOfIntent({ ...letterOfIntent, employment: value });
       case 'LIA':
         return setLetterOfIntent({ ...letterOfIntent, internship: value });
+      case 'Företag':
+        return setFormData({ ...formData, company: value });
       default:
         return setLetterOfIntent({
           ...letterOfIntent,
@@ -220,6 +231,25 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
     }
   };
 
+  const createCompanySelectList = () => {
+    const list: {value: string, label: string}[] = [];
+    let obj: {value: string, label: string} = {
+      value: "",
+      label: ""
+    };
+
+    console.log("JP ListData", ListData)
+
+    ListData.forEach(item => {
+      obj = {
+        value: item.name,
+        label: item.name
+      }
+      list.push(obj)
+    })
+    setCompanySelectList(list)
+  }
+
   const validate = () => {
     if (
       !formData.firstName ||
@@ -236,6 +266,13 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
       return false;
     return true;
   };
+
+  useEffect(() => {
+    createCompanySelectList()
+
+
+
+  }, [])
 
   return (
     <>
@@ -311,13 +348,13 @@ const AddContactModule = ({ active, closeModule }: IModuleProps) => {
             width='full'
             justify='space-between'
           >
-            <Input
+            <Select
+              options={companySelectList}
               width='50%'
-              name='company'
               placeholder='Företag'
               label='Företag'
               value={company}
-              onChangeFunction={handleOnChange}
+              onChangeFunction={handleOnChangeSelect}
             />
             <Input
               width='50%'
